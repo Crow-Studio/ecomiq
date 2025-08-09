@@ -56,7 +56,7 @@ export default function SellingSection() {
   };
 
   return (
-    <div className="flex items-center justify-center bg-black py-20 px-5 text-white overflow-x-hidden">
+    <div className="flex items-center justify-center overflow-x-hidden bg-black px-5 py-20 text-white">
       <div className="grid w-full max-w-6xl items-center gap-12 lg:grid-cols-2">
         <div className="relative">
           <div className="mb-8 space-y-1.5">
