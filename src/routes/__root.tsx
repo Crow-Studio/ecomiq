@@ -59,7 +59,7 @@ export const Route = createRootRouteWithContext<{
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Rubik+Doodle+Shadow&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Instrument+Serif:ital@0;1&family=Sigmar&display=swap",
       },
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
