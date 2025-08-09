@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import { Link } from "@tanstack/react-router";
+import { Image } from "@unpic/react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
@@ -7,19 +8,19 @@ import { cn } from "~/lib/utils";
 
 const images = [
   {
-    src: "https://cdn.shopify.com/b/shopify-brochure2-assets/890dbeb471a10637528a72179b12bfa9.jpg?originalWidth=575&originalHeight=795&width=400",
-    alt: "Analytics Dashboard",
+    src: "https://res.cloudinary.com/dfa1yoc1v/image/upload/v1754752826/ecofriendly-groceries-local-store_pplp2x.jpg",
+    alt: "Store Setup",
   },
   {
-    src: "https://www.freepik.com/free-photo/woman-promoting-cloths-from-thrift-store_80752596.htm#fromView=search&page=1&position=18&uuid=5e39961a-faa1-43f9-bb19-26aaaaf80be4&query=store",
-    alt: "Retail Store Setup",
+    src: "https://res.cloudinary.com/dfa1yoc1v/image/upload/v1754752788/children-s-bright-clothes-hang-display-baby-clothing-store_xtlbuj.jpg",
+    alt: "Product Setup",
   },
   {
-    src: "https://cdn.shopify.com/b/shopify-brochure2-assets/669022e522248e4ab88aeeb1165486d0.jpg?originalWidth=571&originalHeight=744&width=200",
-    alt: "Payment Setup",
+    src: "https://res.cloudinary.com/dfa1yoc1v/image/upload/v1754754720/people-look-clothing-kiosk-service_meahgd.jpg",
+    alt: "Store Setup",
   },
   {
-    src: "https://cdn.shopify.com/b/shopify-brochure2-assets/669022e522248e4ab88aeeb1165486d0.jpg?originalWidth=571&originalHeight=744&width=200",
+    src: "https://res.cloudinary.com/dfa1yoc1v/image/upload/v1754754093/person-paying-with-its-smartphone-wallet-app_vqvq3h.jpg",
     alt: "Payment Setup",
   },
 ];
@@ -55,7 +56,7 @@ export default function SellingSection() {
   };
 
   return (
-    <div className="flex items-center justify-center bg-black py-20 text-white">
+    <div className="flex items-center justify-center bg-black py-20 px-5 text-white overflow-x-hidden">
       <div className="grid w-full max-w-6xl items-center gap-12 lg:grid-cols-2">
         <div className="relative">
           <div className="mb-8 space-y-1.5">
@@ -69,31 +70,47 @@ export default function SellingSection() {
           <div className="relative mx-auto w-full max-w-md">
             <div className="relative h-96 overflow-hidden rounded-2xl">
               <AnimatePresence mode="wait">
-                <motion.img
+                <motion.div
                   key={currentImageIndex}
-                  src={images[currentImageIndex].src}
-                  alt={images[currentImageIndex].alt}
                   className="absolute inset-0 h-full w-full object-cover"
                   initial={{ opacity: 0, scale: 1.1 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
-                />
+                >
+                  <Image
+                    src={images[currentImageIndex].src}
+                    alt={images[currentImageIndex].alt}
+                    layout="fullWidth"
+                    priority={true}
+                    background="auto"
+                    cdn="cloudinary"
+                    className="size-full"
+                  />
+                </motion.div>
               </AnimatePresence>
             </div>
 
             <div className="absolute -right-4 -bottom-4 h-32 w-48 overflow-hidden rounded-xl shadow-2xl">
               <AnimatePresence mode="wait">
-                <motion.img
+                <motion.div
                   key={`secondary-${currentImageIndex}`}
-                  src={images[(currentImageIndex + 1) % images.length].src}
-                  alt={images[(currentImageIndex + 1) % images.length].alt}
                   className="h-full w-full object-cover"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.5, ease: "easeInOut", delay: 0.2 }}
-                />
+                >
+                  <Image
+                    src={images[(currentImageIndex + 1) % images.length].src}
+                    alt={images[(currentImageIndex + 1) % images.length].alt}
+                    layout="fullWidth"
+                    priority={true}
+                    background="auto"
+                    cdn="cloudinary"
+                    className="size-full"
+                  />
+                </motion.div>
               </AnimatePresence>
             </div>
           </div>
@@ -107,11 +124,9 @@ export default function SellingSection() {
               onMouseLeave={handleStepLeave}
               whileHover={{ x: 10 }}
               transition={{ duration: 0.2 }}
-              style={
-                {
-                  x: currentImageIndex === index ? 10 : 0
-                }
-              }
+              style={{
+                x: currentImageIndex === index ? 10 : 0,
+              }}
             >
               <div className="flex items-center space-x-4">
                 <span
@@ -121,10 +136,12 @@ export default function SellingSection() {
                 >
                   {step.number}
                 </span>
-                <div className={cn(
-                  'h-px w-16 bg-gray-600 transition-colors duration-300',
-                  currentImageIndex === index ? 'bg-brand' : 'group-hover:bg-brand/50'
-                )} />
+                <div
+                  className={cn(
+                    "h-px w-16 bg-gray-600 transition-colors duration-300",
+                    currentImageIndex === index ? "bg-brand" : "group-hover:bg-brand/50",
+                  )}
+                />
               </div>
               <h3
                 className={`text-2xl font-light transition-colors duration-300 md:text-3xl ${
