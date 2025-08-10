@@ -1,0 +1,93 @@
+export const monthlyPlans = [
+  {
+    name: "Starter",
+    price: "$9",
+    description: "For individuals starting their first online store.",
+    features: [
+      "1 store",
+      "Unlimited products",
+      "Local payment integrations",
+      "Basic inventory management",
+      "Basic analytics",
+      "Email support",
+    ],
+    cta: "Start Free Trial",
+  },
+  {
+    name: "Growth",
+    price: "$19",
+    description: "Best for growing businesses with more orders.",
+    features: [
+      "Up to 3 stores",
+      "Unlimited products",
+      "Local & international payments",
+      "Advanced inventory & order tracking",
+      "Discount codes & coupons",
+      "Priority email support",
+      "Analytics dashboard",
+    ],
+    cta: "Start Free Trial",
+    popular: true,
+  },
+  {
+    name: "Enterprise",
+    price: "$49",
+    description: "For large-scale sellers with high traffic.",
+    features: [
+      "Unlimited stores",
+      "Advanced analytics & reports",
+      "Custom checkout experience",
+      "API & custom integrations",
+      "Dedicated account manager",
+      "24/7 priority support",
+    ],
+    cta: "Contact Sales",
+  },
+];
+
+export const annualPlans = [
+  {
+    name: "Starter",
+    price: "$7",
+    description: "For individuals starting their first online store.",
+    features: [
+      "1 store",
+      "Unlimited products",
+      "Local payment integrations",
+      "Basic inventory management",
+      "Basic analytics",
+      "Email support",
+    ],
+    cta: "Start Free Trial",
+  },
+  {
+    name: "Growth",
+    price: "$15",
+    description: "Best for growing businesses with more orders.",
+    features: [
+      "Up to 3 stores",
+      "Unlimited products",
+      "Local & international payments",
+      "Advanced inventory & order tracking",
+      "Discount codes & coupons",
+      "Priority email support",
+      "Analytics dashboard",
+    ],
+    cta: "Start Free Trial",
+    popular: true,
+  },
+  {
+    name: "Enterprise",
+    price: "$39",
+    description: "For large-scale sellers with high traffic.",
+    features: [
+      "Unlimited stores",
+      "Advanced analytics & reports",
+      "Custom checkout experience",
+      "API & custom integrations",
+      "Dedicated account manager",
+      "24/7 priority support",
+    ],
+    cta: "Contact Sales",
+  },
+];
