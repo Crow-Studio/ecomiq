@@ -2,6 +2,7 @@ export const monthlyPlans = [
   {
     name: "Starter",
     price: "$9",
+    period: "/month",
     description: "For individuals starting their first online store.",
     features: [
       "1 store",
@@ -16,6 +17,7 @@ export const monthlyPlans = [
   {
     name: "Growth",
     price: "$19",
+    period: "/month",
     description: "Best for growing businesses with more orders.",
     features: [
       "Up to 3 stores",
@@ -32,6 +34,7 @@ export const monthlyPlans = [
   {
     name: "Enterprise",
     price: "$49",
+    period: "/month",
     description: "For large-scale sellers with high traffic.",
     features: [
       "Unlimited stores",
@@ -48,7 +51,8 @@ export const monthlyPlans = [
 export const annualPlans = [
   {
     name: "Starter",
-    price: "$7",
+    price: "$84",
+    period: "/year ($7/mo)",
     description: "For individuals starting their first online store.",
     features: [
       "1 store",
@@ -62,7 +66,8 @@ export const annualPlans = [
   },
   {
     name: "Growth",
-    price: "$15",
+    price: "$180",
+    period: "/year ($15/mo)",
     description: "Best for growing businesses with more orders.",
     features: [
       "Up to 3 stores",
@@ -78,7 +83,8 @@ export const annualPlans = [
   },
   {
     name: "Enterprise",
-    price: "$39",
+    price: "$468",
+    period: "/year ($39/mo)",
     description: "For large-scale sellers with high traffic.",
     features: [
       "Unlimited stores",

@@ -31,7 +31,7 @@ export default function MonthlyPlan() {
               <h3 className="text-2xl font-bold">{plan.name}</h3>
               <div className="mt-4 flex items-baseline">
                 <span className="text-4xl font-bold">{plan.price}</span>
-                <span className="text-muted-foreground ml-1">/month</span>
+                <span className="text-muted-foreground ml-1">{plan.period}</span>
               </div>
               <p className="text-muted-foreground mt-2">{plan.description}</p>
               <ul className="my-6 flex-grow space-y-3">
