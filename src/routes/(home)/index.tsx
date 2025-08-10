@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import Faqs from "~/components/home/faqs";
 import Hero from "~/components/home/hero";
 import Header from "~/components/home/navigations/header";
 import Pricing from "~/components/home/pricing";
@@ -20,6 +21,7 @@ function Home() {
       <SellingSection />
       <TestimonialsGrid />
       <Pricing />
+      <Faqs />
     </div>
   );
 }
