@@ -10,10 +10,10 @@ import { Badge } from "~/components/ui/badge";
 import { faqs as FaqsInitial } from "~/data/faqs";
 
 export default function Faqs() {
-  const [faqs] = useState(FaqsInitial)
+  const [faqs] = useState(FaqsInitial);
   return (
     <section id="faq" className="w-full py-16">
-      <div className="container px-4 md:px-6 mx-auto">
+      <div className="container mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -49,7 +49,7 @@ export default function Faqs() {
                   value={`item-${i}`}
                   className="border-border/40 border-b py-2"
                 >
-                  <AccordionTrigger className="text-left text-lg font-medium hover:no-underline cursor-pointer">
+                  <AccordionTrigger className="cursor-pointer text-left text-lg font-medium hover:no-underline">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground text-base">
