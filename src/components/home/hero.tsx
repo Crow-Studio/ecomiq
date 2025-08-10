@@ -9,7 +9,7 @@ export default function Hero() {
     {
       href: "/",
       label: "Request Demo",
-      type: "",
+      type: "secondary",
       _id: "demo",
     },
     {

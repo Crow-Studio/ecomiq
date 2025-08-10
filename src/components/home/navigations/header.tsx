@@ -36,7 +36,7 @@ export default function Header() {
     >
       <div className="container mx-auto flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-bold">
-          <Ecomiq className="h-auto w-10" />
+          <Ecomiq className="h-auto w-8.5" />
         </Link>
         <nav className="hidden gap-8 md:flex">
           <Link
