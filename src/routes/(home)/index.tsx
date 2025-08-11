@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Faqs from "~/components/home/faqs";
 import Hero from "~/components/home/hero";
-import Footer from "~/components/home/navigations/footer";
 import Header from "~/components/home/navigations/header";
 import Pricing from "~/components/home/pricing";
 import SellingSection from "~/components/home/selling-section";
@@ -16,16 +15,13 @@ export const Route = createFileRoute("/(home)/")({
 
 function Home() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div>
       <Header />
-      <main className="flex-1">
-        <Hero />
-        <SellingSection />
-        <TestimonialsGrid />
-        <Pricing />
-        <Faqs />
-      </main>
-      <Footer />
+      <Hero />
+      <SellingSection />
+      <TestimonialsGrid />
+      <Pricing />
+      <Faqs />
     </div>
   );
 }
