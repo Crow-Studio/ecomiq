@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { motion } from "motion/react";
 import { Ecomiq } from "~/components/svgs/ecomiq";
 import { Button } from "~/components/ui/button";
 import {
@@ -11,11 +12,11 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import OauthProviders from "../oauth/oauth-providers";
-import { motion } from 'motion/react'
 
 export function SignupForm() {
   return (
-    <motion.div initial={{
+    <motion.div
+      initial={{
         opacity: 0,
         y: -20,
       }}
@@ -28,7 +29,7 @@ export function SignupForm() {
         ease: "easeIn",
       }}
       className="flex flex-col gap-6"
-      >
+    >
       <Card>
         <CardHeader className="items-center gap-y-3 text-center">
           <Link to="/">
