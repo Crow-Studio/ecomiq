@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
-import { Ecomiq } from "~/components/svgs/Ecomiq";
+import { Ecomiq } from "~/components/svgs/ecomiq";
 import { useTheme } from "~/components/theme-provider";
 import { Button } from "~/components/ui/button";
 
