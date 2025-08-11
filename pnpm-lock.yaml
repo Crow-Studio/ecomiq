@@ -126,6 +126,9 @@ importers:
       '@iconify-json/devicon':
         specifier: ^1.2.36
         version: 1.2.36
+      '@iconify-json/lucide':
+        specifier: ^1.2.62
+        version: 1.2.62
       '@iconify/react':
         specifier: ^6.0.0
         version: 6.0.0(react@19.1.1)
@@ -1005,6 +1008,9 @@ packages:
 
   '@iconify-json/devicon@1.2.36':
     resolution: {integrity: sha512-UUg3jcKqUbnaiSPdUgXphp1bI25It4XTBsZ3v8U5kp7kd/zNQ0CSrBOt7Jj0+xjxT58BNlLY9zlWG9mciDwOcA==}
+
+  '@iconify-json/lucide@1.2.62':
+    resolution: {integrity: sha512-K0KfhvP5YQZ2KraOgCm6jJbwwzQCVocvXcdMpDou5uLa48QnLBRW/dQ8VDGmxHTGpwF9EqLlvnUSinH2i6xs3Q==}
 
   '@iconify/react@6.0.0':
     resolution: {integrity: sha512-eqNscABVZS8eCpZLU/L5F5UokMS9mnCf56iS1nM9YYHdH8ZxqZL9zyjSwW60IOQFsXZkilbBiv+1paMXBhSQnw==}
@@ -5987,6 +5993,10 @@ snapshots:
   '@humanwhocodes/retry@0.4.3': {}
 
   '@iconify-json/devicon@1.2.36':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/lucide@1.2.62':
     dependencies:
       '@iconify/types': 2.0.0
 

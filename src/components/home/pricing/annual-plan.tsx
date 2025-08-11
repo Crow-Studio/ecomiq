@@ -11,7 +11,7 @@ export default function AnnualPlan() {
     <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
       {plans.map((plan, i) => (
         <motion.div
-          key={i}
+          key={plan.name}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -35,8 +35,8 @@ export default function AnnualPlan() {
               </div>
               <p className="text-muted-foreground mt-2">{plan.description}</p>
               <ul className="my-6 flex-grow space-y-3">
-                {plan.features.map((feature, j) => (
-                  <li key={j} className="flex items-center">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-center">
                     <Check className="text-primary mr-2 size-4" />
                     <span>{feature}</span>
                   </li>

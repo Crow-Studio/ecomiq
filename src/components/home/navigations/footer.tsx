@@ -1,4 +1,4 @@
-import { Instagram, Linkedin } from "lucide-react";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import { Ecomiq } from "~/components/svgs/ecomiq";
 import { SocialIcon } from "~/components/svgs/social";
 
@@ -13,7 +13,6 @@ export default function Footer() {
     >
       <div className="mx-auto max-w-7xl px-5 py-10">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-          {/* Brand / Blurb */}
           <div>
             <div className="mb-4 flex items-center gap-3">
               <Ecomiq className="h-auto w-[clamp(32px,7vw,56px)] text-white" />
@@ -27,7 +26,7 @@ export default function Footer() {
 
             <div className="mt-5 flex items-center gap-3">
               <SocialIcon href="#" label="Instagram">
-                <Instagram className="h-4 w-4" />
+                <Icon icon="lucide:instagram" className="h-4 w-4" />
               </SocialIcon>
               <SocialIcon href="#" label="X">
                 <span className="text-[12px] leading-none font-black tracking-[-0.02em]">
@@ -35,7 +34,7 @@ export default function Footer() {
                 </span>
               </SocialIcon>
               <SocialIcon href="#" label="LinkedIn">
-                <Linkedin className="h-4 w-4" />
+                <Icon icon="lucide:linkedin" className="h-4 w-4" />
               </SocialIcon>
             </div>
           </div>

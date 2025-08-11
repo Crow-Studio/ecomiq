@@ -53,12 +53,14 @@ export const Button = ({
   unstyled,
   className,
   size = "md",
+  type = "button",
   ref,
   ...props
-}: ButtonProps<"button">) => {
+}: ButtonProps<"button"> & { type?: "button" | "submit" | "reset" }) => {
   return (
     <button
       ref={ref}
+      type={type}
       className={$button(
         !unstyled
           ? {

@@ -29,7 +29,7 @@ type CarouselContextProps = {
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
 function useCarousel() {
-  const context = React.useContext(CarouselContext);
+  const context = React.use(CarouselContext);
 
   if (!context) {
     throw new Error("useCarousel must be used within a <Carousel />");
@@ -101,7 +101,7 @@ function Carousel({
   }, [api, onSelect]);
 
   return (
-    <CarouselContext.Provider
+    <CarouselContext
       value={{
         carouselRef,
         api: api,
@@ -123,7 +123,7 @@ function Carousel({
       >
         {children}
       </div>
-    </CarouselContext.Provider>
+    </CarouselContext>
   );
 }
 

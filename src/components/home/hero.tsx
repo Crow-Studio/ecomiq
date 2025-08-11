@@ -41,8 +41,8 @@ export default function Hero() {
         <div className="flex flex-col items-center justify-end">
           <div className="flex items-center gap-2 !border !border-b-0 border-[--border] px-4 py-2 dark:border-[--dark-border]">
             <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
-              {avatars.map((avatar, index) => (
-                <Avatar key={index} className="size-5">
+              {avatars.map((avatar) => (
+                <Avatar key={`avatar_${avatar}`} className="size-5">
                   <AvatarImage src={avatar} alt="@shadcn" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>

@@ -114,6 +114,7 @@ export function Slider({
                 index === selectedIndex ? "bg-[--accent-500-50]" : "",
               )}
               onClick={() => onDotButtonClick(index)}
+              type="button"
             >
               <span
                 className={clsx(
