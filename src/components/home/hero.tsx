@@ -13,7 +13,7 @@ export default function Hero() {
       _id: "demo",
     },
     {
-      href: "/",
+      href: "/auth/signup",
       label: "Get Started for Free",
       type: "primary",
       _id: "free",
