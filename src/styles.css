@@ -43,6 +43,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-brand: var(--brand);
+  --color-brand-secondary: var(--brand-secondary);
 }
 
 :root {
@@ -79,6 +80,7 @@
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
   --brand: oklch(0.7011 0.2236 40.47);
+  --brand-secondary: oklch(0.77 0.18 47.5);
 
   /* Text rendering optimizations */
   text-rendering: geometricprecision;

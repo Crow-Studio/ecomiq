@@ -101,7 +101,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
       <body>
         <ThemeProvider>
           {children}
-          <Toaster richColors />
+          <Toaster richColors closeButton />
         </ThemeProvider>
 
         <ReactQueryDevtools buttonPosition="bottom-right" />

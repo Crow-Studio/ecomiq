@@ -1,4 +1,4 @@
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { Icon } from "@iconify/react";
 import { Ecomiq } from "~/components/svgs/ecomiq";
 import { SocialIcon } from "~/components/svgs/social";
 
@@ -29,9 +29,10 @@ export default function Footer() {
                 <Icon icon="lucide:instagram" className="h-4 w-4" />
               </SocialIcon>
               <SocialIcon href="#" label="X">
-                <span className="text-[12px] leading-none font-black tracking-[-0.02em]">
-                  {"X"}
-                </span>
+                <Icon
+                  icon="hugeicons:new-twitter"
+                  className="text-[12px] leading-none font-black tracking-[-0.02em] text-white"
+                />
               </SocialIcon>
               <SocialIcon href="#" label="LinkedIn">
                 <Icon icon="lucide:linkedin" className="h-4 w-4" />

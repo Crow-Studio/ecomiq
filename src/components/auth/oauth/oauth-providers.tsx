@@ -8,18 +8,25 @@ import { cn } from "~/lib/utils";
 type AuthProvider = "google";
 
 interface OauthButtonProps {
+  isAuthenticating: boolean;
+}
+
+interface OauthButton {
   provider: AuthProvider;
   text: string;
 }
 
-export default function OauthProviders() {
-  const [auth_providers] = useState<OauthButtonProps[]>([
+export default function OauthProviders({ isAuthenticating }: OauthButtonProps) {
+  const [auth_providers] = useState<OauthButton[]>([
     {
       provider: "google",
       text: "Continue with Google",
     },
   ]);
+
+  const [isOauthAuthentication, setIsOauthAthentication] = useState(false);
   const handleOauthLogin = async (provider: AuthProvider) => {
+    setIsOauthAthentication(true);
     try {
       await authClient.signIn.social({
         provider,
@@ -34,6 +41,8 @@ export default function OauthProviders() {
       return toast.error("Login failed", {
         position: "top-center",
       });
+    } finally {
+      setIsOauthAthentication(false);
     }
   };
   return (
@@ -44,13 +53,17 @@ export default function OauthProviders() {
             key={auth.provider}
             className={cn(
               "flex h-[42px] w-full items-center justify-center gap-2 rounded border px-2 text-sm font-medium duration-300 hover:border-orange-200",
+              isAuthenticating ? "cursor-not-allowed" : "cursor-pointer",
             )}
             type="button"
             onClick={() => handleOauthLogin(auth.provider)}
+            disabled={isAuthenticating}
           >
-            {/* oauth.isSigninWithOauth ? 'cursor-not-allowed' : 'cursor-pointer', */}
-            <Loader2 className="size-4 animate-spin" />
-            <Icon v-else icon="devicon:google" className="size-4" />
+            {isAuthenticating && isOauthAuthentication ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Icon icon="devicon:google" className="size-4" />
+            )}
             Continue with Google
           </button>
         ))}
