@@ -26,7 +26,7 @@ export const Route = createRootRouteWithContext<{
       queryKey: ["user"],
       queryFn: ({ signal }) => getUser({ signal }),
       revalidateIfStale: true,
-    }); // we're using react-query for caching, see router.tsx
+    });
     return { user };
   },
   head: () => ({
@@ -104,8 +104,8 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
           <Toaster richColors closeButton />
         </ThemeProvider>
 
-        <ReactQueryDevtools buttonPosition="bottom-right" />
         <TanStackRouterDevtools position="bottom-right" />
+        <ReactQueryDevtools buttonPosition="bottom-left" />
 
         <Scripts />
       </body>

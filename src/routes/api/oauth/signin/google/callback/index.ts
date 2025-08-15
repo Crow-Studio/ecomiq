@@ -1,16 +1,19 @@
-import { createServerFileRoute } from "@tanstack/react-start/server";
+import {
+  createServerFileRoute,
+  deleteCookie,
+  getCookie,
+} from "@tanstack/react-start/server";
 import { OAuth2RequestError } from "arctic";
+import { getAccountByGoogleIdUseCase } from "~/use-cases/accounts";
+import { GoogleUser } from "~/use-cases/types";
+import { createGoogleUserUseCase } from "~/use-cases/users";
 import { googleAuth } from "~/utils/auth";
 import { setSession } from "~/utils/session";
-import { deleteCookie, getCookie } from "@tanstack/react-start/server";
-import { GoogleUser } from "~/use-cases/types";
-import { getAccountByGoogleIdUseCase } from "~/use-cases/accounts";
-import { createGoogleUserUseCase } from "~/use-cases/users";
 
 const AFTER_LOGIN_URL = "/";
 
 export const ServerRoute = createServerFileRoute(
-  "/api/oauth/signin/google/callback/"
+  "/api/oauth/signin/google/callback/",
 ).methods({
   GET: async ({ request }) => {
     const url = new URL(request.url);
@@ -20,13 +23,7 @@ export const ServerRoute = createServerFileRoute(
     const codeVerifier = getCookie("google_code_verifier") ?? null;
     const redirectUri = getCookie("google_redirect_uri") ?? AFTER_LOGIN_URL;
 
-    if (
-      !code ||
-      !state ||
-      !storedState ||
-      state !== storedState ||
-      !codeVerifier
-    ) {
+    if (!code || !state || !storedState || state !== storedState || !codeVerifier) {
       return new Response(null, { status: 400 });
     }
 
@@ -35,14 +32,10 @@ export const ServerRoute = createServerFileRoute(
     deleteCookie("google_redirect_uri");
 
     try {
-      const tokens = await googleAuth.validateAuthorizationCode(
-        code,
-        codeVerifier
-      );
-      const response = await fetch(
-        "https://openidconnect.googleapis.com/v1/userinfo",
-        { headers: { Authorization: `Bearer ${tokens.accessToken()}` } }
-      );
+      const tokens = await googleAuth.validateAuthorizationCode(code, codeVerifier);
+      const response = await fetch("https://openidconnect.googleapis.com/v1/userinfo", {
+        headers: { Authorization: `Bearer ${tokens.accessToken()}` },
+      });
 
       const googleUser: GoogleUser = await response.json();
 

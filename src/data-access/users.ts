@@ -9,24 +9,27 @@ export async function deleteUser(user_id: UserId) {
 
 export async function getUser(user_id: UserId) {
   const user = await db.query.user.findFirst({
-    where: table => eq(table.id, user_id),
+    where: (table) => eq(table.id, user_id),
   });
 
   return user;
 }
 
 export async function createUser(email: string, avatar: string, username: string) {
-  const [user] = await db.insert(tables.user).values({
-    email,
-    avatar,
-    username,
-  }).returning();
+  const [user] = await db
+    .insert(tables.user)
+    .values({
+      email,
+      avatar,
+      username,
+    })
+    .returning();
   return user;
 }
 
 export async function getUserByEmail(email: string) {
   const user = await db.query.user.findFirst({
-    where: table => eq(table.email, email),
+    where: (table) => eq(table.email, email),
   });
 
   return user;
@@ -37,7 +40,7 @@ export async function setEmailVerified(user_id: UserId) {
     .update(tables.user)
     .set({
       email_verified: true,
-     })
+    })
     .where(eq(tables.user.id, user_id));
 }
 

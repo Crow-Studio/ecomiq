@@ -19,7 +19,8 @@ import { Route as AuthSignupRouteImport } from "./routes/auth/signup";
 import { Route as AuthSigninRouteImport } from "./routes/auth/signin";
 import { Route as authSignupRouteImport } from "./routes/(auth)/signup";
 import { Route as authLoginRouteImport } from "./routes/(auth)/login";
-import { ServerRoute as ApiAuthSplatServerRouteImport } from "./routes/api/auth/$";
+import { ServerRoute as ApiOauthSigninGoogleIndexServerRouteImport } from "./routes/api/oauth/signin/google/index";
+import { ServerRoute as ApiOauthSigninGoogleCallbackIndexServerRouteImport } from "./routes/api/oauth/signin/google/callback/index";
 
 const rootServerRouteImport = createServerRootRoute();
 
@@ -63,11 +64,18 @@ const authLoginRoute = authLoginRouteImport.update({
   path: "/login",
   getParentRoute: () => rootRouteImport,
 } as any);
-const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
-  id: "/api/auth/$",
-  path: "/api/auth/$",
-  getParentRoute: () => rootServerRouteImport,
-} as any);
+const ApiOauthSigninGoogleIndexServerRoute =
+  ApiOauthSigninGoogleIndexServerRouteImport.update({
+    id: "/api/oauth/signin/google/",
+    path: "/api/oauth/signin/google/",
+    getParentRoute: () => rootServerRouteImport,
+  } as any);
+const ApiOauthSigninGoogleCallbackIndexServerRoute =
+  ApiOauthSigninGoogleCallbackIndexServerRouteImport.update({
+    id: "/api/oauth/signin/google/callback/",
+    path: "/api/oauth/signin/google/callback/",
+    getParentRoute: () => rootServerRouteImport,
+  } as any);
 
 export interface FileRoutesByFullPath {
   "/auth": typeof AuthRouteRouteWithChildren;
@@ -139,25 +147,32 @@ export interface RootRouteChildren {
   homeIndexRoute: typeof homeIndexRoute;
 }
 export interface FileServerRoutesByFullPath {
-  "/api/auth/$": typeof ApiAuthSplatServerRoute;
+  "/api/oauth/signin/google": typeof ApiOauthSigninGoogleIndexServerRoute;
+  "/api/oauth/signin/google/callback": typeof ApiOauthSigninGoogleCallbackIndexServerRoute;
 }
 export interface FileServerRoutesByTo {
-  "/api/auth/$": typeof ApiAuthSplatServerRoute;
+  "/api/oauth/signin/google": typeof ApiOauthSigninGoogleIndexServerRoute;
+  "/api/oauth/signin/google/callback": typeof ApiOauthSigninGoogleCallbackIndexServerRoute;
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport;
-  "/api/auth/$": typeof ApiAuthSplatServerRoute;
+  "/api/oauth/signin/google/": typeof ApiOauthSigninGoogleIndexServerRoute;
+  "/api/oauth/signin/google/callback/": typeof ApiOauthSigninGoogleCallbackIndexServerRoute;
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath;
-  fullPaths: "/api/auth/$";
+  fullPaths: "/api/oauth/signin/google" | "/api/oauth/signin/google/callback";
   fileServerRoutesByTo: FileServerRoutesByTo;
-  to: "/api/auth/$";
-  id: "__root__" | "/api/auth/$";
+  to: "/api/oauth/signin/google" | "/api/oauth/signin/google/callback";
+  id:
+    | "__root__"
+    | "/api/oauth/signin/google/"
+    | "/api/oauth/signin/google/callback/";
   fileServerRoutesById: FileServerRoutesById;
 }
 export interface RootServerRouteChildren {
-  ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute;
+  ApiOauthSigninGoogleIndexServerRoute: typeof ApiOauthSigninGoogleIndexServerRoute;
+  ApiOauthSigninGoogleCallbackIndexServerRoute: typeof ApiOauthSigninGoogleCallbackIndexServerRoute;
 }
 
 declare module "@tanstack/react-router" {
@@ -222,11 +237,18 @@ declare module "@tanstack/react-router" {
 }
 declare module "@tanstack/react-start/server" {
   interface ServerFileRoutesByPath {
-    "/api/auth/$": {
-      id: "/api/auth/$";
-      path: "/api/auth/$";
-      fullPath: "/api/auth/$";
-      preLoaderRoute: typeof ApiAuthSplatServerRouteImport;
+    "/api/oauth/signin/google/": {
+      id: "/api/oauth/signin/google/";
+      path: "/api/oauth/signin/google";
+      fullPath: "/api/oauth/signin/google";
+      preLoaderRoute: typeof ApiOauthSigninGoogleIndexServerRouteImport;
+      parentRoute: typeof rootServerRouteImport;
+    };
+    "/api/oauth/signin/google/callback/": {
+      id: "/api/oauth/signin/google/callback/";
+      path: "/api/oauth/signin/google/callback";
+      fullPath: "/api/oauth/signin/google/callback";
+      preLoaderRoute: typeof ApiOauthSigninGoogleCallbackIndexServerRouteImport;
       parentRoute: typeof rootServerRouteImport;
     };
   }
@@ -269,7 +291,9 @@ export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>();
 const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
+  ApiOauthSigninGoogleIndexServerRoute: ApiOauthSigninGoogleIndexServerRoute,
+  ApiOauthSigninGoogleCallbackIndexServerRoute:
+    ApiOauthSigninGoogleCallbackIndexServerRoute,
 };
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)

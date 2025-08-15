@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import Faqs from "~/components/home/faqs";
 import Hero from "~/components/home/hero";
 import Footer from "~/components/home/navigations/footer";
@@ -9,8 +9,10 @@ import { TestimonialsGrid } from "~/components/home/testimonials-grid";
 
 export const Route = createFileRoute("/(home)/")({
   component: Home,
-  loader: ({ context }) => {
-    return { user: context.user };
+  beforeLoad: async ({ context }) => {
+    if (context.user) {
+      throw redirect({ to: "/dashboard" });
+    }
   },
 });
 

@@ -6,7 +6,7 @@ export interface Session {
   user_id: string;
 }
 
-export type OauthProvider = 'google'
+export type OauthProvider = "google";
 
 export interface GoogleUser {
   sub: string;

@@ -1,10 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
-import { auth } from "~/lib/auth";
+import { validateRequest } from "~/utils/auth";
+import { logMiddleware } from "../middleware/auth-guard";
 
-export const getUser = createServerFn({ method: "GET" }).handler(async () => {
-  const { headers } = getWebRequest();
-  const session = await auth.api.getSession({ headers });
-
-  return session?.user || null;
+export const getUser = createServerFn({ method: "GET" })
+.middleware([logMiddleware])
+.handler(async () => {
+  const { user, session } = await validateRequest();
+  return session ? user : null
 });

@@ -1,7 +1,6 @@
-import { createServerFileRoute } from "@tanstack/react-start/server";
+import { createServerFileRoute, setCookie } from "@tanstack/react-start/server";
 import { generateCodeVerifier, generateState } from "arctic";
 import { googleAuth } from "~/utils/auth";
-import { setCookie } from "@tanstack/react-start/server";
 
 const MAX_COOKIE_AGE_SECONDS = 60 * 10;
 
@@ -12,11 +11,10 @@ export const ServerRoute = createServerFileRoute("/api/oauth/signin/google/").me
 
     const state = generateState();
     const codeVerifier = generateCodeVerifier();
-    const authorizationInfo = googleAuth.createAuthorizationURL(
-      state,
-      codeVerifier,
-      ["profile", "email"]
-    );
+    const authorizationInfo = googleAuth.createAuthorizationURL(state, codeVerifier, [
+      "profile",
+      "email",
+    ]);
 
     setCookie("google_oauth_state", state, {
       path: "/",

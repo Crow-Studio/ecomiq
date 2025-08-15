@@ -5,7 +5,7 @@ export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
   beforeLoad: async ({ context }) => {
     if (!context.user) {
-      throw redirect({ to: "/login" });
+      throw redirect({ to: "/auth/signin" });
     }
 
     // `context.queryClient` is also available in our loaders

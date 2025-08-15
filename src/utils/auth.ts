@@ -7,14 +7,22 @@ import { db, tables } from "~/lib/db";
 import { User } from "~/lib/db/schema";
 import { Session, UserId } from "~/use-cases/types";
 import { getSessionToken } from "./session";
+import { encodeBase32UpperCaseNoPadding } from "@oslojs/encoding";
 
 const SESSION_REFRESH_INTERVAL_MS = 1000 * 60 * 60 * 24 * 15;
 const SESSION_MAX_DURATION_MS = SESSION_REFRESH_INTERVAL_MS * 2;
 
+export function generateRandomOTP(): string {
+  const bytes = new Uint8Array(5);
+  crypto.getRandomValues(bytes);
+  const code = encodeBase32UpperCaseNoPadding(bytes);
+  return code;
+}
+
 export const googleAuth = new Google(
   env.GOOGLE_CLIENT_ID!,
   env.GOOGLE_CLIENT_SECRET!,
-  `${env.VITE_BASE_URL}/api/login/google/callback`,
+  `${env.VITE_BASE_URL}/api/oauth/signin/google/callback`,
 );
 
 export function generateSessionToken(): string {
