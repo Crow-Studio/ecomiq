@@ -102,3 +102,4 @@ export const session = pgTable("session", {
 
 /* ------------------- TYPES ------------------- */
 export type User = InferSelectModel<typeof user>;
+export type Session = InferSelectModel<typeof session>;
