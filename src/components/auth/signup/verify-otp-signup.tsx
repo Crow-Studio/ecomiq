@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronLeft, InfoIcon } from "lucide-react";
+import { ChevronLeft, InfoIcon, Loader2 } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -45,7 +45,10 @@ export default function VerifyOTPSignup({ setIsOTPSent, formData }: Props) {
     setIsVerifyOTP(true);
     try {
       const res = await signupUserAction({
-        data: values,
+        data: {
+          ...values,
+          ...formData,
+        },
       });
 
       form.reset();
@@ -144,6 +147,11 @@ export default function VerifyOTPSignup({ setIsOTPSent, formData }: Props) {
             className="bg-brand hover:bg-brand-secondary w-full text-white"
             disabled={isVerifyOTP || isResendOTPCode}
           >
+            {
+              isVerifyOTP && (
+                <Loader2 className="animate-spin size-4" />
+              )
+            }
             Verify OTP
           </Button>
           <Button
@@ -154,7 +162,7 @@ export default function VerifyOTPSignup({ setIsOTPSent, formData }: Props) {
             onClick={() => onCancel()}
           >
             <ChevronLeft />
-            Back to signup
+            Cancel
           </Button>
         </div>
       </form>

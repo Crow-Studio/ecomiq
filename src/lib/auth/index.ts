@@ -9,7 +9,7 @@ import { db } from "~/lib/db";
 import { sendEmailVerificationMail } from "../mails/email-verification";
 import { checkIfUserExistsByEmail } from "./functions/user-exists";
 
-export const OTP_EXPIRY_SECONDS = 600; // 5 minutes
+export const OTP_EXPIRY_SECONDS = 600; // 10 minutes
 export const OTP_EXPIRY_MINUTES = Math.floor(OTP_EXPIRY_SECONDS / 60);
 
 const getAuthConfig = serverOnly(() =>
@@ -28,39 +28,37 @@ const getAuthConfig = serverOnly(() =>
         async sendVerificationOTP({ email, otp, type }) {
           const expiryTimestamp = new Date(Date.now() + OTP_EXPIRY_SECONDS * 1000);
 
-          if (type === "sign-in") {
-            // Logic to check if user exists for a potential sign-up
-            const userExists = await checkIfUserExistsByEmail({
-              data: {
-                email,
-              },
-            });
+          // Check if user exists
+          const userExists = await checkIfUserExistsByEmail({
+            data: {
+              email,
+            },
+          });
 
+          if (type === "sign-in") {
             if (!userExists) {
-              console.log(`Sending sign-up OTP ${otp} to ${email}`);
-              // Logic to send the OTP for new user registration
+              console.log(`User ${email} not found, sending sign-up OTP ${otp}`);
+              // Send OTP for new user registration
               await sendEmailVerificationMail({
                 email,
-                subject: "Verify your email address",
+                subject: "Complete your registration",
                 otp,
                 expiryTimestamp,
-              }); // your send function
+              });
             } else {
-              console.log(
-                `User ${email} found, not sending sign-in OTP (or handle existing user sign-in flow)`,
-              );
+              console.log(`User ${email} found, sending sign-in OTP ${otp}`);
+              // Send OTP for existing user sign-in
+              await sendEmailVerificationMail({
+                email,
+                subject: "Sign in to your account",
+                otp,
+                expiryTimestamp,
+              });
             }
           } else if (type === "email-verification") {
-            // Logic to check if user exists for signIn
-            const userExists = await checkIfUserExistsByEmail({
-              data: {
-                email,
-              },
-            });
-
             if (userExists) {
               console.log(`Sending email verification OTP ${otp} to ${email}`);
-              // Logic to send the OTP to verify an existing user's email
+              // Send OTP to verify an existing user's email
               await sendEmailVerificationMail({
                 email,
                 subject: "Verify your email address",
@@ -68,7 +66,9 @@ const getAuthConfig = serverOnly(() =>
                 expiryTimestamp,
               });
             } else {
-              console.log(`No user found, no email sent for ${email}`);
+              console.log(`No user found for email verification: ${email}`);
+              // Optionally throw an error here if email verification is requested for non-existent user
+              throw new Error(`User not found for email verification: ${email}`);
             }
           }
         },

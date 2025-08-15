@@ -1,4 +1,13 @@
-import { Body, Container, Font, Head, Hr, Html, Tailwind, Text } from "@react-email/components";
+import {
+  Body,
+  Container,
+  Font,
+  Head,
+  Hr,
+  Html,
+  Tailwind,
+  Text,
+} from "@react-email/components";
 
 interface EmailVerificationMailProps {
   otp: string;
@@ -55,7 +64,7 @@ export default function EmailVerificationMail({
               Thank you for signing up with {companyName}! To complete your registration,
               please use the verification code below:
             </Text>
-            <Text className="m-0 font-mono text-2xl text-center border-2 border-dashed border-slate-300 p-5 bg-slate-50 font-bold tracking-wide text-slate-800">
+            <Text className="m-0 border-2 border-dashed border-slate-300 bg-slate-50 p-5 text-center font-mono text-2xl font-bold tracking-wide text-slate-800">
               {otp}
             </Text>
 
