@@ -6,6 +6,16 @@ export interface Session {
   user_id: string;
 }
 
+export interface User {
+  id: string;
+  email: string;
+  username: string;
+  avatar: string;
+  email_verified: boolean;
+  created_at: Date;
+  updated_at: Date | null;
+}
+
 export type OauthProvider = "google";
 
 export interface GoogleUser {

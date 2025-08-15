@@ -5,6 +5,7 @@ import {
   HeadContent,
   Outlet,
   Scripts,
+  useRouterState,
 } from "@tanstack/react-router";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -16,6 +17,10 @@ import appCss from "~/styles.css?url";
 import { ThemeProvider } from "~/components/theme-provider";
 import { Toaster } from "~/components/ui/sonner";
 import { seo } from "~/lib/seo";
+
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+import { useEffect, useRef } from "react";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -92,11 +97,39 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { readonly children: React.ReactNode }) {
+  const routerState = useRouterState();
+  const prevPathnameRef = useRef("");
+  useEffect(() => {
+    const currentPathname = routerState.location.pathname;
+    const pathnameChanged = prevPathnameRef.current !== currentPathname;
+
+    if (pathnameChanged && routerState.status === "pending") {
+      NProgress.start();
+      prevPathnameRef.current = currentPathname;
+    }
+
+    if (routerState.status === "idle") {
+      NProgress.done();
+    }
+  }, [routerState.status, routerState.location.pathname]);
+
   return (
     // suppress since we're updating the "dark" class in ThemeProvider
     <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <style>{`
+          #nprogress .bar {
+            background: #22c55e !important;
+            height: 3px;
+          }
+          #nprogress .peg {
+            box-shadow: 0 0 10px #22c55e, 0 0 5px #22c55e;
+          }
+          #nprogress .spinner-icon {
+            display: none;
+          }
+        `}</style>
       </head>
       <body>
         <ThemeProvider>

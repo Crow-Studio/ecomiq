@@ -8,8 +8,7 @@ import { Google } from "arctic";
 import { eq } from "drizzle-orm";
 import { env } from "~/env/server";
 import { db, tables } from "~/lib/db";
-import { User } from "~/lib/db/schema";
-import { Session, UserId } from "~/use-cases/types";
+import { Session, User, UserId } from "~/use-cases/types";
 import { getSessionToken } from "./session";
 
 const SESSION_REFRESH_INTERVAL_MS = 1000 * 60 * 60 * 24 * 15;
@@ -89,6 +88,9 @@ export async function validateSessionToken(
 
   const user = await db.query.user.findFirst({
     where: (table) => eq(table.id, sessionInDb.user_id),
+    columns: {
+      password: false,
+    },
   });
 
   if (!user) {
