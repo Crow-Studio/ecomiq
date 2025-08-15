@@ -6,8 +6,11 @@ import { reactStartCookies } from "better-auth/react-start";
 import { emailOTP } from "better-auth/plugins";
 import { env } from "~/env/server";
 import { db } from "~/lib/db";
-import { sendEmailVerificationMail } from "../emails/email-verication";
+import { sendEmailVerificationMail } from "../mails/email-verification";
 import { checkIfUserExistsByEmail } from "./functions/user-exists";
+
+export const OTP_EXPIRY_SECONDS = 600; // 5 minutes
+export const OTP_EXPIRY_MINUTES = Math.floor(OTP_EXPIRY_SECONDS / 60);
 
 const getAuthConfig = serverOnly(() =>
   betterAuth({
@@ -20,7 +23,11 @@ const getAuthConfig = serverOnly(() =>
     plugins: [
       reactStartCookies(),
       emailOTP({
+        expiresIn: OTP_EXPIRY_SECONDS, // Set to 10 minutes
+        otpLength: 6, // Default 6 digits
         async sendVerificationOTP({ email, otp, type }) {
+          const expiryTimestamp = new Date(Date.now() + OTP_EXPIRY_SECONDS * 1000);
+
           if (type === "sign-in") {
             // Logic to check if user exists for a potential sign-up
             const userExists = await checkIfUserExistsByEmail({
@@ -36,6 +43,7 @@ const getAuthConfig = serverOnly(() =>
                 email,
                 subject: "Verify your email address",
                 otp,
+                expiryTimestamp,
               }); // your send function
             } else {
               console.log(
@@ -57,7 +65,8 @@ const getAuthConfig = serverOnly(() =>
                 email,
                 subject: "Verify your email address",
                 otp,
-              }); // your send function
+                expiryTimestamp,
+              });
             } else {
               console.log(`No user found, no email sent for ${email}`);
             }

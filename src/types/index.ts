@@ -21,6 +21,5 @@ export interface QuoteFragment {
 
 export interface AuthFormData {
   email: string;
-  otp: string;
   password: string;
 }

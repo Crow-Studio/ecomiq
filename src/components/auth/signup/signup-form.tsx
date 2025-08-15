@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -9,11 +9,17 @@ import { PasswordInput } from "~/common/password-input";
 import { Button } from "~/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { signupUserAction } from "~/lib/auth/functions/signup-user";
+import { userOTPAction } from "~/lib/auth/functions/user-otp";
+import { AuthFormData } from "~/types";
 import { formSchema } from "~/types/forms";
 import OauthProviders from "../oauth/oauth-providers";
 
-export function SignupForm() {
+interface Props {
+  setFormData: Dispatch<SetStateAction<AuthFormData>>;
+  setIsOTPSent: Dispatch<SetStateAction<boolean>>;
+}
+
+export function SignupForm({ setFormData, setIsOTPSent }: Props) {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -27,13 +33,17 @@ export function SignupForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsAuthenticating(true);
     try {
-      const res = await signupUserAction({
+      const res = await userOTPAction({
         data: values,
       });
-
-      console.log("res", res);
       form.reset();
-      toast.success("Success!", { position: "top-center" });
+      setFormData((prev) => ({
+        ...prev,
+        email: values.email,
+        password: values.password,
+      }));
+      setIsOTPSent(true);
+      toast.success(res.message, { position: "top-center" });
     } catch (error) {
       if (error instanceof Error) {
         try {
@@ -46,7 +56,6 @@ export function SignupForm() {
             }[];
           };
           if (errorData.type === "validation") {
-            // Handle Zod validation errors
             if (errorData.issues.length > 0) {
               const message = errorData.issues[0].message;
               return toast.error(message, {
@@ -54,7 +63,6 @@ export function SignupForm() {
               });
             }
           } else if (errorData.type === "auth") {
-            // Handle Zod validation errors
             if (errorData.issues.length > 0) {
               const message = errorData.issues[0].message;
               return toast.error(message, {
@@ -63,7 +71,6 @@ export function SignupForm() {
             }
           }
         } catch {
-          // Not a JSON error, handle as regular error
           console.log("error");
         }
       }
