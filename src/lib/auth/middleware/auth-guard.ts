@@ -16,20 +16,18 @@ export const logMiddleware = createMiddleware({ type: "function" }).server(
     console.log("Server Req/Res:", { duration: `${duration}ms`, functionId });
 
     return result;
-  }
+  },
 );
 
 export const authMiddleware = createMiddleware({ type: "function" })
   .middleware([logMiddleware])
-  .server(
-    async ({ next }) => {
-      const { user, session } = await validateRequest();
+  .server(async ({ next }) => {
+    const { user, session } = await validateRequest();
 
-      if (!session) {
-        setResponseStatus(401);
-        throw new Error("Unauthorized");
-      }
+    if (!session) {
+      setResponseStatus(401);
+      throw new Error("Unauthorized");
+    }
 
-      return next({ context: { user } });
-    },
-  );
+    return next({ context: { user } });
+  });

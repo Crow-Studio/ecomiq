@@ -1,5 +1,9 @@
 import { sha256 } from "@oslojs/crypto/sha2";
-import { encodeBase32LowerCaseNoPadding, encodeHexLowerCase } from "@oslojs/encoding";
+import {
+  encodeBase32LowerCaseNoPadding,
+  encodeBase32UpperCaseNoPadding,
+  encodeHexLowerCase,
+} from "@oslojs/encoding";
 import { Google } from "arctic";
 import { eq } from "drizzle-orm";
 import { env } from "~/env/server";
@@ -7,7 +11,6 @@ import { db, tables } from "~/lib/db";
 import { User } from "~/lib/db/schema";
 import { Session, UserId } from "~/use-cases/types";
 import { getSessionToken } from "./session";
-import { encodeBase32UpperCaseNoPadding } from "@oslojs/encoding";
 
 const SESSION_REFRESH_INTERVAL_MS = 1000 * 60 * 60 * 24 * 15;
 const SESSION_MAX_DURATION_MS = SESSION_REFRESH_INTERVAL_MS * 2;

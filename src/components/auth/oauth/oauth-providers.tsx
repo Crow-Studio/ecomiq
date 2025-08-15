@@ -16,28 +16,34 @@ interface OauthButton {
 }
 
 export default function OauthProviders({ isAuthenticating }: OauthButtonProps) {
-  const authProviders = useMemo<OauthButton[]>(() => [
-    {
-      provider: "google",
-      text: "Continue with Google",
-      icon: "devicon:google"
-    },
-  ], []);
+  const authProviders = useMemo<OauthButton[]>(
+    () => [
+      {
+        provider: "google",
+        text: "Continue with Google",
+        icon: "devicon:google",
+      },
+    ],
+    [],
+  );
 
   const [isOauthAuthentication, setIsOauthAuthentication] = useState(false);
 
-  const handleOauthLogin = useCallback(async (provider: AuthProvider) => {
-    if (isAuthenticating || isOauthAuthentication) return;
+  const handleOauthLogin = useCallback(
+    async (provider: AuthProvider) => {
+      if (isAuthenticating || isOauthAuthentication) return;
 
-    setIsOauthAuthentication(true);
-    try {
-      if (provider === "google") {
-        window.location.assign("/api/oauth/signin/google");
+      setIsOauthAuthentication(true);
+      try {
+        if (provider === "google") {
+          window.location.assign("/api/oauth/signin/google");
+        }
+      } finally {
+        setIsOauthAuthentication(false);
       }
-    } finally {
-      setIsOauthAuthentication(false);
-    }
-  }, [isAuthenticating, isOauthAuthentication]);
+    },
+    [isAuthenticating, isOauthAuthentication],
+  );
 
   return (
     <div className="grid gap-2 overflow-hidden">
@@ -50,7 +56,7 @@ export default function OauthProviders({ isAuthenticating }: OauthButtonProps) {
             <button
               key={auth.provider}
               className={cn(
-                "flex h-[42px] w-full items-center justify-center gap-2 rounded border px-2 text-sm font-medium transition-colors duration-200 hover:border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-1",
+                "flex h-[42px] w-full items-center justify-center gap-2 rounded border px-2 text-sm font-medium transition-colors duration-200 hover:border-orange-200 focus:ring-2 focus:ring-orange-200 focus:ring-offset-1 focus:outline-none",
                 isButtonDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
               )}
               type="button"
