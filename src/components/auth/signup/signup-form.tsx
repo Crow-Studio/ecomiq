@@ -43,41 +43,13 @@ export function SignupForm({ setFormData, setIsOTPSent }: Props) {
         password: values.password,
       }));
       setIsOTPSent(true);
-      toast.success(res.message, { position: "top-center" });
+      toast.success(res?.message, { position: "top-center" });
     } catch (error) {
       if (error instanceof Error) {
-        try {
-          const errorData = JSON.parse(error.message) as {
-            type: string;
-            issues: {
-              code: string;
-              path: string[];
-              message: string;
-            }[];
-          };
-          if (errorData.type === "validation") {
-            if (errorData.issues.length > 0) {
-              const message = errorData.issues[0].message;
-              return toast.error(message, {
-                position: "top-center",
-              });
-            }
-          } else if (errorData.type === "auth") {
-            if (errorData.issues.length > 0) {
-              const message = errorData.issues[0].message;
-              return toast.error(message, {
-                position: "top-center",
-              });
-            }
-          }
-        } catch {
-          console.log("error");
-        }
+        return toast.error(error.message, {
+          position: "top-center",
+        });
       }
-
-      toast.error("An error occurred", {
-        position: "top-center",
-      });
     } finally {
       setIsAuthenticating(false);
     }

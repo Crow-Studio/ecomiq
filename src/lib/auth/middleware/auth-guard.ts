@@ -1,3 +1,4 @@
+import { redirect } from "@tanstack/react-router";
 import { createMiddleware } from "@tanstack/react-start";
 import { setResponseStatus } from "@tanstack/react-start/server";
 import { validateRequest } from "~/utils/auth";
@@ -18,6 +19,36 @@ export const logMiddleware = createMiddleware({ type: "function" }).server(
     return result;
   },
 );
+
+// For routes that require authentication - redirect to signin if not authenticated
+export const authenticatedMiddleware = createMiddleware({ type: "function" })
+  .middleware([logMiddleware])
+  .server(async ({ next }) => {
+    const { user, session } = await validateRequest();
+
+    if (!session) {
+      throw redirect({ to: "/auth/signin" });
+    }
+
+    return next({
+      context: { user, session },
+    });
+  });
+
+// For routes that should only be accessed by unauthenticated users - redirect to dashboard if authenticated
+export const unauthenticatedMiddleware = createMiddleware({ type: "function" })
+  .middleware([logMiddleware])
+  .server(async ({ next }) => {
+    const { user, session } = await validateRequest();
+
+    if (session) {
+      throw redirect({ to: "/dashboard" });
+    }
+
+    return next({
+      context: { user, session },
+    });
+  });
 
 export const authMiddleware = createMiddleware({ type: "function" })
   .middleware([logMiddleware])

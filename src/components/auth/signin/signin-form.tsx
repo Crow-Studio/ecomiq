@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -16,11 +16,17 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { signinUserAction } from "~/lib/auth/functions/signin-user";
+import { userOTPAction } from "~/lib/auth/functions/user-otp";
+import { AuthFormData } from "~/types";
 import { formSchema } from "~/types/forms";
 import OauthProviders from "../oauth/oauth-providers";
 
-export function SigninForm() {
+interface Props {
+  setFormData: Dispatch<SetStateAction<AuthFormData>>;
+  setIsOTPSent: Dispatch<SetStateAction<boolean>>;
+}
+
+export function SigninForm({ setFormData, setIsOTPSent }: Props) {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -34,50 +40,23 @@ export function SigninForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsAuthenticating(true);
     try {
-      const res = await signinUserAction({
+      const res = await userOTPAction({
         data: values,
       });
-
-      console.log("res", res);
       form.reset();
-      toast.success("Success!", { position: "top-center" });
+      setFormData((prev) => ({
+        ...prev,
+        email: values.email,
+        password: values.password,
+      }));
+      setIsOTPSent(true);
+      toast.success(res?.message, { position: "top-center" });
     } catch (error) {
       if (error instanceof Error) {
-        try {
-          const errorData = JSON.parse(error.message) as {
-            type: string;
-            issues: {
-              code: string;
-              path: string[];
-              message: string;
-            }[];
-          };
-          if (errorData.type === "validation") {
-            // Handle Zod validation errors
-            if (errorData.issues.length > 0) {
-              const message = errorData.issues[0].message;
-              return toast.error(message, {
-                position: "top-center",
-              });
-            }
-          } else if (errorData.type === "auth") {
-            // Handle Zod validation errors
-            if (errorData.issues.length > 0) {
-              const message = errorData.issues[0].message;
-              return toast.error(message, {
-                position: "top-center",
-              });
-            }
-          }
-        } catch {
-          // Not a JSON error, handle as regular error
-          console.log("error");
-        }
+        return toast.error(error.message, {
+          position: "top-center",
+        });
       }
-
-      toast.error("An error occurred", {
-        position: "top-center",
-      });
     } finally {
       setIsAuthenticating(false);
     }

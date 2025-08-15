@@ -1,93 +1,148 @@
 import { faker } from "@faker-js/faker";
 import { createServerFn } from "@tanstack/react-start";
+import {
+  checkUniqueCode,
+  createUser,
+  deleteUniqueCode,
+  getUserByEmail,
+} from "~/data-access/users";
 import { capitalize } from "~/lib/utils";
-import { otpVerifyFormSchema } from "~/types/forms";
-import authClient from "../auth-client";
+import { verifyCodeFormSchema } from "~/types/forms";
+import { hashPassword, isWithinExpirationDate } from "~/utils/auth";
+import { EmailInUseError } from "~/utils/errors";
+import { setSession } from "~/utils/session";
 
 export const signupUserAction = createServerFn({
   method: "POST",
 })
   .validator((person: unknown) => {
-    const result = otpVerifyFormSchema.safeParse(person);
-    if (!result.success) {
-      throw new Error(
-        JSON.stringify({
-          type: "validation",
-          issues: result.error.issues,
-        }),
-      );
+    try {
+      const result = verifyCodeFormSchema.safeParse(person);
+      if (!result.success) {
+        const firstError = result.error.issues[0];
+        throw new Error(`Validation failed: ${firstError.message}`);
+      }
+      return result.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error("Invalid input data provided");
     }
-    return result.data;
   })
   .handler(async ({ data }) => {
-    const firstName = faker.person.firstName();
-    const lastName = faker.person.lastName();
-
-    const imageText = `${capitalize(firstName.charAt(0))}${capitalize(lastName.charAt(0))}`;
-
-    // STEP 1: Try to create user (might already exist from previous failed attempt)
-    const { error: signupError } = await authClient.signUp.email({
-      name: `${capitalize(firstName)} ${capitalize(lastName)}`,
-      email: data.email,
-      password: data.password,
-      image: `https://avatar.vercel.sh/vercel.svg?text=${imageText}`,
-      callbackURL: "/",
-    });
-
-    // Handle the case where user already exists but is unverified
-    if (signupError) {
-      // Check if error is "user already exists" - if so, proceed to OTP verification
-      if (
-        signupError.code === "USER_ALREADY_EXISTS" ||
-        signupError.message?.includes("already exists") ||
-        signupError.message?.includes("already registered")
-      ) {
-        console.log(
-          `User ${data.email} already exists, proceeding to OTP verification...`,
-        );
-
-        // User exists but might be unverified, proceed to OTP verification
-      } else {
-        // Some other signup error occurred
-        throw new Error(
-          JSON.stringify({
-            type: "auth",
-            issues: [
-              {
-                code: signupError?.code as string,
-                path: ["auth"],
-                message: signupError?.message as string,
-              },
-            ],
-          }),
-        );
+    try {
+      // Input validation
+      if (!data.email || !data.code || !data.password) {
+        throw new Error("Email, code, and password are required!");
       }
-    } else {
-      console.log(`New user ${data.email} created successfully`);
+
+      const [existingUser, uniqueCodeRequest] = await Promise.allSettled([
+        getUserByEmail(data.email),
+        checkUniqueCode(data.email, data.code),
+      ]);
+
+      // Handle existing user check
+      if (existingUser.status === "rejected") {
+        console.error("Error checking existing user:", existingUser.reason);
+        throw new Error("Failed to check existing user. Please try again!");
+      }
+
+      if (existingUser.value) {
+        throw new EmailInUseError();
+      }
+
+      // Handle unique code check
+      if (uniqueCodeRequest.status === "rejected") {
+        console.error("Error checking unique code:", uniqueCodeRequest.reason);
+        throw new Error("Failed to check unique code. Please try again!");
+      }
+
+      if (!uniqueCodeRequest.value) {
+        throw new Error("Invalid unique code provided!");
+      }
+
+      // Validate code expiration
+      try {
+        if (!isWithinExpirationDate(uniqueCodeRequest.value.expires_at)) {
+          // Clean up expired code
+          try {
+            await deleteUniqueCode(uniqueCodeRequest.value.id);
+          } catch (cleanupError) {
+            console.error("Failed to cleanup expired code:", cleanupError);
+            // Don't throw here, continue with main error
+          }
+          throw new Error("The unique code has expired. Please request a new one.");
+        }
+      } catch (error) {
+        if (error instanceof Error && error.message.includes("expired")) {
+          throw error;
+        }
+        console.error("Error validating expiration date:", error);
+        throw new Error("Failed to validate code expiration. Please try again!");
+      }
+
+      // Generate user details
+      const firstName = faker.person.firstName();
+      const lastName = faker.person.lastName();
+      const fullName = `${capitalize(firstName)} ${capitalize(lastName)}`;
+      const imageText = `https://api.dicebear.com/9.x/initials/svg?seed${fullName}`;
+
+      // Hash password
+      let hashedPassword: string;
+      try {
+        hashedPassword = await hashPassword(data.password);
+      } catch (error) {
+        console.error("Error hashing password:", error);
+        throw new Error("Failed to process password. Please try again!");
+      }
+
+      let newUser;
+      try {
+        // Start transaction-like operations
+        // First, delete the unique code
+        await deleteUniqueCode(uniqueCodeRequest.value.id);
+
+        // Then create the user
+        newUser = await createUser(data.email, fullName, hashedPassword, imageText);
+      } catch (error) {
+        console.error("Error during user creation:", error);
+
+        // If user creation failed but code was deleted, this is a critical error
+        if (error instanceof Error) {
+          if (error.message.includes("duplicate") || error.message.includes("unique")) {
+            throw new EmailInUseError();
+          }
+        }
+
+        throw new Error("Failed to create user account. Please try again!");
+      }
+
+      // Set session
+      try {
+        await setSession(newUser.id);
+      } catch (error) {
+        console.error("Error setting session:", error);
+        throw new Error("Failed to create session");
+      }
+
+      return {
+        message: "You've successfully signed up and verified your account!",
+      };
+    } catch (error) {
+      console.error("Signup error:", error);
+
+      // Re-throw known errors
+      if (error instanceof EmailInUseError) {
+        throw error;
+      }
+
+      // Handle other known error types
+      if (error instanceof Error) {
+        throw error;
+      }
+
+      // Fallback for unknown errors
+      throw new Error("An unexpected error occurred during signup. Please try again!");
     }
-
-    // STEP 2: Verify the OTP (works for both new and existing unverified users)
-    const { error: emailOTPError } = await authClient.emailOtp.verifyEmail({
-      email: data.email,
-      otp: data.otp,
-    });
-
-    if (emailOTPError) {
-      throw new Error(
-        JSON.stringify({
-          type: "auth",
-          issues: [
-            {
-              code: emailOTPError?.code as string,
-              path: ["otp"],
-              message: "Invalid or expired OTP. Please try again.",
-            },
-          ],
-        }),
-      );
-    }
-
-    return {
-      message: "You've successfully signed up and verified your account!",
-    };
   });

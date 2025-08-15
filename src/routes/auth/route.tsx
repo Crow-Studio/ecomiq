@@ -1,15 +1,20 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { ThemeToggle } from "~/components/theme-toggle";
+import { checkAuthenticatedUser } from "~/lib/auth/functions/auth";
 
 export const Route = createFileRoute("/auth")({
   component: RouteComponent,
-  beforeLoad: async ({ context }) => {
+  beforeLoad: async () => {
     const REDIRECT_URL = "/dashboard";
-    if (context.user) {
+
+    const { user } = await checkAuthenticatedUser();
+
+    if (user) {
       throw redirect({
         to: REDIRECT_URL,
       });
     }
+
     return {
       redirectUrl: REDIRECT_URL,
     };

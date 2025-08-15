@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-deprecated */
-import { InferSelectModel } from "drizzle-orm";
+import { InferSelectModel, sql } from "drizzle-orm";
 import {
   boolean,
+  check,
   index,
   pgTableCreator,
   text,
@@ -66,24 +67,29 @@ export const oauth_account = pgTable("oauth_account", {
   ),
 });
 
-// Email Verification
-export const email_verification_request_table = pgTable("email_verification_request", {
-  id: varchar("id", { length: 16 })
-    .primaryKey()
-    .$defaultFn(() => generateNanoId()),
-  email: text("email").notNull(),
-  code: text("code").notNull(),
-  user_id: text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-  expires_at: timestamp("expires_at", { withTimezone: true, mode: "date" }).notNull(),
-  created_at: timestamp("created_at", { mode: "date", precision: 3 })
-    .notNull()
-    .defaultNow(),
-  updated_at: timestamp("updated_at", { mode: "date", precision: 3 }).$onUpdate(
-    () => new Date(),
-  ),
-});
+//  Unique Code
+export const unique_code = pgTable(
+  "unique_code",
+  {
+    id: varchar("id", { length: 16 })
+      .primaryKey()
+      .$defaultFn(() => generateNanoId()),
+    email: text("email").notNull(),
+    code: varchar("code", {
+      length: 6,
+    }).notNull(),
+    expires_at: timestamp("expires_at", { withTimezone: true, mode: "date" }).notNull(),
+    created_at: timestamp("created_at", { mode: "date", precision: 3 })
+      .notNull()
+      .defaultNow(),
+    updated_at: timestamp("updated_at", { mode: "date", precision: 3 }).$onUpdate(
+      () => new Date(),
+    ),
+  },
+  (table) => ({
+    codeExactLengthCheck: check("code_exact_length", sql`LENGTH(${table.code}) = 6`),
+  }),
+);
 
 // sessions
 export const session = pgTable("session", {

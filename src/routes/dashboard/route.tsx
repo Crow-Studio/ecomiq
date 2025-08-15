@@ -1,20 +1,16 @@
-import { createFileRoute, Link, Outlet, redirect } from "@tanstack/react-router";
-import { Button } from "~/components/ui/button";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { getAuthenticatedUser } from "~/lib/auth/functions/auth";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
-  beforeLoad: async ({ context }) => {
-    if (!context.user) {
-      throw redirect({ to: "/auth/signin" });
-    }
-
-    // `context.queryClient` is also available in our loaders
-    // https://tanstack.com/start/latest/docs/framework/react/examples/start-basic-react-query
-    // https://tanstack.com/router/latest/docs/framework/react/guide/external-data-loading
+  beforeLoad: async () => {
+    const { user, session } = await getAuthenticatedUser();
+    return { user, session };
   },
 });
 
 function DashboardLayout() {
+  const { user } = Route.useRouteContext();
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-10 p-2">
       <div className="flex flex-col items-center gap-4">
@@ -26,9 +22,7 @@ function DashboardLayout() {
           </pre>
         </div>
 
-        <Button type="button" asChild className="w-fit" size="lg">
-          <Link to="/">Back to index</Link>
-        </Button>
+        <p>user_id: {user.id}</p>
       </div>
 
       <Outlet />

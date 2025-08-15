@@ -1,12 +1,12 @@
 import { createOauthAccount } from "~/data-access/accounts";
-import { createUser, getUserByEmail } from "~/data-access/users";
+import { createOauthUser, getUserByEmail } from "~/data-access/users";
 import { GoogleUser } from "./types";
 
 export async function createGoogleUserUseCase(googleUser: GoogleUser) {
   let existingUser = await getUserByEmail(googleUser.email);
 
   if (!existingUser) {
-    existingUser = await createUser(
+    existingUser = await createOauthUser(
       googleUser.email,
       googleUser.picture,
       googleUser.name,

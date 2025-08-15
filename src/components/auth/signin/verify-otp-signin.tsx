@@ -19,7 +19,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "~/components/ui/input-otp";
-import { signupUserAction } from "~/lib/auth/functions/signup-user";
+import { signinUserAction } from "~/lib/auth/functions/signin-user";
 import { AuthFormData } from "~/types";
 import { codeFormSchema } from "~/types/forms";
 import ResendOTPButton from "../shared/resend-otp";
@@ -31,7 +31,7 @@ interface Props {
   isOTPSent: boolean;
 }
 
-export default function VerifyOTPSignup({ setIsOTPSent, formData }: Props) {
+export default function VerifyOTPSignin({ setIsOTPSent, formData }: Props) {
   const navigate = useNavigate();
   const [isResendOTPCode, setIsResendingOTPCode] = useState(false);
   const [isVerifyOTP, setIsVerifyOTP] = useState(false);
@@ -46,7 +46,7 @@ export default function VerifyOTPSignup({ setIsOTPSent, formData }: Props) {
   async function onSubmit(values: z.infer<typeof codeFormSchema>) {
     setIsVerifyOTP(true);
     try {
-      const res = await signupUserAction({
+      const res = await signinUserAction({
         data: {
           ...values,
           ...formData,

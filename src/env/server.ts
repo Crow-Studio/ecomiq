@@ -8,9 +8,13 @@ export const env = createEnv({
     BETTER_AUTH_SECRET: z.string().min(1),
     NODE_ENV: z.string(),
 
+    // Upstash
+    UPSTASH_URL: z.string(),
+    UPSTASH_TOKEN: z.string(),
+
     // OAuth2 providers, optional, update as needed
-    GOOGLE_CLIENT_ID: z.string().optional(),
-    GOOGLE_CLIENT_SECRET: z.string().optional(),
+    GOOGLE_CLIENT_ID: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string(),
 
     // SMTP Credentials
     RESEND_API_KEY: z.string().min(1),

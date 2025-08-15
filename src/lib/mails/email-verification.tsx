@@ -4,14 +4,14 @@ import { resend } from "./resend";
 interface Props {
   email: string;
   subject: string;
-  otp: string;
+  code: string;
   expiryTimestamp: Date;
 }
 
 export const sendEmailVerificationMail = async ({
   email,
   subject,
-  otp,
+  code,
   expiryTimestamp,
 }: Props) => {
   try {
@@ -19,7 +19,7 @@ export const sendEmailVerificationMail = async ({
       from: "Team Ecomiq <noreply@thecodingmontana.com>",
       to: [email],
       subject: subject,
-      react: <EmailVerificationMail otp={otp} expiryTimestamp={expiryTimestamp} />,
+      react: <EmailVerificationMail code={code} expiryTimestamp={expiryTimestamp} />,
     });
     return result;
   } catch (error) {

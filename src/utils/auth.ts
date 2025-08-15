@@ -1,3 +1,4 @@
+import { generateRandomString, type RandomReader } from "@oslojs/crypto/random";
 import { sha256 } from "@oslojs/crypto/sha2";
 import {
   encodeBase32LowerCaseNoPadding,
@@ -5,6 +6,7 @@ import {
   encodeHexLowerCase,
 } from "@oslojs/encoding";
 import { Google } from "arctic";
+import argon2 from "argon2";
 import { eq } from "drizzle-orm";
 import { env } from "~/env/server";
 import { db, tables } from "~/lib/db";
@@ -14,6 +16,46 @@ import { getSessionToken } from "./session";
 const SESSION_REFRESH_INTERVAL_MS = 1000 * 60 * 60 * 24 * 15;
 const SESSION_MAX_DURATION_MS = SESSION_REFRESH_INTERVAL_MS * 2;
 
+export type TimeSpanUnit = "ms" | "s" | "m" | "h" | "d" | "w";
+
+export class TimeSpan {
+  value: number;
+  unit: TimeSpanUnit;
+
+  constructor(value: number, unit: TimeSpanUnit) {
+    this.value = value;
+    this.unit = unit;
+  }
+
+  milliseconds(): number {
+    const unitMultipliers: Record<TimeSpanUnit, number> = {
+      ms: 1,
+      s: 1000,
+      m: 60000,
+      h: 3600000,
+      d: 86400000,
+      w: 604800000,
+    };
+    return this.value * unitMultipliers[this.unit];
+  }
+
+  seconds(): number {
+    return this.milliseconds() / 1000;
+  }
+
+  transform(x: number): TimeSpan {
+    return new TimeSpan(this.value * x, this.unit);
+  }
+}
+
+export function isWithinExpirationDate(date: Date): boolean {
+  return date.getTime() > Date.now();
+}
+
+export function createDate(timeSpan: TimeSpan): Date {
+  return new Date(Date.now() + timeSpan.milliseconds());
+}
+
 export function generateRandomOTP(): string {
   const bytes = new Uint8Array(5);
   crypto.getRandomValues(bytes);
@@ -21,9 +63,21 @@ export function generateRandomOTP(): string {
   return code;
 }
 
+export function generateUniqueCode(length: number): string {
+  const random: RandomReader = {
+    read(bytes) {
+      crypto.getRandomValues(bytes);
+    },
+  };
+
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
+
+  return generateRandomString(random, alphabet, length);
+}
+
 export const googleAuth = new Google(
-  env.GOOGLE_CLIENT_ID!,
-  env.GOOGLE_CLIENT_SECRET!,
+  env.GOOGLE_CLIENT_ID,
+  env.GOOGLE_CLIENT_SECRET,
   `${env.VITE_BASE_URL}/api/oauth/signin/google/callback`,
 );
 
@@ -117,6 +171,16 @@ export async function invalidateSession(sessionId: string): Promise<void> {
 
 export async function invalidateUserSessions(user_id: UserId): Promise<void> {
   await db.delete(tables.session).where(eq(tables.user.id, user_id));
+}
+
+export async function hashPassword(password: string) {
+  const hash = await argon2.hash(password);
+  return hash;
+}
+
+export async function verifyHashedPassword(hashedPassword: string, password: string) {
+  const isCorrectPassword = await argon2.verify(hashedPassword, password);
+  return isCorrectPassword;
 }
 
 export type SessionValidationResult =

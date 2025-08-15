@@ -49,7 +49,7 @@ export default function ResendOTPButton({
         data: formData,
       });
       startTimer();
-      toast.success(res.message, { position: "top-center" });
+      toast.success(res?.message, { position: "top-center" });
     } catch (error) {
       if (error instanceof Error) {
         try {

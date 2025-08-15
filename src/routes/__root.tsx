@@ -11,7 +11,6 @@ import {
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-import { getUser } from "~/lib/auth/functions/getUser";
 import appCss from "~/styles.css?url";
 
 import { ThemeProvider } from "~/components/theme-provider";
@@ -24,16 +23,7 @@ import { useEffect, useRef } from "react";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
-  user: Awaited<ReturnType<typeof getUser>>;
 }>()({
-  beforeLoad: async ({ context }) => {
-    const user = await context.queryClient.ensureQueryData({
-      queryKey: ["user"],
-      queryFn: ({ signal }) => getUser({ signal }),
-      revalidateIfStale: true,
-    });
-    return { user };
-  },
   head: () => ({
     meta: [
       {
@@ -120,11 +110,11 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
         <HeadContent />
         <style>{`
           #nprogress .bar {
-            background: #22c55e !important;
+            background: #FE650B !important;
             height: 3px;
           }
           #nprogress .peg {
-            box-shadow: 0 0 10px #22c55e, 0 0 5px #22c55e;
+            box-shadow: 0 0 10px #FE650B, 0 0 5px #FE650B;
           }
           #nprogress .spinner-icon {
             display: none;

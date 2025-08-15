@@ -18,6 +18,13 @@ export class EmailInUseError extends PublicError {
   }
 }
 
+export class EmailNotInUseError extends PublicError {
+  constructor() {
+    super("Email not found");
+    this.name = "EmailNotInUseError";
+  }
+}
+
 export class NotFoundError extends PublicError {
   constructor() {
     super("Resource not found");
@@ -36,5 +43,26 @@ export class LoginError extends PublicError {
   constructor() {
     super("Invalid email or password");
     this.name = "LoginError";
+  }
+}
+
+export class InvalidCredentialsError extends Error {
+  constructor(message = "Invalid credentials provided") {
+    super(message);
+    this.name = "InvalidCredentialsError";
+  }
+}
+
+export class ExpiredCodeError extends Error {
+  constructor(message = "The unique code has expired. Please request a new one.") {
+    super(message);
+    this.name = "ExpiredCodeError";
+  }
+}
+
+export class SessionError extends Error {
+  constructor(message = "Failed to create session") {
+    super(message);
+    this.name = "SessionError";
   }
 }

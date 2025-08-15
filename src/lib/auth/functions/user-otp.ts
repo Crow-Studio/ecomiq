@@ -1,6 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
+import {
+  createEmailVerificationCode,
+  getEmailVerificationCode,
+  getUserByEmail,
+  updateEmailVerificationCode,
+} from "~/data-access/users";
+import { sendEmailVerificationMail } from "~/lib/mails/email-verification";
 import { formSchema } from "~/types/forms";
-import authClient from "../auth-client";
+import { createDate, generateUniqueCode, TimeSpan } from "~/utils/auth";
+import { EmailInUseError } from "~/utils/errors";
 
 export const userOTPAction = createServerFn({
   method: "POST",
@@ -8,37 +16,62 @@ export const userOTPAction = createServerFn({
   .validator((person: unknown) => {
     const result = formSchema.safeParse(person);
     if (!result.success) {
-      throw new Error(
-        JSON.stringify({
-          type: "validation",
-          issues: result.error.issues,
-        }),
-      );
+      throw new Error(result.error.issues[0].message);
     }
     return result.data;
   })
   .handler(async ({ data }) => {
-    const { error } = await authClient.emailOtp.sendVerificationOtp({
-      email: data.email,
-      type: "sign-in",
-    });
+    try {
+      const [user, existingCode] = await Promise.all([
+        getUserByEmail(data.email),
+        getEmailVerificationCode(data.email),
+      ]);
 
-    if (error) {
-      throw new Error(
-        JSON.stringify({
-          type: "auth",
-          issues: [
-            {
-              code: error?.code as string,
-              path: ["auth"],
-              message: error?.message as string,
-            },
-          ],
-        }),
-      );
+      if (user) {
+        throw new EmailInUseError();
+      }
+
+      // Generate code and expiry once
+      const code = generateUniqueCode(6);
+      const expires_at = createDate(new TimeSpan(10, "m"));
+
+      const emailData = {
+        email: data.email,
+        subject: `Your unique Ecomiq verification code is ${code}`,
+        code,
+        expiryTimestamp: expires_at,
+      };
+
+      try {
+        if (!existingCode) {
+          await Promise.all([
+            createEmailVerificationCode(data.email, code, expires_at),
+            sendEmailVerificationMail(emailData),
+          ]);
+        } else {
+          await Promise.all([
+            updateEmailVerificationCode(data.email, code, expires_at),
+            sendEmailVerificationMail(emailData),
+          ]);
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          console.log("Database or email operation failed:", error.message);
+        }
+        throw new Error(
+          "Failed to process verification request. Please try again later.",
+        );
+      }
+      return {
+        message: "Check your email for the verification code!",
+      };
+    } catch (error) {
+      if (error instanceof EmailInUseError) {
+        throw error;
+      }
+
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
-
-    return {
-      message: "Check your email for the One Time Password (OTP)!",
-    };
   });

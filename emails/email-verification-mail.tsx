@@ -10,7 +10,7 @@ import {
 } from "@react-email/components";
 
 interface EmailVerificationMailProps {
-  otp: string;
+  code: string;
   userName?: string;
   companyName?: string;
   expirationMinutes?: number;
@@ -18,7 +18,7 @@ interface EmailVerificationMailProps {
 }
 
 export default function EmailVerificationMail({
-  otp,
+  code,
   companyName = "Ecomiq",
   expirationMinutes = 10,
   expiryTimestamp,
@@ -61,11 +61,10 @@ export default function EmailVerificationMail({
             </Text>
 
             <Text className="mb-4 px-6 text-base leading-relaxed text-slate-600">
-              Thank you for signing up with {companyName}! To complete your registration,
-              please use the verification code below:
+              Please use the verification code below:
             </Text>
             <Text className="m-0 border-2 border-dashed border-slate-300 bg-slate-50 p-5 text-center font-mono text-2xl font-bold tracking-wide text-slate-800">
-              {otp}
+              {code}
             </Text>
 
             <Text className="mb-4 px-6 text-base leading-relaxed text-slate-600">
@@ -79,13 +78,13 @@ export default function EmailVerificationMail({
 
             <Hr className="mx-3 my-8 border-slate-200" />
 
-            <Text className="mb-4 px-6 text-sm leading-relaxed text-slate-600">
+            <Text className="mb-4 px-6 text-base leading-relaxed text-slate-600">
               Best regards,
               <br />
               The {companyName} Team
             </Text>
 
-            <Text className="m-0 px-6 text-center text-xs leading-relaxed text-slate-400">
+            <Text className="m-0 px-6 text-center text-xs leading-relaxed text-pretty text-slate-400 italic">
               This is an automated message. Please do not reply to this email.
             </Text>
           </Container>

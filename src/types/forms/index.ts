@@ -65,7 +65,7 @@ export const formSchema = z.object({
     }),
 });
 
-export const otpVerifyFormSchema = z.object({
+export const verifyCodeFormSchema = z.object({
   email: z
     .email({
       message: "Please enter a valid email address",
@@ -128,13 +128,13 @@ export const otpVerifyFormSchema = z.object({
     .refine((password) => password === password.trim(), {
       message: "Password cannot start or end with whitespace",
     }),
-  otp: z.string().min(6, {
-    message: "Your one-time password must be 6 characters.",
+  code: z.string().min(6, {
+    message: "Verification code must be 6 characters.",
   }),
 });
 
-export const otpFormSchema = z.object({
-  otp: z.string().min(6, {
+export const codeFormSchema = z.object({
+  code: z.string().min(6, {
     message: "Your one-time password must be 6 characters.",
   }),
 });
