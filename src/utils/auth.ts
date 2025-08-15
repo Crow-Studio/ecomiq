@@ -1,10 +1,7 @@
-import { Google } from "arctic";
-import {
-  encodeBase32LowerCaseNoPadding,
-  encodeHexLowerCase,
-} from "@oslojs/encoding";
-import { eq } from "drizzle-orm";
 import { sha256 } from "@oslojs/crypto/sha2";
+import { encodeBase32LowerCaseNoPadding, encodeHexLowerCase } from "@oslojs/encoding";
+import { Google } from "arctic";
+import { eq } from "drizzle-orm";
 import { env } from "~/env/server";
 import { db, tables } from "~/lib/db";
 import { User } from "~/lib/db/schema";
@@ -17,7 +14,7 @@ const SESSION_MAX_DURATION_MS = SESSION_REFRESH_INTERVAL_MS * 2;
 export const googleAuth = new Google(
   env.GOOGLE_CLIENT_ID!,
   env.GOOGLE_CLIENT_SECRET!,
-  `${env.VITE_BASE_URL}/api/login/google/callback`
+  `${env.VITE_BASE_URL}/api/login/google/callback`,
 );
 
 export function generateSessionToken(): string {
@@ -27,10 +24,7 @@ export function generateSessionToken(): string {
   return token;
 }
 
-export async function createSession(
-  token: string,
-  user_id: UserId
-): Promise<Session> {
+export async function createSession(token: string, user_id: UserId): Promise<Session> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
   const session: Session = {
     id: sessionId,
@@ -68,11 +62,11 @@ export async function isAuthenticated(): Promise<boolean> {
 }
 
 export async function validateSessionToken(
-  token: string
+  token: string,
 ): Promise<SessionValidationResult> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
   const sessionInDb = await db.query.session.findFirst({
-    where: table => eq(table.id, sessionId),
+    where: (table) => eq(table.id, sessionId),
   });
   if (!sessionInDb) {
     return { session: null, user: null };
@@ -83,7 +77,7 @@ export async function validateSessionToken(
   }
 
   const user = await db.query.user.findFirst({
-    where: table => eq(table.id, sessionInDb.user_id),
+    where: (table) => eq(table.id, sessionInDb.user_id),
   });
 
   if (!user) {
@@ -91,10 +85,7 @@ export async function validateSessionToken(
     return { session: null, user: null };
   }
 
-  if (
-    Date.now() >=
-    sessionInDb.expires_at.getTime() - SESSION_REFRESH_INTERVAL_MS
-  ) {
+  if (Date.now() >= sessionInDb.expires_at.getTime() - SESSION_REFRESH_INTERVAL_MS) {
     sessionInDb.expires_at = new Date(Date.now() + SESSION_MAX_DURATION_MS);
     await db
       .update(tables.session)

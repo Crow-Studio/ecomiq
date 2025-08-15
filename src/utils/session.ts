@@ -1,14 +1,14 @@
-import { type UserId } from "~/use-cases/types";
-import { createSession, generateSessionToken, validateRequest } from "./auth";
 import { getCookie, setCookie } from "@tanstack/react-start/server";
 import { env } from "~/env/server";
+import { type UserId } from "~/use-cases/types";
+import { createSession, generateSessionToken, validateRequest } from "./auth";
 import { AuthenticationError } from "./errors";
 
 const SESSION_COOKIE_NAME = "session";
 
 export async function setSessionTokenCookie(
   token: string,
-  expiresAt: Date
+  expiresAt: Date,
 ): Promise<void> {
   setCookie(SESSION_COOKIE_NAME, token, {
     httpOnly: true,

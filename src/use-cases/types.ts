@@ -1,4 +1,4 @@
-export type UserId = string
+export type UserId = string;
 
 export interface Session {
   id: string;
