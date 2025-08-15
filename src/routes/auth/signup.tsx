@@ -93,7 +93,10 @@ function RouteComponent() {
               </div>
             </CardHeader>
             <CardContent>
-              <SignupForm setFormData={setFormData} setIsOTPSent={setIsOTPSent} />
+              <SignupForm
+                setFormData={setFormData}
+                setIsOTPSent={setIsOTPSent}
+              />
             </CardContent>
           </Card>
         </motion.div>

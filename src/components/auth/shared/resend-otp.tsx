@@ -1,14 +1,19 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import { userOTPAction } from "~/lib/auth/functions/user-otp";
 import { cn } from "~/lib/utils";
+import { AuthFormData } from "~/types";
 
 interface Props {
   setIsResendingOTPCode: Dispatch<SetStateAction<boolean>>;
   isResendOTPCode: boolean;
+  formData: AuthFormData;
 }
 
 export default function ResendOTPButton({
   setIsResendingOTPCode,
   isResendOTPCode,
+  formData,
 }: Props) {
   const [timeElapsed, setTimeElapsed] = useState(30);
   const [isStopTimer, setIsStopTimer] = useState(false);
@@ -39,8 +44,49 @@ export default function ResendOTPButton({
 
   const resendOTPCode = async () => {
     setIsResendingOTPCode(true);
-    startTimer();
-    // try { ... } catch {}
+    try {
+      const res = await userOTPAction({
+        data: formData,
+      });
+      startTimer();
+      toast.success(res.message, { position: "top-center" });
+    } catch (error) {
+      if (error instanceof Error) {
+        try {
+          const errorData = JSON.parse(error.message) as {
+            type: string;
+            issues: {
+              code: string;
+              path: string[];
+              message: string;
+            }[];
+          };
+          if (errorData.type === "validation") {
+            if (errorData.issues.length > 0) {
+              const message = errorData.issues[0].message;
+              return toast.error(message, {
+                position: "top-center",
+              });
+            }
+          } else if (errorData.type === "auth") {
+            if (errorData.issues.length > 0) {
+              const message = errorData.issues[0].message;
+              return toast.error(message, {
+                position: "top-center",
+              });
+            }
+          }
+        } catch {
+          console.log("error");
+        }
+      }
+
+      toast.error("An error occurred", {
+        position: "top-center",
+      });
+    } finally {
+      setIsResendingOTPCode(false);
+    }
   };
 
   return (

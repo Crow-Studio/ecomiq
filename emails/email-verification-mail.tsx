@@ -1,4 +1,4 @@
-import { Body, Container, Head, Hr, Html, Tailwind, Text } from "@react-email/components";
+import { Body, Container, Font, Head, Hr, Html, Tailwind, Text } from "@react-email/components";
 
 interface EmailVerificationMailProps {
   otp: string;
@@ -32,10 +32,21 @@ export default function EmailVerificationMail({
 
   return (
     <Html>
-      <Head />
+      <Head>
+        <Font
+          fontFamily="Roboto"
+          fallbackFontFamily="Verdana"
+          webFont={{
+            url: "https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2",
+            format: "woff2",
+          }}
+          fontWeight={400}
+          fontStyle="normal"
+        />
+      </Head>
       <Tailwind>
         <Body className="bg-slate-50 font-sans">
-          <Container className="mx-auto mb-16 max-w-sm rounded-lg border border-slate-200 bg-white py-5 pb-12">
+          <Container className="mx-auto mb-16 max-w-[650px] rounded-lg border border-slate-200 bg-white py-5 pb-12">
             <Text className="mb-4 px-6 text-base leading-relaxed text-slate-600">
               Hi 👋,
             </Text>
@@ -44,10 +55,7 @@ export default function EmailVerificationMail({
               Thank you for signing up with {companyName}! To complete your registration,
               please use the verification code below:
             </Text>
-
-            {/* <Section className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg mx-3 my-6 py-4 text-center">
-            </Section> */}
-            <Text className="m-0 font-mono text-2xl font-bold tracking-wide text-slate-800">
+            <Text className="m-0 font-mono text-2xl text-center border-2 border-dashed border-slate-300 p-5 bg-slate-50 font-bold tracking-wide text-slate-800">
               {otp}
             </Text>
 

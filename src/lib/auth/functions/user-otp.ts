@@ -23,8 +23,6 @@ export const userOTPAction = createServerFn({
       type: "sign-in",
     });
 
-    console.log("OTP", error?.message);
-
     if (error) {
       throw new Error(
         JSON.stringify({

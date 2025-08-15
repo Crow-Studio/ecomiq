@@ -30,7 +30,7 @@ interface Props {
   isOTPSent: boolean;
 }
 
-export default function VerifyOTPSignup({ setIsOTPSent }: Props) {
+export default function VerifyOTPSignup({ setIsOTPSent, formData }: Props) {
   const [isResendOTPCode, setIsResendingOTPCode] = useState(false);
   const [isVerifyOTP, setIsVerifyOTP] = useState(false);
 
@@ -135,13 +135,8 @@ export default function VerifyOTPSignup({ setIsOTPSent }: Props) {
           <ResendOTPButton
             setIsResendingOTPCode={setIsResendingOTPCode}
             isResendOTPCode={isResendOTPCode}
+            formData={formData}
           />
-          {/* <ResendCodeButton
-              :email="props?.email"
-              :api-url="apiUrl"
-              :set-is-resending-code="setIsResendingCode"
-              :is-resend-code="isResendCode"
-            /> */}
         </div>
         <div className="space-y-2">
           <Button
