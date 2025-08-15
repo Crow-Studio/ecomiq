@@ -21,11 +21,10 @@ export function enumToPgEnum<T extends Record<string, string>>(
 }
 
 const PREFIX = "app";
-
-const tableCreator = pgTableCreator((name) => `${PREFIX}_${name}`);
+const pgTable = pgTableCreator((name) => `${PREFIX}_${name}`);
 
 // user
-export const user = tableCreator(
+export const user = pgTable(
   "user",
   {
     id: varchar("id", { length: 16 })
@@ -49,7 +48,7 @@ export const user = tableCreator(
 );
 
 // OAuth
-export const oauth_account = tableCreator("oauth_account", {
+export const oauth_account = pgTable("oauth_account", {
   id: varchar("id", { length: 16 })
     .primaryKey()
     .$defaultFn(() => generateNanoId()),
@@ -67,7 +66,7 @@ export const oauth_account = tableCreator("oauth_account", {
 });
 
 // Email Verification
-export const email_verification_request_table = tableCreator(
+export const email_verification_request_table = pgTable(
   "email_verification_request",
   {
     id: varchar("id", { length: 16 })
@@ -89,7 +88,7 @@ export const email_verification_request_table = tableCreator(
 );
 
 // sessions
-export const session = tableCreator("session", {
+export const session = pgTable("session", {
   id: varchar("id", { length: 255 }).primaryKey(),
   user_id: text("user_id")
     .notNull()
