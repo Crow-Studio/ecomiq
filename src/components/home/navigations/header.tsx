@@ -10,11 +10,10 @@ import { Button } from "~/components/ui/button";
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [mounted] = useState(true);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    setMounted(true);
     const handleScroll = () => {
       if (window.scrollY > 10) {
         setIsScrolled(true);

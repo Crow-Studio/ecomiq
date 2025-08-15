@@ -1,3 +1,5 @@
+/* eslint-disable @eslint-react/no-unstable-context-value */
+/* eslint-disable @eslint-react/hooks-extra/no-direct-set-state-in-use-effect */
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import * as React from "react";

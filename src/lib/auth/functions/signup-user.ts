@@ -37,11 +37,14 @@ export const signupUserAction = createServerFn({
     // Handle the case where user already exists but is unverified
     if (signupError) {
       // Check if error is "user already exists" - if so, proceed to OTP verification
-      if (signupError.code === "USER_ALREADY_EXISTS" ||
+      if (
+        signupError.code === "USER_ALREADY_EXISTS" ||
         signupError.message?.includes("already exists") ||
-        signupError.message?.includes("already registered")) {
-
-        console.log(`User ${data.email} already exists, proceeding to OTP verification...`);
+        signupError.message?.includes("already registered")
+      ) {
+        console.log(
+          `User ${data.email} already exists, proceeding to OTP verification...`,
+        );
 
         // User exists but might be unverified, proceed to OTP verification
       } else {

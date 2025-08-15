@@ -147,11 +147,7 @@ export default function VerifyOTPSignup({ setIsOTPSent, formData }: Props) {
             className="bg-brand hover:bg-brand-secondary w-full text-white"
             disabled={isVerifyOTP || isResendOTPCode}
           >
-            {
-              isVerifyOTP && (
-                <Loader2 className="animate-spin size-4" />
-              )
-            }
+            {isVerifyOTP && <Loader2 className="size-4 animate-spin" />}
             Verify OTP
           </Button>
           <Button

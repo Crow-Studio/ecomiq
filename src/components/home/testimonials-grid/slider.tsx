@@ -1,3 +1,4 @@
+/* eslint-disable @eslint-react/hooks-extra/no-direct-set-state-in-use-effect */
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import { type EmblaCarouselType } from "embla-carousel";

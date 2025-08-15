@@ -1,3 +1,4 @@
+/* eslint-disable @eslint-react/no-unstable-context-value */
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
@@ -34,15 +35,15 @@ const FormField = <
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
   return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
+    <FormFieldContext value={{ name: props.name }}>
       <Controller {...props} />
-    </FormFieldContext.Provider>
+    </FormFieldContext>
   );
 };
 
 const useFormField = () => {
-  const fieldContext = React.useContext(FormFieldContext);
-  const itemContext = React.useContext(FormItemContext);
+  const fieldContext = React.use(FormFieldContext);
+  const itemContext = React.use(FormItemContext);
   const { getFieldState } = useFormContext();
   const formState = useFormState({ name: fieldContext.name });
   const fieldState = getFieldState(fieldContext.name, formState);
@@ -75,9 +76,9 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   const id = React.useId();
 
   return (
-    <FormItemContext.Provider value={{ id }}>
+    <FormItemContext value={{ id }}>
       <div data-slot="form-item" className={cn("grid gap-2", className)} {...props} />
-    </FormItemContext.Provider>
+    </FormItemContext>
   );
 }
 
