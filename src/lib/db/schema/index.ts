@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-deprecated */
 import { InferSelectModel } from "drizzle-orm";
 import {
   boolean,
@@ -66,26 +67,23 @@ export const oauth_account = pgTable("oauth_account", {
 });
 
 // Email Verification
-export const email_verification_request_table = pgTable(
-  "email_verification_request",
-  {
-    id: varchar("id", { length: 16 })
-      .primaryKey()
-      .$defaultFn(() => generateNanoId()),
-    email: text("email").notNull(),
-    code: text("code").notNull(),
-    user_id: text("user_id")
-      .notNull()
-      .references(() => user.id, { onDelete: "cascade" }),
-    expires_at: timestamp("expires_at", { withTimezone: true, mode: "date" }).notNull(),
-    created_at: timestamp("created_at", { mode: "date", precision: 3 })
-      .notNull()
-      .defaultNow(),
-    updated_at: timestamp("updated_at", { mode: "date", precision: 3 }).$onUpdate(
-      () => new Date(),
-    ),
-  },
-);
+export const email_verification_request_table = pgTable("email_verification_request", {
+  id: varchar("id", { length: 16 })
+    .primaryKey()
+    .$defaultFn(() => generateNanoId()),
+  email: text("email").notNull(),
+  code: text("code").notNull(),
+  user_id: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  expires_at: timestamp("expires_at", { withTimezone: true, mode: "date" }).notNull(),
+  created_at: timestamp("created_at", { mode: "date", precision: 3 })
+    .notNull()
+    .defaultNow(),
+  updated_at: timestamp("updated_at", { mode: "date", precision: 3 }).$onUpdate(
+    () => new Date(),
+  ),
+});
 
 // sessions
 export const session = pgTable("session", {
