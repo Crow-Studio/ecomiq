@@ -7,8 +7,12 @@ import * as schema from "~/lib/db/schema";
 
 const driver = postgres(env.DATABASE_URL);
 
+const tables = schema;
+
 const getDatabase = serverOnly(() =>
   drizzle({ client: driver, schema, casing: "snake_case" }),
 );
 
-export const db = getDatabase();
+const db = getDatabase();
+
+export { db, driver, tables };
