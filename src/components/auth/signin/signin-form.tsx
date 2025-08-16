@@ -16,10 +16,10 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { signinUserOTPAction } from "~/lib/auth/functions/signin-user-otp";
 import { AuthFormData } from "~/types";
 import { formSchema } from "~/types/forms";
 import OauthProviders from "../oauth/oauth-providers";
-import { signinUserOTPAction } from "~/lib/auth/functions/signin-user-otp";
 
 interface Props {
   setFormData: Dispatch<SetStateAction<AuthFormData>>;

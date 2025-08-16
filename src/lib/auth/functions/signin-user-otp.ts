@@ -7,7 +7,12 @@ import {
 } from "~/data-access/users";
 import { sendEmailVerificationMail } from "~/lib/mails/email-verification";
 import { formSchema } from "~/types/forms";
-import { createDate, generateUniqueCode, TimeSpan, verifyHashedPassword } from "~/utils/auth";
+import {
+  createDate,
+  generateUniqueCode,
+  TimeSpan,
+  verifyHashedPassword,
+} from "~/utils/auth";
 import { EmailInUseError, InvalidCredentialsError } from "~/utils/errors";
 
 export const signinUserOTPAction = createServerFn({
@@ -45,10 +50,7 @@ export const signinUserOTPAction = createServerFn({
         throw new InvalidCredentialsError("User account has no password set!");
       }
 
-      const isPasswordValid = await verifyHashedPassword(
-        user.password,
-        data.password,
-      );
+      const isPasswordValid = await verifyHashedPassword(user.password, data.password);
 
       if (!isPasswordValid) {
         throw new InvalidCredentialsError("Invalid password provided!");
