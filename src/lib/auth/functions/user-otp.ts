@@ -66,6 +66,7 @@ export const userOTPAction = createServerFn({
         message: "Check your email for the verification code!",
       };
     } catch (error) {
+      console.log(error);
       if (error instanceof EmailInUseError) {
         throw error;
       }
