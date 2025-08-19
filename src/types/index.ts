@@ -23,3 +23,8 @@ export interface AuthFormData {
   email: string;
   password: string;
 }
+
+export interface AuthForgotPasswordFormData {
+  email: string;
+  new_password: string;
+}

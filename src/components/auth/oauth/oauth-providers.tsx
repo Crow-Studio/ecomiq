@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { Loader2 } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { cn } from "~/lib/utils";
 
 type AuthProvider = "google";
@@ -34,23 +34,35 @@ export default function OauthProviders({ isAuthenticating }: OauthButtonProps) {
       if (isAuthenticating || isOauthAuthentication) return;
 
       setIsOauthAuthentication(true);
-      try {
-        if (provider === "google") {
-          window.location.assign("/api/oauth/signin/google");
-        }
-      } finally {
-        setIsOauthAuthentication(false);
+
+      if (provider === "google") {
+        window.location.assign("/api/oauth/signin/google");
       }
     },
     [isAuthenticating, isOauthAuthentication],
   );
+
+  useEffect(() => {
+    const handleOauthResponse = (event: MessageEvent) => {
+      if (event.data === "oauth-success") {
+        setIsOauthAuthentication(false);
+      } else if (event.data === "oauth-failure") {
+        setIsOauthAuthentication(false);
+      }
+    };
+
+    window.addEventListener("message", handleOauthResponse);
+
+    return () => {
+      window.removeEventListener("message", handleOauthResponse);
+    };
+  });
 
   return (
     <div className="grid gap-2 overflow-hidden">
       <div className="flex h-[42px] items-center !overflow-hidden">
         {authProviders.map((auth) => {
           const isButtonDisabled = isAuthenticating || isOauthAuthentication;
-          const showSpinner = isButtonDisabled && isOauthAuthentication;
 
           return (
             <button
@@ -64,7 +76,7 @@ export default function OauthProviders({ isAuthenticating }: OauthButtonProps) {
               disabled={isButtonDisabled}
               aria-label={`${auth.text} - OAuth authentication`}
             >
-              {showSpinner ? (
+              {isOauthAuthentication ? (
                 <Loader2 className="size-4 animate-spin" />
               ) : (
                 <Icon icon={auth.icon} className="size-4" />

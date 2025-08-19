@@ -32,7 +32,7 @@ function RouteComponent() {
       content: <StoreName />,
     },
     {
-      id: "business-size",
+      id: "business-siz",
       title: "What sze is your business?",
       subtitle: "Select one to get tailored support. We won't share this with anyone.",
       content: <StoreName />,
@@ -98,9 +98,9 @@ function RouteComponent() {
           >
             {/* Step indicators */}
             <div className="mb-8 flex justify-center space-x-2">
-              {steps.map((_, index) => (
+              {steps.map((step, index) => (
                 <motion.div
-                  key={index}
+                  key={step.id}
                   className={`h-1 w-6 rounded-full transition-colors duration-300 ${
                     index <= currentStep ? "bg-gray-900" : "bg-gray-300"
                   }`}
