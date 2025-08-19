@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Icon } from "@iconify/react";
 import { Link } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -96,7 +97,7 @@ export function SignupForm({ setFormData, setIsOTPSent }: Props) {
               className="bg-brand hover:bg-brand-secondary w-full gap-x-2 text-white"
             >
               {isAuthenticating && <Loader2 className="size-4 animate-spin" />}
-              Create account
+              Create Ecomiq account
             </Button>
           </div>
         </div>
@@ -108,15 +109,18 @@ export function SignupForm({ setFormData, setIsOTPSent }: Props) {
           </div>
           <OauthProviders isAuthenticating={isAuthenticating} />
         </div>
-        <div className="text-center text-sm">
-          Already have an account?
+        <div className="flex items-center justify-center text-center text-sm">
+          <p>Already have an Ecomiq account?</p>
           <Link
             to="/auth/signin"
-            className="ml-1 underline decoration-wavy underline-offset-2"
+            className="text-brand hover:text-brand-secondary group ml-1 flex items-center gap-x-1"
           >
             Sign in
+            <Icon
+              icon="hugeicons:arrow-right-02"
+              className="size-4 transition-all duration-300 ease-in-out group-hover:translate-x-1.5"
+            />
           </Link>
-          .
         </div>
       </form>
     </Form>

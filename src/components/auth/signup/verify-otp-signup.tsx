@@ -111,12 +111,14 @@ export default function VerifyOTPSignup({ setIsOTPSent, formData }: Props) {
         <div className="flex w-full items-center justify-between pt-1">
           <p className="text-muted-foreground flex items-center gap-1 text-xs font-medium">
             <InfoIcon className="size-4" />
-            Paste the OTP sent to your email
+            Paste the verification code sent to your email
           </p>
           <ResendOTPButton
             setIsResendingOTPCode={setIsResendingOTPCode}
             isResendOTPCode={isResendOTPCode}
             formData={formData}
+            type="signup"
+            isVerifyOTP={isVerifyOTP}
           />
         </div>
         <div className="space-y-2">
@@ -126,7 +128,7 @@ export default function VerifyOTPSignup({ setIsOTPSent, formData }: Props) {
             disabled={isVerifyOTP || isResendOTPCode}
           >
             {isVerifyOTP && <Loader2 className="size-4 animate-spin" />}
-            Verify OTP
+            Verify code
           </Button>
           <Button
             disabled={isVerifyOTP || isResendOTPCode}

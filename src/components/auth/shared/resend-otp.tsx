@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { userOTPAction } from "~/lib/auth/functions/user-otp";
+import { userSignResendOTPAction } from "~/lib/auth/functions/user-signin-resend-otp";
 import { cn } from "~/lib/utils";
 import { AuthFormData } from "~/types";
 
@@ -8,12 +9,16 @@ interface Props {
   setIsResendingOTPCode: Dispatch<SetStateAction<boolean>>;
   isResendOTPCode: boolean;
   formData: AuthFormData;
+  type: "signin" | "signup";
+  isVerifyOTP: boolean;
 }
 
 export default function ResendOTPButton({
   setIsResendingOTPCode,
   isResendOTPCode,
   formData,
+  type,
+  isVerifyOTP,
 }: Props) {
   const [timeElapsed, setTimeElapsed] = useState(30);
   const [isStopTimer, setIsStopTimer] = useState(false);
@@ -45,11 +50,19 @@ export default function ResendOTPButton({
   const resendOTPCode = async () => {
     setIsResendingOTPCode(true);
     try {
-      const res = await userOTPAction({
-        data: formData,
-      });
-      startTimer();
-      toast.success(res?.message, { position: "top-center" });
+      if (type === "signin") {
+        const res = await userSignResendOTPAction({
+          data: formData,
+        });
+        startTimer();
+        return toast.success(res?.message, { position: "top-center" });
+      } else {
+        const res = await userOTPAction({
+          data: formData,
+        });
+        startTimer();
+        return toast.success(res?.message, { position: "top-center" });
+      }
     } catch (error) {
       if (error instanceof Error) {
         try {
@@ -99,7 +112,7 @@ export default function ResendOTPButton({
           : "text-brand hover:text-brand-secondary cursor-pointer text-sm",
       )}
       onClick={resendOTPCode}
-      disabled={isResendOTPCode || (timeElapsed > 0 && isStopTimer)}
+      disabled={isResendOTPCode || (timeElapsed > 0 && isStopTimer) || isVerifyOTP}
     >
       {isResendOTPCode
         ? "Resending..."

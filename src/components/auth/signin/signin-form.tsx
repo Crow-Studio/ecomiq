@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Icon } from "@iconify/react";
 import { Link } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -126,15 +127,18 @@ export function SigninForm({ setFormData, setIsOTPSent }: Props) {
           </div>
           <OauthProviders isAuthenticating={isAuthenticating} />
         </div>
-        <div className="text-center text-sm">
-          Don't have an account?
+        <div className="flex items-center justify-center text-center text-sm">
+          <p>Don't have an Ecomiq account?</p>
           <Link
             to="/auth/signup"
-            className="ml-1 underline decoration-wavy underline-offset-2"
+            className="text-brand hover:text-brand-secondary group ml-1 flex items-center gap-x-1"
           >
             Sign up
+            <Icon
+              icon="hugeicons:arrow-right-02"
+              className="size-4 transition-all duration-300 ease-in-out group-hover:translate-x-1.5"
+            />
           </Link>
-          .
         </div>
       </form>
     </Form>

@@ -8,28 +8,38 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from "@tanstack/react-router";
 import { createServerRootRoute } from "@tanstack/react-start/server";
 
 import { Route as rootRouteImport } from "./routes/__root";
 import { Route as DashboardRouteRouteImport } from "./routes/dashboard/route";
-import { Route as AuthRouteRouteImport } from "./routes/auth/route";
 import { Route as DashboardIndexRouteImport } from "./routes/dashboard/index";
 import { Route as homeIndexRouteImport } from "./routes/(home)/index";
-import { Route as AuthSignupRouteImport } from "./routes/auth/signup";
-import { Route as AuthSigninRouteImport } from "./routes/auth/signin";
+import { Route as AuthAuthLayoutRouteImport } from "./routes/auth/_auth-layout";
+import { Route as UserUserIdOnboardingLayoutRouteImport } from "./routes/user/$userId/_onboarding-layout";
+import { Route as AuthAuthLayoutSignupRouteImport } from "./routes/auth/_auth-layout/signup";
+import { Route as AuthAuthLayoutSigninRouteImport } from "./routes/auth/_auth-layout/signin";
+import { Route as UserUserIdOnboardingLayoutOnboardingRouteImport } from "./routes/user/$userId/_onboarding-layout/onboarding";
 import { ServerRoute as ApiOauthSigninGoogleIndexServerRouteImport } from "./routes/api/oauth/signin/google/index";
 import { ServerRoute as ApiOauthSigninGoogleCallbackIndexServerRouteImport } from "./routes/api/oauth/signin/google/callback/index";
 
+const AuthRouteImport = createFileRoute("/auth")();
+const UserUserIdRouteImport = createFileRoute("/user/$userId")();
 const rootServerRouteImport = createServerRootRoute();
 
+const AuthRoute = AuthRouteImport.update({
+  id: "/auth",
+  path: "/auth",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const DashboardRouteRoute = DashboardRouteRouteImport.update({
   id: "/dashboard",
   path: "/dashboard",
   getParentRoute: () => rootRouteImport,
 } as any);
-const AuthRouteRoute = AuthRouteRouteImport.update({
-  id: "/auth",
-  path: "/auth",
+const UserUserIdRoute = UserUserIdRouteImport.update({
+  id: "/user/$userId",
+  path: "/user/$userId",
   getParentRoute: () => rootRouteImport,
 } as any);
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
@@ -42,16 +52,31 @@ const homeIndexRoute = homeIndexRouteImport.update({
   path: "/",
   getParentRoute: () => rootRouteImport,
 } as any);
-const AuthSignupRoute = AuthSignupRouteImport.update({
+const AuthAuthLayoutRoute = AuthAuthLayoutRouteImport.update({
+  id: "/_auth-layout",
+  getParentRoute: () => AuthRoute,
+} as any);
+const UserUserIdOnboardingLayoutRoute =
+  UserUserIdOnboardingLayoutRouteImport.update({
+    id: "/_onboarding-layout",
+    getParentRoute: () => UserUserIdRoute,
+  } as any);
+const AuthAuthLayoutSignupRoute = AuthAuthLayoutSignupRouteImport.update({
   id: "/signup",
   path: "/signup",
-  getParentRoute: () => AuthRouteRoute,
+  getParentRoute: () => AuthAuthLayoutRoute,
 } as any);
-const AuthSigninRoute = AuthSigninRouteImport.update({
+const AuthAuthLayoutSigninRoute = AuthAuthLayoutSigninRouteImport.update({
   id: "/signin",
   path: "/signin",
-  getParentRoute: () => AuthRouteRoute,
+  getParentRoute: () => AuthAuthLayoutRoute,
 } as any);
+const UserUserIdOnboardingLayoutOnboardingRoute =
+  UserUserIdOnboardingLayoutOnboardingRouteImport.update({
+    id: "/onboarding",
+    path: "/onboarding",
+    getParentRoute: () => UserUserIdOnboardingLayoutRoute,
+  } as any);
 const ApiOauthSigninGoogleIndexServerRoute =
   ApiOauthSigninGoogleIndexServerRouteImport.update({
     id: "/api/oauth/signin/google/",
@@ -66,54 +91,76 @@ const ApiOauthSigninGoogleCallbackIndexServerRoute =
   } as any);
 
 export interface FileRoutesByFullPath {
-  "/auth": typeof AuthRouteRouteWithChildren;
   "/dashboard": typeof DashboardRouteRouteWithChildren;
-  "/auth/signin": typeof AuthSigninRoute;
-  "/auth/signup": typeof AuthSignupRoute;
+  "/auth": typeof AuthAuthLayoutRouteWithChildren;
   "/": typeof homeIndexRoute;
   "/dashboard/": typeof DashboardIndexRoute;
+  "/auth/signin": typeof AuthAuthLayoutSigninRoute;
+  "/auth/signup": typeof AuthAuthLayoutSignupRoute;
+  "/user/$userId": typeof UserUserIdOnboardingLayoutRouteWithChildren;
+  "/user/$userId/onboarding": typeof UserUserIdOnboardingLayoutOnboardingRoute;
 }
 export interface FileRoutesByTo {
-  "/auth": typeof AuthRouteRouteWithChildren;
-  "/auth/signin": typeof AuthSigninRoute;
-  "/auth/signup": typeof AuthSignupRoute;
+  "/auth": typeof AuthAuthLayoutRouteWithChildren;
   "/": typeof homeIndexRoute;
   "/dashboard": typeof DashboardIndexRoute;
+  "/auth/signin": typeof AuthAuthLayoutSigninRoute;
+  "/auth/signup": typeof AuthAuthLayoutSignupRoute;
+  "/user/$userId": typeof UserUserIdOnboardingLayoutRouteWithChildren;
+  "/user/$userId/onboarding": typeof UserUserIdOnboardingLayoutOnboardingRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
-  "/auth": typeof AuthRouteRouteWithChildren;
   "/dashboard": typeof DashboardRouteRouteWithChildren;
-  "/auth/signin": typeof AuthSigninRoute;
-  "/auth/signup": typeof AuthSignupRoute;
+  "/auth": typeof AuthRouteWithChildren;
+  "/auth/_auth-layout": typeof AuthAuthLayoutRouteWithChildren;
   "/(home)/": typeof homeIndexRoute;
   "/dashboard/": typeof DashboardIndexRoute;
+  "/auth/_auth-layout/signin": typeof AuthAuthLayoutSigninRoute;
+  "/auth/_auth-layout/signup": typeof AuthAuthLayoutSignupRoute;
+  "/user/$userId": typeof UserUserIdRouteWithChildren;
+  "/user/$userId/_onboarding-layout": typeof UserUserIdOnboardingLayoutRouteWithChildren;
+  "/user/$userId/_onboarding-layout/onboarding": typeof UserUserIdOnboardingLayoutOnboardingRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
+    | "/dashboard"
     | "/auth"
+    | "/"
+    | "/dashboard/"
+    | "/auth/signin"
+    | "/auth/signup"
+    | "/user/$userId"
+    | "/user/$userId/onboarding";
+  fileRoutesByTo: FileRoutesByTo;
+  to:
+    | "/auth"
+    | "/"
     | "/dashboard"
     | "/auth/signin"
     | "/auth/signup"
-    | "/"
-    | "/dashboard/";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/auth" | "/auth/signin" | "/auth/signup" | "/" | "/dashboard";
+    | "/user/$userId"
+    | "/user/$userId/onboarding";
   id:
     | "__root__"
-    | "/auth"
     | "/dashboard"
-    | "/auth/signin"
-    | "/auth/signup"
+    | "/auth"
+    | "/auth/_auth-layout"
     | "/(home)/"
-    | "/dashboard/";
+    | "/dashboard/"
+    | "/auth/_auth-layout/signin"
+    | "/auth/_auth-layout/signup"
+    | "/user/$userId"
+    | "/user/$userId/_onboarding-layout"
+    | "/user/$userId/_onboarding-layout/onboarding";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  AuthRouteRoute: typeof AuthRouteRouteWithChildren;
   DashboardRouteRoute: typeof DashboardRouteRouteWithChildren;
+  AuthRoute: typeof AuthRouteWithChildren;
   homeIndexRoute: typeof homeIndexRoute;
+  UserUserIdRoute: typeof UserUserIdRouteWithChildren;
 }
 export interface FileServerRoutesByFullPath {
   "/api/oauth/signin/google": typeof ApiOauthSigninGoogleIndexServerRoute;
@@ -146,6 +193,13 @@ export interface RootServerRouteChildren {
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/auth": {
+      id: "/auth";
+      path: "/auth";
+      fullPath: "/auth";
+      preLoaderRoute: typeof AuthRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     "/dashboard": {
       id: "/dashboard";
       path: "/dashboard";
@@ -153,11 +207,11 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof DashboardRouteRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/auth": {
-      id: "/auth";
-      path: "/auth";
-      fullPath: "/auth";
-      preLoaderRoute: typeof AuthRouteRouteImport;
+    "/user/$userId": {
+      id: "/user/$userId";
+      path: "/user/$userId";
+      fullPath: "/user/$userId";
+      preLoaderRoute: typeof UserUserIdRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     "/dashboard/": {
@@ -174,19 +228,40 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof homeIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/auth/signup": {
-      id: "/auth/signup";
+    "/auth/_auth-layout": {
+      id: "/auth/_auth-layout";
+      path: "/auth";
+      fullPath: "/auth";
+      preLoaderRoute: typeof AuthAuthLayoutRouteImport;
+      parentRoute: typeof AuthRoute;
+    };
+    "/user/$userId/_onboarding-layout": {
+      id: "/user/$userId/_onboarding-layout";
+      path: "/user/$userId";
+      fullPath: "/user/$userId";
+      preLoaderRoute: typeof UserUserIdOnboardingLayoutRouteImport;
+      parentRoute: typeof UserUserIdRoute;
+    };
+    "/auth/_auth-layout/signup": {
+      id: "/auth/_auth-layout/signup";
       path: "/signup";
       fullPath: "/auth/signup";
-      preLoaderRoute: typeof AuthSignupRouteImport;
-      parentRoute: typeof AuthRouteRoute;
+      preLoaderRoute: typeof AuthAuthLayoutSignupRouteImport;
+      parentRoute: typeof AuthAuthLayoutRoute;
     };
-    "/auth/signin": {
-      id: "/auth/signin";
+    "/auth/_auth-layout/signin": {
+      id: "/auth/_auth-layout/signin";
       path: "/signin";
       fullPath: "/auth/signin";
-      preLoaderRoute: typeof AuthSigninRouteImport;
-      parentRoute: typeof AuthRouteRoute;
+      preLoaderRoute: typeof AuthAuthLayoutSigninRouteImport;
+      parentRoute: typeof AuthAuthLayoutRoute;
+    };
+    "/user/$userId/_onboarding-layout/onboarding": {
+      id: "/user/$userId/_onboarding-layout/onboarding";
+      path: "/onboarding";
+      fullPath: "/user/$userId/onboarding";
+      preLoaderRoute: typeof UserUserIdOnboardingLayoutOnboardingRouteImport;
+      parentRoute: typeof UserUserIdOnboardingLayoutRoute;
     };
   }
 }
@@ -209,20 +284,6 @@ declare module "@tanstack/react-start/server" {
   }
 }
 
-interface AuthRouteRouteChildren {
-  AuthSigninRoute: typeof AuthSigninRoute;
-  AuthSignupRoute: typeof AuthSignupRoute;
-}
-
-const AuthRouteRouteChildren: AuthRouteRouteChildren = {
-  AuthSigninRoute: AuthSigninRoute,
-  AuthSignupRoute: AuthSignupRoute,
-};
-
-const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
-  AuthRouteRouteChildren,
-);
-
 interface DashboardRouteRouteChildren {
   DashboardIndexRoute: typeof DashboardIndexRoute;
 }
@@ -235,10 +296,62 @@ const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
   DashboardRouteRouteChildren,
 );
 
+interface AuthAuthLayoutRouteChildren {
+  AuthAuthLayoutSigninRoute: typeof AuthAuthLayoutSigninRoute;
+  AuthAuthLayoutSignupRoute: typeof AuthAuthLayoutSignupRoute;
+}
+
+const AuthAuthLayoutRouteChildren: AuthAuthLayoutRouteChildren = {
+  AuthAuthLayoutSigninRoute: AuthAuthLayoutSigninRoute,
+  AuthAuthLayoutSignupRoute: AuthAuthLayoutSignupRoute,
+};
+
+const AuthAuthLayoutRouteWithChildren = AuthAuthLayoutRoute._addFileChildren(
+  AuthAuthLayoutRouteChildren,
+);
+
+interface AuthRouteChildren {
+  AuthAuthLayoutRoute: typeof AuthAuthLayoutRouteWithChildren;
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthAuthLayoutRoute: AuthAuthLayoutRouteWithChildren,
+};
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren);
+
+interface UserUserIdOnboardingLayoutRouteChildren {
+  UserUserIdOnboardingLayoutOnboardingRoute: typeof UserUserIdOnboardingLayoutOnboardingRoute;
+}
+
+const UserUserIdOnboardingLayoutRouteChildren: UserUserIdOnboardingLayoutRouteChildren =
+  {
+    UserUserIdOnboardingLayoutOnboardingRoute:
+      UserUserIdOnboardingLayoutOnboardingRoute,
+  };
+
+const UserUserIdOnboardingLayoutRouteWithChildren =
+  UserUserIdOnboardingLayoutRoute._addFileChildren(
+    UserUserIdOnboardingLayoutRouteChildren,
+  );
+
+interface UserUserIdRouteChildren {
+  UserUserIdOnboardingLayoutRoute: typeof UserUserIdOnboardingLayoutRouteWithChildren;
+}
+
+const UserUserIdRouteChildren: UserUserIdRouteChildren = {
+  UserUserIdOnboardingLayoutRoute: UserUserIdOnboardingLayoutRouteWithChildren,
+};
+
+const UserUserIdRouteWithChildren = UserUserIdRoute._addFileChildren(
+  UserUserIdRouteChildren,
+);
+
 const rootRouteChildren: RootRouteChildren = {
-  AuthRouteRoute: AuthRouteRouteWithChildren,
   DashboardRouteRoute: DashboardRouteRouteWithChildren,
+  AuthRoute: AuthRouteWithChildren,
   homeIndexRoute: homeIndexRoute,
+  UserUserIdRoute: UserUserIdRouteWithChildren,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

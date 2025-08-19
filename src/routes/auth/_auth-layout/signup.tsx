@@ -13,7 +13,7 @@ import {
 } from "~/components/ui/card";
 import { AuthFormData } from "~/types";
 
-export const Route = createFileRoute("/auth/signup")({
+export const Route = createFileRoute("/auth/_auth-layout/signup")({
   component: RouteComponent,
 });
 
