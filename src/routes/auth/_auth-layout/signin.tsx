@@ -11,10 +11,26 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { seo } from "~/lib/seo";
 import { AuthFormData } from "~/types";
 
 export const Route = createFileRoute("/auth/_auth-layout/signin")({
   component: RouteComponent,
+  head: () => ({
+    meta: [
+      {
+        charSet: "utf-8",
+      },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
+      },
+      ...seo({
+        title: "Ecomiq - Signin",
+        description: `A powerful all-in-one ecommerce platform built for store owners of all skill levels—manage orders, inventory, marketing, and customers with ease.`,
+      }),
+    ],
+  }),
 });
 
 function RouteComponent() {

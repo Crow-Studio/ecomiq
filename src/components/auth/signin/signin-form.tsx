@@ -93,12 +93,12 @@ export function SigninForm({ setFormData, setIsOTPSent }: Props) {
                 <FormItem className="grid gap-3">
                   <div className="flex items-center">
                     <FormLabel>Password</FormLabel>
-                    <a
-                      href="#"
+                    <Link
+                      to="/auth/forgot-password"
                       className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                     >
                       Forgot your password?
-                    </a>
+                    </Link>
                   </div>
                   <FormControl>
                     <PasswordInput {...field} disabled={isAuthenticating} />

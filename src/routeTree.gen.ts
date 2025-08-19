@@ -19,6 +19,7 @@ import { Route as AuthAuthLayoutRouteImport } from "./routes/auth/_auth-layout";
 import { Route as UserUserIdOnboardingLayoutRouteImport } from "./routes/user/$userId/_onboarding-layout";
 import { Route as AuthAuthLayoutSignupRouteImport } from "./routes/auth/_auth-layout/signup";
 import { Route as AuthAuthLayoutSigninRouteImport } from "./routes/auth/_auth-layout/signin";
+import { Route as AuthAuthLayoutForgotPasswordRouteImport } from "./routes/auth/_auth-layout/forgot-password";
 import { Route as UserUserIdOnboardingLayoutOnboardingRouteImport } from "./routes/user/$userId/_onboarding-layout/onboarding";
 import { ServerRoute as ApiOauthSigninGoogleIndexServerRouteImport } from "./routes/api/oauth/signin/google/index";
 import { ServerRoute as ApiOauthSigninGoogleCallbackIndexServerRouteImport } from "./routes/api/oauth/signin/google/callback/index";
@@ -71,6 +72,12 @@ const AuthAuthLayoutSigninRoute = AuthAuthLayoutSigninRouteImport.update({
   path: "/signin",
   getParentRoute: () => AuthAuthLayoutRoute,
 } as any);
+const AuthAuthLayoutForgotPasswordRoute =
+  AuthAuthLayoutForgotPasswordRouteImport.update({
+    id: "/forgot-password",
+    path: "/forgot-password",
+    getParentRoute: () => AuthAuthLayoutRoute,
+  } as any);
 const UserUserIdOnboardingLayoutOnboardingRoute =
   UserUserIdOnboardingLayoutOnboardingRouteImport.update({
     id: "/onboarding",
@@ -95,6 +102,7 @@ export interface FileRoutesByFullPath {
   "/auth": typeof AuthAuthLayoutRouteWithChildren;
   "/": typeof homeIndexRoute;
   "/dashboard/": typeof DashboardIndexRoute;
+  "/auth/forgot-password": typeof AuthAuthLayoutForgotPasswordRoute;
   "/auth/signin": typeof AuthAuthLayoutSigninRoute;
   "/auth/signup": typeof AuthAuthLayoutSignupRoute;
   "/user/$userId": typeof UserUserIdOnboardingLayoutRouteWithChildren;
@@ -104,6 +112,7 @@ export interface FileRoutesByTo {
   "/auth": typeof AuthAuthLayoutRouteWithChildren;
   "/": typeof homeIndexRoute;
   "/dashboard": typeof DashboardIndexRoute;
+  "/auth/forgot-password": typeof AuthAuthLayoutForgotPasswordRoute;
   "/auth/signin": typeof AuthAuthLayoutSigninRoute;
   "/auth/signup": typeof AuthAuthLayoutSignupRoute;
   "/user/$userId": typeof UserUserIdOnboardingLayoutRouteWithChildren;
@@ -116,6 +125,7 @@ export interface FileRoutesById {
   "/auth/_auth-layout": typeof AuthAuthLayoutRouteWithChildren;
   "/(home)/": typeof homeIndexRoute;
   "/dashboard/": typeof DashboardIndexRoute;
+  "/auth/_auth-layout/forgot-password": typeof AuthAuthLayoutForgotPasswordRoute;
   "/auth/_auth-layout/signin": typeof AuthAuthLayoutSigninRoute;
   "/auth/_auth-layout/signup": typeof AuthAuthLayoutSignupRoute;
   "/user/$userId": typeof UserUserIdRouteWithChildren;
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | "/auth"
     | "/"
     | "/dashboard/"
+    | "/auth/forgot-password"
     | "/auth/signin"
     | "/auth/signup"
     | "/user/$userId"
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | "/auth"
     | "/"
     | "/dashboard"
+    | "/auth/forgot-password"
     | "/auth/signin"
     | "/auth/signup"
     | "/user/$userId"
@@ -149,6 +161,7 @@ export interface FileRouteTypes {
     | "/auth/_auth-layout"
     | "/(home)/"
     | "/dashboard/"
+    | "/auth/_auth-layout/forgot-password"
     | "/auth/_auth-layout/signin"
     | "/auth/_auth-layout/signup"
     | "/user/$userId"
@@ -256,6 +269,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AuthAuthLayoutSigninRouteImport;
       parentRoute: typeof AuthAuthLayoutRoute;
     };
+    "/auth/_auth-layout/forgot-password": {
+      id: "/auth/_auth-layout/forgot-password";
+      path: "/forgot-password";
+      fullPath: "/auth/forgot-password";
+      preLoaderRoute: typeof AuthAuthLayoutForgotPasswordRouteImport;
+      parentRoute: typeof AuthAuthLayoutRoute;
+    };
     "/user/$userId/_onboarding-layout/onboarding": {
       id: "/user/$userId/_onboarding-layout/onboarding";
       path: "/onboarding";
@@ -297,11 +317,13 @@ const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
 );
 
 interface AuthAuthLayoutRouteChildren {
+  AuthAuthLayoutForgotPasswordRoute: typeof AuthAuthLayoutForgotPasswordRoute;
   AuthAuthLayoutSigninRoute: typeof AuthAuthLayoutSigninRoute;
   AuthAuthLayoutSignupRoute: typeof AuthAuthLayoutSignupRoute;
 }
 
 const AuthAuthLayoutRouteChildren: AuthAuthLayoutRouteChildren = {
+  AuthAuthLayoutForgotPasswordRoute: AuthAuthLayoutForgotPasswordRoute,
   AuthAuthLayoutSigninRoute: AuthAuthLayoutSigninRoute,
   AuthAuthLayoutSignupRoute: AuthAuthLayoutSignupRoute,
 };
