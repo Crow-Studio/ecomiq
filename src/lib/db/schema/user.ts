@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-deprecated */
 import { sql } from "drizzle-orm";
 import { boolean, check, index, text, timestamp, varchar } from "drizzle-orm/pg-core";
-import { generateNanoId, pgTable } from "./types";
+import { generateNanoId, pgTable } from "./utils";
 
 // user
 export const user = pgTable(

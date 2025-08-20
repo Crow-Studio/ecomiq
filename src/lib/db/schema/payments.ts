@@ -11,8 +11,8 @@ import {
 } from "drizzle-orm/pg-core";
 import * as enums from "./enums";
 import { store } from "./store";
-import { generateNanoId, pgTable } from "./types";
 import { user } from "./user";
+import { generateNanoId, pgTable } from "./utils";
 
 // Paystack Customer
 export const paystack_customer = pgTable("paystack_customer", {

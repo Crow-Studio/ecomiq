@@ -8,7 +8,9 @@ export function enumToPgEnum<T extends Record<string, string>>(
 
 // Enums
 export enum UserRole {
-  ADMIN = "admin",
+  OWNER = "owner",
+  MANAGER = "manager",
+  STAFF = "staff",
 }
 
 export enum CurrencyEnum {
@@ -58,7 +60,7 @@ export enum LedgerEntryTypeEnum {
   DEBIT = "debit",
 }
 
-export const user_role_rnum = pgEnum("user_role", enumToPgEnum(UserRole));
+export const user_role_enum = pgEnum("user_role", enumToPgEnum(UserRole));
 export const currency_enum = pgEnum("currency_enum", enumToPgEnum(CurrencyEnum));
 export const billing_cyle_enum = pgEnum(
   "billing_cyle_enum",

@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { ThemeToggle } from "~/components/theme-toggle";
 import { getAuthenticatedUser } from "~/lib/auth/functions/auth";
 import { signoutUserAction } from "~/lib/auth/functions/signout-user";
+import { UserRole } from "~/lib/db/schema";
 import { getStoresQuery } from "~/lib/queries/stores";
 
 export const Route = createFileRoute("/user/$userId/_my-stores-layout")({
@@ -17,6 +18,25 @@ export const Route = createFileRoute("/user/$userId/_my-stores-layout")({
     }
 
     const stores = await queryClient.ensureQueryData(getStoresQuery(params.userId));
+
+    // Identify all stores where the user is the OWNER
+    const ownedStores = stores.filter((s) => s.role === UserRole.OWNER);
+
+    /**
+     * Access Control:
+     * - If user has no active subscription
+     * - AND does not own any store
+     * → they are redirected to the dashboard of the first available store
+     */
+    if (!user.subscription_id && ownedStores.length === 0 && stores.length > 0) {
+      throw redirect({
+        to: "/user/$userId/store/$storeId/dashboard",
+        params: {
+          userId: user.id,
+          storeId: stores[0].id,
+        },
+      });
+    }
 
     return { user, session, stores };
   },

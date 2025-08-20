@@ -7,16 +7,28 @@ import {
   wallets,
   withdrawals,
 } from "./payments";
-import { store } from "./store";
+import { store, store_members } from "./store";
 import { user } from "./user";
 
 /* ------------------- RELATIONS ------------------- */
 export const users_relations = relations(user, ({ many }) => ({
   stores: many(store),
+  memberships: many(store_members),
   subscriptions: many(subscriptions),
   wallet: many(wallets),
   ledger: many(ledger_entries),
   withdrawals: many(withdrawals),
+}));
+
+export const store_relations = relations(store, ({ one, many }) => ({
+  owner: one(user, { fields: [store.owner_id], references: [user.id] }),
+  members: many(store_members),
+  payments: many(payments),
+}));
+
+export const store_members_relations = relations(store_members, ({ one }) => ({
+  user: one(user, { fields: [store_members.user_id], references: [user.id] }),
+  store: one(store, { fields: [store_members.store_id], references: [store.id] }),
 }));
 
 export const plans_relations = relations(plans, ({ many }) => ({
@@ -26,11 +38,6 @@ export const plans_relations = relations(plans, ({ many }) => ({
 export const subscriptions_relations = relations(subscriptions, ({ one }) => ({
   user: one(user, { fields: [subscriptions.user_id], references: [user.id] }),
   plan: one(plans, { fields: [subscriptions.plan_id], references: [plans.id] }),
-}));
-
-export const store_relations = relations(store, ({ one, many }) => ({
-  owner: one(user, { fields: [store.owner_id], references: [user.id] }),
-  payments: many(payments),
 }));
 
 export const payments_relations = relations(payments, ({ one }) => ({
