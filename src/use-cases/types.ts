@@ -21,6 +21,7 @@ export interface User {
   avatar: string;
   email_verified: boolean;
   registered_2fa: boolean;
+  subscription_id: string | null;
   created_at: Date;
   updated_at: Date | null;
 }

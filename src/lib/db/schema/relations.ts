@@ -3,11 +3,11 @@ import {
   ledger_entries,
   payments,
   plans,
-  store,
   subscriptions,
   wallets,
   withdrawals,
 } from "./payments";
+import { store } from "./store";
 import { user } from "./user";
 
 /* ------------------- RELATIONS ------------------- */

@@ -10,6 +10,7 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import * as enums from "./enums";
+import { store } from "./store";
 import { generateNanoId, pgTable } from "./types";
 import { user } from "./user";
 
@@ -90,28 +91,7 @@ export const subscriptions = pgTable(
   },
   (t) => ({ userIdx: index("user_subscriptions_user_idx").on(t.user_id) }),
 );
-// stores
-export const store = pgTable(
-  "stores",
-  {
-    id: varchar("id", { length: 16 })
-      .primaryKey()
-      .$defaultFn(() => generateNanoId()),
-    owner_id: text("owner_id")
-      .notNull()
-      .references(() => user.id, { onDelete: "cascade" }),
-    name: varchar("name", { length: 200 }).notNull(),
-    currency: enums.currency_enum("currency").default(enums.CurrencyEnum.KES).notNull(),
-    active: boolean("active").default(true).notNull(),
-    created_at: timestamp("created_at", { mode: "date", precision: 3 })
-      .notNull()
-      .defaultNow(),
-    updated_at: timestamp("updated_at", { mode: "date", precision: 3 }).$onUpdate(
-      () => new Date(),
-    ),
-  },
-  (t) => ({ ownerIdx: index("stores_owner_idx").on(t.owner_id) }),
-);
+
 // Payments from customers, Paystack deducts processing fee, platform takes one percent commission
 export const payments = pgTable(
   "payments",
