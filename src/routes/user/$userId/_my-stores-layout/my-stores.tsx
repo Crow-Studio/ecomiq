@@ -10,8 +10,8 @@ export const Route = createFileRoute("/user/$userId/_my-stores-layout/my-stores"
   component: RouteComponent,
   loader({ context }) {
     return {
-      username: context.user.username
-    }
+      username: context.user.username,
+    };
   },
   head: ({ loaderData }) => ({
     meta: [

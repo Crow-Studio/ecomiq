@@ -39,7 +39,7 @@ export const ServerRoute = createServerFileRoute(
 
       const existingAccount = await getAccountByGoogleIdUseCase(googleUser.sub);
 
-      const metadata = await createSessionMetadata(headers)
+      const metadata = await createSessionMetadata(headers);
 
       if (existingAccount) {
         await setSession(existingAccount.user_id, metadata);

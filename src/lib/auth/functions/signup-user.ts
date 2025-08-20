@@ -124,7 +124,7 @@ export const signupUserAction = createServerFn({
       // Set session
       try {
         const headers = Object.fromEntries(request.headers.entries());
-        const metadata = await createSessionMetadata(headers)
+        const metadata = await createSessionMetadata(headers);
         await setSession(newUser.id, metadata);
       } catch (error) {
         console.error("Error setting session:", error);

@@ -97,7 +97,7 @@ export const signinUserAction = createServerFn({
         await deleteUniqueCode(uniqueCodeRequest.id);
         const headers = Object.fromEntries(request.headers.entries());
 
-        const metadata = await createSessionMetadata(headers)
+        const metadata = await createSessionMetadata(headers);
 
         await setSession(existingUser.id, metadata);
       } catch (error) {

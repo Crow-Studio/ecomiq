@@ -1,7 +1,7 @@
+import { UAParser } from "ua-parser-js";
 import { createOauthAccount } from "~/data-access/accounts";
 import { createOauthUser, getUserByEmail } from "~/data-access/users";
 import { GoogleUser, SessionMetadata } from "./types";
-import { UAParser } from "ua-parser-js";
 
 export async function createGoogleUserUseCase(googleUser: GoogleUser) {
   let existingUser = await getUserByEmail(googleUser.email);
@@ -18,7 +18,6 @@ export async function createGoogleUserUseCase(googleUser: GoogleUser) {
 
   return existingUser.id;
 }
-
 
 export async function createSessionMetadata(headers: {
   [k: string]: string;
@@ -69,5 +68,5 @@ export async function createSessionMetadata(headers: {
     device: result.device.vendor || "Unknown Device",
     os: result.os.name || "Unknown OS",
     ipAddress: localIp,
-  }
+  };
 }
