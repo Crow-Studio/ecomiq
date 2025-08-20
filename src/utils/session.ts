@@ -1,6 +1,6 @@
 import { getCookie, setCookie } from "@tanstack/react-start/server";
 import { env } from "~/env/server";
-import { type UserId } from "~/use-cases/types";
+import { SessionMetadata, type UserId } from "~/use-cases/types";
 import { createSession, generateSessionToken, validateRequest } from "./auth";
 import { AuthenticationError } from "./errors";
 
@@ -47,8 +47,8 @@ export const assertAuthenticated = async () => {
   return user;
 };
 
-export async function setSession(userId: UserId) {
+export async function setSession(userId: UserId, metadata: SessionMetadata) {
   const token = generateSessionToken();
-  const session = await createSession(token, userId);
+  const session = await createSession(token, userId, metadata);
   await setSessionTokenCookie(token, session.expires_at);
 }

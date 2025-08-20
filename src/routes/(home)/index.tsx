@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import Faqs from "~/components/home/faqs";
 import Hero from "~/components/home/hero";
 import Footer from "~/components/home/navigations/footer";
@@ -11,19 +11,7 @@ import { checkAuthenticatedUser } from "~/lib/auth/functions/auth";
 export const Route = createFileRoute("/(home)/")({
   component: Home,
   beforeLoad: async () => {
-    const REDIRECT_URL = "/dashboard";
-
-    const { user } = await checkAuthenticatedUser();
-
-    if (user) {
-      throw redirect({
-        to: REDIRECT_URL,
-      });
-    }
-
-    return {
-      redirectUrl: REDIRECT_URL,
-    };
+    await checkAuthenticatedUser();
   },
 });
 

@@ -20,6 +20,7 @@ import { seo } from "~/lib/seo";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { useEffect, useRef } from "react";
+import ModalProvider from "~/providers/modal-provider";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -89,6 +90,7 @@ function RootComponent() {
 function RootDocument({ children }: { readonly children: React.ReactNode }) {
   const routerState = useRouterState();
   const prevPathnameRef = useRef("");
+
   useEffect(() => {
     const currentPathname = routerState.location.pathname;
     const pathnameChanged = prevPathnameRef.current !== currentPathname;
@@ -100,6 +102,10 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
 
     if (routerState.status === "idle") {
       NProgress.done();
+      const timeoutId = setTimeout(() => {
+        NProgress.remove();
+      }, 300);
+      return () => clearTimeout(timeoutId);
     }
   }, [routerState.status, routerState.location.pathname]);
 
@@ -125,11 +131,10 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
         <ThemeProvider>
           {children}
           <Toaster richColors closeButton />
+          <ModalProvider />
         </ThemeProvider>
-
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
-
         <Scripts />
       </body>
     </html>

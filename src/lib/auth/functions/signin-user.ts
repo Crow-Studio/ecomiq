@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getWebRequest } from "@tanstack/react-start/server";
 import { checkUniqueCode, deleteUniqueCode, getUserByEmail } from "~/data-access/users";
 import { verifyCodeFormSchema } from "~/types/forms";
+import { createSessionMetadata } from "~/use-cases/users";
 import { isWithinExpirationDate, verifyHashedPassword } from "~/utils/auth";
 import {
   EmailNotInUseError,
@@ -23,6 +25,8 @@ export const signinUserAction = createServerFn({
   })
   .handler(async ({ data }) => {
     try {
+      const request = getWebRequest();
+
       if (!data.email?.trim() || !data.code?.trim() || !data.password?.trim()) {
         throw new InvalidCredentialsError(
           "Email, code, and password are required and cannot be empty",
@@ -91,8 +95,11 @@ export const signinUserAction = createServerFn({
 
       try {
         await deleteUniqueCode(uniqueCodeRequest.id);
+        const headers = Object.fromEntries(request.headers.entries());
 
-        await setSession(existingUser.id);
+        const metadata = await createSessionMetadata(headers)
+
+        await setSession(existingUser.id, metadata);
       } catch (error) {
         console.error("Critical error during signin completion:", {
           userId: existingUser.id,
@@ -111,6 +118,7 @@ export const signinUserAction = createServerFn({
 
       return {
         message: "Successfully signed in! Welcome back.",
+        user_id: existingUser.id,
       };
     } catch (error) {
       console.error("Signin process failed:", {

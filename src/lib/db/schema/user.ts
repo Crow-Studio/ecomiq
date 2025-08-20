@@ -15,6 +15,7 @@ export const user = pgTable(
     avatar: text("avatar").notNull(),
     password: text("password"),
     email_verified: boolean("email_verified").notNull().default(false),
+    registered_2fa: boolean("registered_2fa").notNull().default(false),
     created_at: timestamp("created_at", { mode: "date", precision: 3 })
       .notNull()
       .defaultNow(),
@@ -75,6 +76,12 @@ export const session = pgTable("session", {
   user_id: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
+  two_factor_verified: boolean("two_factor_verified").notNull().default(false),
+  ip_address: varchar("ip_address", { length: 100 }),
+  location: text("location"),
+  device: text("device"),
+  browser: text("browser"),
+  os: text("os"),
   expires_at: timestamp("expires_at", { withTimezone: true, mode: "date" }).notNull(),
   created_at: timestamp("created_at", { mode: "date", precision: 3 })
     .notNull()

@@ -57,7 +57,10 @@ export default function VerifyOTPSignin({ setIsOTPSent, formData }: Props) {
       toast.success(res.message, { position: "top-center" });
 
       navigate({
-        to: "/dashboard",
+        to: "/user/$userId/my-stores",
+        params: {
+          userId: res.user_id,
+        },
       });
     } catch (error) {
       if (error instanceof Error) {

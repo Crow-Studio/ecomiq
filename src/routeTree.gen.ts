@@ -12,15 +12,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { createServerRootRoute } from "@tanstack/react-start/server";
 
 import { Route as rootRouteImport } from "./routes/__root";
-import { Route as DashboardRouteRouteImport } from "./routes/dashboard/route";
-import { Route as DashboardIndexRouteImport } from "./routes/dashboard/index";
 import { Route as homeIndexRouteImport } from "./routes/(home)/index";
 import { Route as AuthAuthLayoutRouteImport } from "./routes/auth/_auth-layout";
 import { Route as UserUserIdOnboardingLayoutRouteImport } from "./routes/user/$userId/_onboarding-layout";
+import { Route as UserUserIdMyStoresLayoutRouteImport } from "./routes/user/$userId/_my-stores-layout";
 import { Route as AuthAuthLayoutSignupRouteImport } from "./routes/auth/_auth-layout/signup";
 import { Route as AuthAuthLayoutSigninRouteImport } from "./routes/auth/_auth-layout/signin";
 import { Route as AuthAuthLayoutForgotPasswordRouteImport } from "./routes/auth/_auth-layout/forgot-password";
 import { Route as UserUserIdOnboardingLayoutOnboardingRouteImport } from "./routes/user/$userId/_onboarding-layout/onboarding";
+import { Route as UserUserIdMyStoresLayoutMyStoresRouteImport } from "./routes/user/$userId/_my-stores-layout/my-stores";
 import { ServerRoute as ApiOauthSigninGoogleIndexServerRouteImport } from "./routes/api/oauth/signin/google/index";
 import { ServerRoute as ApiOauthSigninGoogleCallbackIndexServerRouteImport } from "./routes/api/oauth/signin/google/callback/index";
 
@@ -33,20 +33,10 @@ const AuthRoute = AuthRouteImport.update({
   path: "/auth",
   getParentRoute: () => rootRouteImport,
 } as any);
-const DashboardRouteRoute = DashboardRouteRouteImport.update({
-  id: "/dashboard",
-  path: "/dashboard",
-  getParentRoute: () => rootRouteImport,
-} as any);
 const UserUserIdRoute = UserUserIdRouteImport.update({
   id: "/user/$userId",
   path: "/user/$userId",
   getParentRoute: () => rootRouteImport,
-} as any);
-const DashboardIndexRoute = DashboardIndexRouteImport.update({
-  id: "/",
-  path: "/",
-  getParentRoute: () => DashboardRouteRoute,
 } as any);
 const homeIndexRoute = homeIndexRouteImport.update({
   id: "/(home)/",
@@ -60,6 +50,11 @@ const AuthAuthLayoutRoute = AuthAuthLayoutRouteImport.update({
 const UserUserIdOnboardingLayoutRoute =
   UserUserIdOnboardingLayoutRouteImport.update({
     id: "/_onboarding-layout",
+    getParentRoute: () => UserUserIdRoute,
+  } as any);
+const UserUserIdMyStoresLayoutRoute =
+  UserUserIdMyStoresLayoutRouteImport.update({
+    id: "/_my-stores-layout",
     getParentRoute: () => UserUserIdRoute,
   } as any);
 const AuthAuthLayoutSignupRoute = AuthAuthLayoutSignupRouteImport.update({
@@ -84,6 +79,12 @@ const UserUserIdOnboardingLayoutOnboardingRoute =
     path: "/onboarding",
     getParentRoute: () => UserUserIdOnboardingLayoutRoute,
   } as any);
+const UserUserIdMyStoresLayoutMyStoresRoute =
+  UserUserIdMyStoresLayoutMyStoresRouteImport.update({
+    id: "/my-stores",
+    path: "/my-stores",
+    getParentRoute: () => UserUserIdMyStoresLayoutRoute,
+  } as any);
 const ApiOauthSigninGoogleIndexServerRoute =
   ApiOauthSigninGoogleIndexServerRouteImport.update({
     id: "/api/oauth/signin/google/",
@@ -98,79 +99,76 @@ const ApiOauthSigninGoogleCallbackIndexServerRoute =
   } as any);
 
 export interface FileRoutesByFullPath {
-  "/dashboard": typeof DashboardRouteRouteWithChildren;
   "/auth": typeof AuthAuthLayoutRouteWithChildren;
   "/": typeof homeIndexRoute;
-  "/dashboard/": typeof DashboardIndexRoute;
   "/auth/forgot-password": typeof AuthAuthLayoutForgotPasswordRoute;
   "/auth/signin": typeof AuthAuthLayoutSigninRoute;
   "/auth/signup": typeof AuthAuthLayoutSignupRoute;
   "/user/$userId": typeof UserUserIdOnboardingLayoutRouteWithChildren;
+  "/user/$userId/my-stores": typeof UserUserIdMyStoresLayoutMyStoresRoute;
   "/user/$userId/onboarding": typeof UserUserIdOnboardingLayoutOnboardingRoute;
 }
 export interface FileRoutesByTo {
   "/auth": typeof AuthAuthLayoutRouteWithChildren;
   "/": typeof homeIndexRoute;
-  "/dashboard": typeof DashboardIndexRoute;
   "/auth/forgot-password": typeof AuthAuthLayoutForgotPasswordRoute;
   "/auth/signin": typeof AuthAuthLayoutSigninRoute;
   "/auth/signup": typeof AuthAuthLayoutSignupRoute;
   "/user/$userId": typeof UserUserIdOnboardingLayoutRouteWithChildren;
+  "/user/$userId/my-stores": typeof UserUserIdMyStoresLayoutMyStoresRoute;
   "/user/$userId/onboarding": typeof UserUserIdOnboardingLayoutOnboardingRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
-  "/dashboard": typeof DashboardRouteRouteWithChildren;
   "/auth": typeof AuthRouteWithChildren;
   "/auth/_auth-layout": typeof AuthAuthLayoutRouteWithChildren;
   "/(home)/": typeof homeIndexRoute;
-  "/dashboard/": typeof DashboardIndexRoute;
   "/auth/_auth-layout/forgot-password": typeof AuthAuthLayoutForgotPasswordRoute;
   "/auth/_auth-layout/signin": typeof AuthAuthLayoutSigninRoute;
   "/auth/_auth-layout/signup": typeof AuthAuthLayoutSignupRoute;
   "/user/$userId": typeof UserUserIdRouteWithChildren;
+  "/user/$userId/_my-stores-layout": typeof UserUserIdMyStoresLayoutRouteWithChildren;
   "/user/$userId/_onboarding-layout": typeof UserUserIdOnboardingLayoutRouteWithChildren;
+  "/user/$userId/_my-stores-layout/my-stores": typeof UserUserIdMyStoresLayoutMyStoresRoute;
   "/user/$userId/_onboarding-layout/onboarding": typeof UserUserIdOnboardingLayoutOnboardingRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | "/dashboard"
     | "/auth"
     | "/"
-    | "/dashboard/"
     | "/auth/forgot-password"
     | "/auth/signin"
     | "/auth/signup"
     | "/user/$userId"
+    | "/user/$userId/my-stores"
     | "/user/$userId/onboarding";
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/auth"
     | "/"
-    | "/dashboard"
     | "/auth/forgot-password"
     | "/auth/signin"
     | "/auth/signup"
     | "/user/$userId"
+    | "/user/$userId/my-stores"
     | "/user/$userId/onboarding";
   id:
     | "__root__"
-    | "/dashboard"
     | "/auth"
     | "/auth/_auth-layout"
     | "/(home)/"
-    | "/dashboard/"
     | "/auth/_auth-layout/forgot-password"
     | "/auth/_auth-layout/signin"
     | "/auth/_auth-layout/signup"
     | "/user/$userId"
+    | "/user/$userId/_my-stores-layout"
     | "/user/$userId/_onboarding-layout"
+    | "/user/$userId/_my-stores-layout/my-stores"
     | "/user/$userId/_onboarding-layout/onboarding";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  DashboardRouteRoute: typeof DashboardRouteRouteWithChildren;
   AuthRoute: typeof AuthRouteWithChildren;
   homeIndexRoute: typeof homeIndexRoute;
   UserUserIdRoute: typeof UserUserIdRouteWithChildren;
@@ -213,26 +211,12 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AuthRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/dashboard": {
-      id: "/dashboard";
-      path: "/dashboard";
-      fullPath: "/dashboard";
-      preLoaderRoute: typeof DashboardRouteRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
     "/user/$userId": {
       id: "/user/$userId";
       path: "/user/$userId";
       fullPath: "/user/$userId";
       preLoaderRoute: typeof UserUserIdRouteImport;
       parentRoute: typeof rootRouteImport;
-    };
-    "/dashboard/": {
-      id: "/dashboard/";
-      path: "/";
-      fullPath: "/dashboard/";
-      preLoaderRoute: typeof DashboardIndexRouteImport;
-      parentRoute: typeof DashboardRouteRoute;
     };
     "/(home)/": {
       id: "/(home)/";
@@ -250,9 +234,16 @@ declare module "@tanstack/react-router" {
     };
     "/user/$userId/_onboarding-layout": {
       id: "/user/$userId/_onboarding-layout";
-      path: "/user/$userId";
+      path: "";
       fullPath: "/user/$userId";
       preLoaderRoute: typeof UserUserIdOnboardingLayoutRouteImport;
+      parentRoute: typeof UserUserIdRoute;
+    };
+    "/user/$userId/_my-stores-layout": {
+      id: "/user/$userId/_my-stores-layout";
+      path: "/user/$userId";
+      fullPath: "/user/$userId";
+      preLoaderRoute: typeof UserUserIdMyStoresLayoutRouteImport;
       parentRoute: typeof UserUserIdRoute;
     };
     "/auth/_auth-layout/signup": {
@@ -283,6 +274,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof UserUserIdOnboardingLayoutOnboardingRouteImport;
       parentRoute: typeof UserUserIdOnboardingLayoutRoute;
     };
+    "/user/$userId/_my-stores-layout/my-stores": {
+      id: "/user/$userId/_my-stores-layout/my-stores";
+      path: "/my-stores";
+      fullPath: "/user/$userId/my-stores";
+      preLoaderRoute: typeof UserUserIdMyStoresLayoutMyStoresRouteImport;
+      parentRoute: typeof UserUserIdMyStoresLayoutRoute;
+    };
   }
 }
 declare module "@tanstack/react-start/server" {
@@ -303,18 +301,6 @@ declare module "@tanstack/react-start/server" {
     };
   }
 }
-
-interface DashboardRouteRouteChildren {
-  DashboardIndexRoute: typeof DashboardIndexRoute;
-}
-
-const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
-  DashboardIndexRoute: DashboardIndexRoute,
-};
-
-const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
-  DashboardRouteRouteChildren,
-);
 
 interface AuthAuthLayoutRouteChildren {
   AuthAuthLayoutForgotPasswordRoute: typeof AuthAuthLayoutForgotPasswordRoute;
@@ -342,6 +328,21 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren);
 
+interface UserUserIdMyStoresLayoutRouteChildren {
+  UserUserIdMyStoresLayoutMyStoresRoute: typeof UserUserIdMyStoresLayoutMyStoresRoute;
+}
+
+const UserUserIdMyStoresLayoutRouteChildren: UserUserIdMyStoresLayoutRouteChildren =
+  {
+    UserUserIdMyStoresLayoutMyStoresRoute:
+      UserUserIdMyStoresLayoutMyStoresRoute,
+  };
+
+const UserUserIdMyStoresLayoutRouteWithChildren =
+  UserUserIdMyStoresLayoutRoute._addFileChildren(
+    UserUserIdMyStoresLayoutRouteChildren,
+  );
+
 interface UserUserIdOnboardingLayoutRouteChildren {
   UserUserIdOnboardingLayoutOnboardingRoute: typeof UserUserIdOnboardingLayoutOnboardingRoute;
 }
@@ -358,10 +359,12 @@ const UserUserIdOnboardingLayoutRouteWithChildren =
   );
 
 interface UserUserIdRouteChildren {
+  UserUserIdMyStoresLayoutRoute: typeof UserUserIdMyStoresLayoutRouteWithChildren;
   UserUserIdOnboardingLayoutRoute: typeof UserUserIdOnboardingLayoutRouteWithChildren;
 }
 
 const UserUserIdRouteChildren: UserUserIdRouteChildren = {
+  UserUserIdMyStoresLayoutRoute: UserUserIdMyStoresLayoutRouteWithChildren,
   UserUserIdOnboardingLayoutRoute: UserUserIdOnboardingLayoutRouteWithChildren,
 };
 
@@ -370,7 +373,6 @@ const UserUserIdRouteWithChildren = UserUserIdRoute._addFileChildren(
 );
 
 const rootRouteChildren: RootRouteChildren = {
-  DashboardRouteRoute: DashboardRouteRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
   homeIndexRoute: homeIndexRoute,
   UserUserIdRoute: UserUserIdRouteWithChildren,

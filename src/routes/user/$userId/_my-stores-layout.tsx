@@ -1,11 +1,21 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { ThemeToggle } from "~/components/theme-toggle";
-import { checkAuthenticatedUser } from "~/lib/auth/functions/auth";
+import { getAuthenticatedUser } from "~/lib/auth/functions/auth";
+import { signoutUserAction } from "~/lib/auth/functions/signout-user";
 
-export const Route = createFileRoute("/auth/_auth-layout")({
+export const Route = createFileRoute("/user/$userId/_my-stores-layout")({
   component: RouteComponent,
-  beforeLoad: async () => {
-    await checkAuthenticatedUser();
+  beforeLoad: async ({ params }) => {
+    const { user, session } = await getAuthenticatedUser();
+
+    if (params.userId !== user.id) {
+      await signoutUserAction();
+      throw redirect({
+        to: "/auth/signin",
+      });
+    }
+
+    return { user, session };
   },
 });
 
@@ -22,7 +32,7 @@ function RouteComponent() {
       <figure className="pointer-events-none absolute right-[7vw] bottom-[-50px] z-20 hidden aspect-square w-[30vw] rounded-full bg-orange-100 opacity-50 blur-[100px] md:block dark:bg-orange-600/20" />
 
       <div className="relative z-10 flex min-h-screen w-full items-center justify-center">
-        <div className="w-full max-w-md p-4">
+        <div className="w-full max-w-lg p-4">
           <div className="absolute top-5 right-16 sm:right-24 md:right-36">
             <ThemeToggle />
           </div>

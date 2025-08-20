@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { createServerFn } from "@tanstack/react-start";
+import { getWebRequest } from "@tanstack/react-start/server";
 import {
   checkUniqueCode,
   createUser,
@@ -8,6 +9,7 @@ import {
 } from "~/data-access/users";
 import { capitalize } from "~/lib/utils";
 import { verifyCodeFormSchema } from "~/types/forms";
+import { createSessionMetadata } from "~/use-cases/users";
 import { hashPassword, isWithinExpirationDate } from "~/utils/auth";
 import { EmailInUseError } from "~/utils/errors";
 import { setSession } from "~/utils/session";
@@ -32,6 +34,7 @@ export const signupUserAction = createServerFn({
   })
   .handler(async ({ data }) => {
     try {
+      const request = getWebRequest();
       // Input validation
       if (!data.email || !data.code || !data.password) {
         throw new Error("Email, code, and password are required!");
@@ -86,7 +89,7 @@ export const signupUserAction = createServerFn({
       const firstName = faker.person.firstName();
       const lastName = faker.person.lastName();
       const fullName = `${capitalize(firstName)} ${capitalize(lastName)}`;
-      const imageText = `https://api.dicebear.com/9.x/initials/svg?seed${fullName}`;
+      const imageText = `https://avatar.vercel.sh/vercel.svg?text=${capitalize(firstName.charAt(0))}${capitalize(lastName.charAt(0))}`;
 
       // Hash password
       let hashedPassword: string;
@@ -120,7 +123,9 @@ export const signupUserAction = createServerFn({
 
       // Set session
       try {
-        await setSession(newUser.id);
+        const headers = Object.fromEntries(request.headers.entries());
+        const metadata = await createSessionMetadata(headers)
+        await setSession(newUser.id, metadata);
       } catch (error) {
         console.error("Error setting session:", error);
         throw new Error("Failed to create session");
@@ -128,6 +133,7 @@ export const signupUserAction = createServerFn({
 
       return {
         message: "You've successfully signed up and verified your account!",
+        user_id: newUser.id,
       };
     } catch (error) {
       console.error("Signup error:", error);

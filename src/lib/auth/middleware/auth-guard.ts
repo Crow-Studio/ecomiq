@@ -42,7 +42,12 @@ export const unauthenticatedMiddleware = createMiddleware({ type: "function" })
     const { user, session } = await validateRequest();
 
     if (session) {
-      throw redirect({ to: "/dashboard" });
+      throw redirect({
+        to: "/user/$userId/my-stores",
+        params: {
+          userId: user.id,
+        },
+      });
     }
 
     return next({

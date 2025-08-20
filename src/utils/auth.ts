@@ -10,7 +10,7 @@ import argon2 from "argon2";
 import { eq } from "drizzle-orm";
 import { env } from "~/env/server";
 import { db, tables } from "~/lib/db";
-import { Session, User, UserId } from "~/use-cases/types";
+import { Session, SessionMetadata, User, UserId } from "~/use-cases/types";
 import { getSessionToken } from "./session";
 
 const SESSION_REFRESH_INTERVAL_MS = 1000 * 60 * 60 * 24 * 15;
@@ -88,14 +88,26 @@ export function generateSessionToken(): string {
   return token;
 }
 
-export async function createSession(token: string, user_id: UserId): Promise<Session> {
+export async function createSession(
+  token: string,
+  user_id: UserId,
+  metadata: SessionMetadata,
+): Promise<Session> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
   const session: Session = {
     id: sessionId,
     user_id,
     expires_at: new Date(Date.now() + SESSION_MAX_DURATION_MS),
   };
-  await db.insert(tables.session).values(session);
+  await db.insert(tables.session).values({
+    id: sessionId,
+    user_id,
+    expires_at: new Date(Date.now() + SESSION_MAX_DURATION_MS),
+    location: metadata.location,
+    browser: metadata.browser,
+    device: metadata.device,
+    os: metadata.os,
+  });
   return session;
 }
 

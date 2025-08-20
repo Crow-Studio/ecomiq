@@ -6,11 +6,9 @@ import {
 import { OAuth2RequestError } from "arctic";
 import { getAccountByGoogleIdUseCase } from "~/use-cases/accounts";
 import { GoogleUser } from "~/use-cases/types";
-import { createGoogleUserUseCase } from "~/use-cases/users";
+import { createGoogleUserUseCase, createSessionMetadata } from "~/use-cases/users";
 import { googleAuth } from "~/utils/auth";
 import { setSession } from "~/utils/session";
-
-const AFTER_LOGIN_URL = "/";
 
 export const ServerRoute = createServerFileRoute(
   "/api/oauth/signin/google/callback/",
@@ -21,7 +19,7 @@ export const ServerRoute = createServerFileRoute(
     const state = url.searchParams.get("state");
     const storedState = getCookie("google_oauth_state") ?? null;
     const codeVerifier = getCookie("google_code_verifier") ?? null;
-    const redirectUri = getCookie("google_redirect_uri") ?? AFTER_LOGIN_URL;
+    const headers = Object.fromEntries(request.headers.entries());
 
     if (!code || !state || !storedState || state !== storedState || !codeVerifier) {
       return new Response(null, { status: 400 });
@@ -41,21 +39,23 @@ export const ServerRoute = createServerFileRoute(
 
       const existingAccount = await getAccountByGoogleIdUseCase(googleUser.sub);
 
+      const metadata = await createSessionMetadata(headers)
+
       if (existingAccount) {
-        await setSession(existingAccount.user_id);
+        await setSession(existingAccount.user_id, metadata);
         return new Response(null, {
           status: 302,
-          headers: { Location: redirectUri },
+          headers: { Location: `/user/${existingAccount.user_id}/my-stores` },
         });
       }
 
       const userId = await createGoogleUserUseCase(googleUser);
 
-      await setSession(userId);
+      await setSession(userId, metadata);
 
       return new Response(null, {
         status: 302,
-        headers: { Location: redirectUri },
+        headers: { Location: `/user/${userId}/my-stores` },
       });
     } catch (e) {
       console.error(e);
