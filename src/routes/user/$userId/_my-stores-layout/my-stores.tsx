@@ -31,7 +31,7 @@ export const Route = createFileRoute("/user/$userId/_my-stores-layout/my-stores"
 });
 
 function RouteComponent() {
-  const { user } = Route.useRouteContext();
+  const { user, stores } = Route.useRouteContext();
   return (
     <div className="bg-card text-card-foreground flex flex-col gap-y-5 rounded-xl border p-5 shadow-sm">
       <div className="flex items-center justify-between">
@@ -48,6 +48,10 @@ function RouteComponent() {
         </div>
 
         <div>
+          <div>
+            <p>Below data is fetched from db instantly</p>
+            <p>Stores: {stores.length > 0 ? stores.length : "No stores found"}</p>
+          </div>
           <div className="flex flex-col items-center gap-y-1">
             <div className="flex items-center justify-center">
               <div className="bg-brand/20 text-brand grid size-28 place-content-center rounded-full p-2">
