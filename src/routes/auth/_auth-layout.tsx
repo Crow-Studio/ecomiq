@@ -1,11 +1,11 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { ThemeToggle } from "~/components/theme-toggle";
-import { checkAuthenticatedUser } from "~/lib/auth/functions/auth";
+import { checkAuthenticatedUserFn } from "~/lib/auth/functions/auth";
 
 export const Route = createFileRoute("/auth/_auth-layout")({
   component: RouteComponent,
   beforeLoad: async () => {
-    await checkAuthenticatedUser();
+    await checkAuthenticatedUserFn();
   },
 });
 

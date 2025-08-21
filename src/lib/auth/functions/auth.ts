@@ -5,7 +5,7 @@ import {
 } from "../middleware/auth-guard";
 
 // Use authenticatedMiddleware for dashboard (requires auth)
-export const getAuthenticatedUser = createServerFn({
+export const getAuthenticatedUserFn = createServerFn({
   method: "GET",
 })
   .middleware([authenticatedMiddleware]) // Changed from unauthenticatedMiddleware
@@ -14,7 +14,7 @@ export const getAuthenticatedUser = createServerFn({
   });
 
 // Use unauthenticatedMiddleware for auth pages (no auth required)
-export const checkAuthenticatedUser = createServerFn({
+export const checkAuthenticatedUserFn = createServerFn({
   method: "GET",
 })
   .middleware([unauthenticatedMiddleware]) // Changed from authenticatedMiddleware

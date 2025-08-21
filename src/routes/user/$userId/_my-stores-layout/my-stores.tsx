@@ -48,12 +48,9 @@ function RouteComponent() {
           </Button>
         </div>
 
-        <div className="space-y-3">
-          <div>
-            <p>Below data is fetched from db instantly</p>
-            <p>Stores: {stores.length > 0 ? stores.length : "No stores found"}</p>
-          </div>
+        {stores.length > 0 ? (
           <UserStores stores={stores} />
+        ) : (
           <div className="flex flex-col items-center gap-y-1">
             <div className="flex items-center justify-center">
               <div className="bg-brand/20 text-brand grid size-28 place-content-center rounded-full p-2">
@@ -64,7 +61,7 @@ function RouteComponent() {
               Currently you have no stores. Click the button above to create a new store.
             </p>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

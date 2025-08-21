@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { ThemeToggle } from "~/components/theme-toggle";
-import { getAuthenticatedUser } from "~/lib/auth/functions/auth";
+import { getAuthenticatedUserFn } from "~/lib/auth/functions/auth";
 import { signoutUserAction } from "~/lib/auth/functions/signout-user";
 import { UserRole } from "~/lib/db/schema";
 import { getStoresQuery } from "~/lib/queries/stores";
@@ -8,7 +8,7 @@ import { getStoresQuery } from "~/lib/queries/stores";
 export const Route = createFileRoute("/user/$userId/_my-stores-layout")({
   component: RouteComponent,
   beforeLoad: async ({ params, context: { queryClient } }) => {
-    const { user, session } = await getAuthenticatedUser();
+    const { user, session } = await getAuthenticatedUserFn();
 
     if (params.userId !== user.id) {
       await signoutUserAction();

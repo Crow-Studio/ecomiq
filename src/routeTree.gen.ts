@@ -14,13 +14,13 @@ import { createServerRootRoute } from "@tanstack/react-start/server";
 import { Route as rootRouteImport } from "./routes/__root";
 import { Route as homeIndexRouteImport } from "./routes/(home)/index";
 import { Route as AuthAuthLayoutRouteImport } from "./routes/auth/_auth-layout";
-import { Route as UserUserIdOnboardingLayoutRouteImport } from "./routes/user/$userId/_onboarding-layout";
 import { Route as UserUserIdMyStoresLayoutRouteImport } from "./routes/user/$userId/_my-stores-layout";
+import { Route as UserUserIdBillingLayoutRouteImport } from "./routes/user/$userId/_billing-layout";
 import { Route as AuthAuthLayoutSignupRouteImport } from "./routes/auth/_auth-layout/signup";
 import { Route as AuthAuthLayoutSigninRouteImport } from "./routes/auth/_auth-layout/signin";
 import { Route as AuthAuthLayoutForgotPasswordRouteImport } from "./routes/auth/_auth-layout/forgot-password";
-import { Route as UserUserIdOnboardingLayoutOnboardingRouteImport } from "./routes/user/$userId/_onboarding-layout/onboarding";
 import { Route as UserUserIdMyStoresLayoutMyStoresRouteImport } from "./routes/user/$userId/_my-stores-layout/my-stores";
+import { Route as UserUserIdBillingLayoutBillingRouteImport } from "./routes/user/$userId/_billing-layout/billing";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsDashboardRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/dashboard";
 import { ServerRoute as ApiOauthSigninGoogleIndexServerRouteImport } from "./routes/api/oauth/signin/google/index";
@@ -52,16 +52,15 @@ const AuthAuthLayoutRoute = AuthAuthLayoutRouteImport.update({
   id: "/_auth-layout",
   getParentRoute: () => AuthRoute,
 } as any);
-const UserUserIdOnboardingLayoutRoute =
-  UserUserIdOnboardingLayoutRouteImport.update({
-    id: "/_onboarding-layout",
-    getParentRoute: () => UserUserIdRoute,
-  } as any);
 const UserUserIdMyStoresLayoutRoute =
   UserUserIdMyStoresLayoutRouteImport.update({
     id: "/_my-stores-layout",
     getParentRoute: () => UserUserIdRoute,
   } as any);
+const UserUserIdBillingLayoutRoute = UserUserIdBillingLayoutRouteImport.update({
+  id: "/_billing-layout",
+  getParentRoute: () => UserUserIdRoute,
+} as any);
 const AuthAuthLayoutSignupRoute = AuthAuthLayoutSignupRouteImport.update({
   id: "/signup",
   path: "/signup",
@@ -83,17 +82,17 @@ const UserUserIdStoreStoreIdRoute = UserUserIdStoreStoreIdRouteImport.update({
   path: "/store/$storeId",
   getParentRoute: () => UserUserIdRoute,
 } as any);
-const UserUserIdOnboardingLayoutOnboardingRoute =
-  UserUserIdOnboardingLayoutOnboardingRouteImport.update({
-    id: "/onboarding",
-    path: "/onboarding",
-    getParentRoute: () => UserUserIdOnboardingLayoutRoute,
-  } as any);
 const UserUserIdMyStoresLayoutMyStoresRoute =
   UserUserIdMyStoresLayoutMyStoresRouteImport.update({
     id: "/my-stores",
     path: "/my-stores",
     getParentRoute: () => UserUserIdMyStoresLayoutRoute,
+  } as any);
+const UserUserIdBillingLayoutBillingRoute =
+  UserUserIdBillingLayoutBillingRouteImport.update({
+    id: "/billing",
+    path: "/billing",
+    getParentRoute: () => UserUserIdBillingLayoutRoute,
   } as any);
 const UserUserIdStoreStoreIdStoreLayoutsRoute =
   UserUserIdStoreStoreIdStoreLayoutsRouteImport.update({
@@ -125,9 +124,9 @@ export interface FileRoutesByFullPath {
   "/auth/forgot-password": typeof AuthAuthLayoutForgotPasswordRoute;
   "/auth/signin": typeof AuthAuthLayoutSigninRoute;
   "/auth/signup": typeof AuthAuthLayoutSignupRoute;
-  "/user/$userId": typeof UserUserIdOnboardingLayoutRouteWithChildren;
+  "/user/$userId": typeof UserUserIdMyStoresLayoutRouteWithChildren;
+  "/user/$userId/billing": typeof UserUserIdBillingLayoutBillingRoute;
   "/user/$userId/my-stores": typeof UserUserIdMyStoresLayoutMyStoresRoute;
-  "/user/$userId/onboarding": typeof UserUserIdOnboardingLayoutOnboardingRoute;
   "/user/$userId/store/$storeId": typeof UserUserIdStoreStoreIdStoreLayoutsRouteWithChildren;
   "/user/$userId/store/$storeId/dashboard": typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRoute;
 }
@@ -137,9 +136,9 @@ export interface FileRoutesByTo {
   "/auth/forgot-password": typeof AuthAuthLayoutForgotPasswordRoute;
   "/auth/signin": typeof AuthAuthLayoutSigninRoute;
   "/auth/signup": typeof AuthAuthLayoutSignupRoute;
-  "/user/$userId": typeof UserUserIdOnboardingLayoutRouteWithChildren;
+  "/user/$userId": typeof UserUserIdMyStoresLayoutRouteWithChildren;
+  "/user/$userId/billing": typeof UserUserIdBillingLayoutBillingRoute;
   "/user/$userId/my-stores": typeof UserUserIdMyStoresLayoutMyStoresRoute;
-  "/user/$userId/onboarding": typeof UserUserIdOnboardingLayoutOnboardingRoute;
   "/user/$userId/store/$storeId": typeof UserUserIdStoreStoreIdStoreLayoutsRouteWithChildren;
   "/user/$userId/store/$storeId/dashboard": typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRoute;
 }
@@ -152,10 +151,10 @@ export interface FileRoutesById {
   "/auth/_auth-layout/signin": typeof AuthAuthLayoutSigninRoute;
   "/auth/_auth-layout/signup": typeof AuthAuthLayoutSignupRoute;
   "/user/$userId": typeof UserUserIdRouteWithChildren;
+  "/user/$userId/_billing-layout": typeof UserUserIdBillingLayoutRouteWithChildren;
   "/user/$userId/_my-stores-layout": typeof UserUserIdMyStoresLayoutRouteWithChildren;
-  "/user/$userId/_onboarding-layout": typeof UserUserIdOnboardingLayoutRouteWithChildren;
+  "/user/$userId/_billing-layout/billing": typeof UserUserIdBillingLayoutBillingRoute;
   "/user/$userId/_my-stores-layout/my-stores": typeof UserUserIdMyStoresLayoutMyStoresRoute;
-  "/user/$userId/_onboarding-layout/onboarding": typeof UserUserIdOnboardingLayoutOnboardingRoute;
   "/user/$userId/store/$storeId": typeof UserUserIdStoreStoreIdRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts": typeof UserUserIdStoreStoreIdStoreLayoutsRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts/dashboard": typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRoute;
@@ -169,8 +168,8 @@ export interface FileRouteTypes {
     | "/auth/signin"
     | "/auth/signup"
     | "/user/$userId"
+    | "/user/$userId/billing"
     | "/user/$userId/my-stores"
-    | "/user/$userId/onboarding"
     | "/user/$userId/store/$storeId"
     | "/user/$userId/store/$storeId/dashboard";
   fileRoutesByTo: FileRoutesByTo;
@@ -181,8 +180,8 @@ export interface FileRouteTypes {
     | "/auth/signin"
     | "/auth/signup"
     | "/user/$userId"
+    | "/user/$userId/billing"
     | "/user/$userId/my-stores"
-    | "/user/$userId/onboarding"
     | "/user/$userId/store/$storeId"
     | "/user/$userId/store/$storeId/dashboard";
   id:
@@ -194,10 +193,10 @@ export interface FileRouteTypes {
     | "/auth/_auth-layout/signin"
     | "/auth/_auth-layout/signup"
     | "/user/$userId"
+    | "/user/$userId/_billing-layout"
     | "/user/$userId/_my-stores-layout"
-    | "/user/$userId/_onboarding-layout"
+    | "/user/$userId/_billing-layout/billing"
     | "/user/$userId/_my-stores-layout/my-stores"
-    | "/user/$userId/_onboarding-layout/onboarding"
     | "/user/$userId/store/$storeId"
     | "/user/$userId/store/$storeId/_store-layouts"
     | "/user/$userId/store/$storeId/_store-layouts/dashboard";
@@ -267,18 +266,18 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AuthAuthLayoutRouteImport;
       parentRoute: typeof AuthRoute;
     };
-    "/user/$userId/_onboarding-layout": {
-      id: "/user/$userId/_onboarding-layout";
-      path: "";
-      fullPath: "/user/$userId";
-      preLoaderRoute: typeof UserUserIdOnboardingLayoutRouteImport;
-      parentRoute: typeof UserUserIdRoute;
-    };
     "/user/$userId/_my-stores-layout": {
       id: "/user/$userId/_my-stores-layout";
-      path: "/user/$userId";
+      path: "";
       fullPath: "/user/$userId";
       preLoaderRoute: typeof UserUserIdMyStoresLayoutRouteImport;
+      parentRoute: typeof UserUserIdRoute;
+    };
+    "/user/$userId/_billing-layout": {
+      id: "/user/$userId/_billing-layout";
+      path: "/user/$userId";
+      fullPath: "/user/$userId";
+      preLoaderRoute: typeof UserUserIdBillingLayoutRouteImport;
       parentRoute: typeof UserUserIdRoute;
     };
     "/auth/_auth-layout/signup": {
@@ -309,19 +308,19 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof UserUserIdStoreStoreIdRouteImport;
       parentRoute: typeof UserUserIdRoute;
     };
-    "/user/$userId/_onboarding-layout/onboarding": {
-      id: "/user/$userId/_onboarding-layout/onboarding";
-      path: "/onboarding";
-      fullPath: "/user/$userId/onboarding";
-      preLoaderRoute: typeof UserUserIdOnboardingLayoutOnboardingRouteImport;
-      parentRoute: typeof UserUserIdOnboardingLayoutRoute;
-    };
     "/user/$userId/_my-stores-layout/my-stores": {
       id: "/user/$userId/_my-stores-layout/my-stores";
       path: "/my-stores";
       fullPath: "/user/$userId/my-stores";
       preLoaderRoute: typeof UserUserIdMyStoresLayoutMyStoresRouteImport;
       parentRoute: typeof UserUserIdMyStoresLayoutRoute;
+    };
+    "/user/$userId/_billing-layout/billing": {
+      id: "/user/$userId/_billing-layout/billing";
+      path: "/billing";
+      fullPath: "/user/$userId/billing";
+      preLoaderRoute: typeof UserUserIdBillingLayoutBillingRouteImport;
+      parentRoute: typeof UserUserIdBillingLayoutRoute;
     };
     "/user/$userId/store/$storeId/_store-layouts": {
       id: "/user/$userId/store/$storeId/_store-layouts";
@@ -384,6 +383,20 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren);
 
+interface UserUserIdBillingLayoutRouteChildren {
+  UserUserIdBillingLayoutBillingRoute: typeof UserUserIdBillingLayoutBillingRoute;
+}
+
+const UserUserIdBillingLayoutRouteChildren: UserUserIdBillingLayoutRouteChildren =
+  {
+    UserUserIdBillingLayoutBillingRoute: UserUserIdBillingLayoutBillingRoute,
+  };
+
+const UserUserIdBillingLayoutRouteWithChildren =
+  UserUserIdBillingLayoutRoute._addFileChildren(
+    UserUserIdBillingLayoutRouteChildren,
+  );
+
 interface UserUserIdMyStoresLayoutRouteChildren {
   UserUserIdMyStoresLayoutMyStoresRoute: typeof UserUserIdMyStoresLayoutMyStoresRoute;
 }
@@ -397,21 +410,6 @@ const UserUserIdMyStoresLayoutRouteChildren: UserUserIdMyStoresLayoutRouteChildr
 const UserUserIdMyStoresLayoutRouteWithChildren =
   UserUserIdMyStoresLayoutRoute._addFileChildren(
     UserUserIdMyStoresLayoutRouteChildren,
-  );
-
-interface UserUserIdOnboardingLayoutRouteChildren {
-  UserUserIdOnboardingLayoutOnboardingRoute: typeof UserUserIdOnboardingLayoutOnboardingRoute;
-}
-
-const UserUserIdOnboardingLayoutRouteChildren: UserUserIdOnboardingLayoutRouteChildren =
-  {
-    UserUserIdOnboardingLayoutOnboardingRoute:
-      UserUserIdOnboardingLayoutOnboardingRoute,
-  };
-
-const UserUserIdOnboardingLayoutRouteWithChildren =
-  UserUserIdOnboardingLayoutRoute._addFileChildren(
-    UserUserIdOnboardingLayoutRouteChildren,
   );
 
 interface UserUserIdStoreStoreIdStoreLayoutsRouteChildren {
@@ -445,14 +443,14 @@ const UserUserIdStoreStoreIdRouteWithChildren =
   );
 
 interface UserUserIdRouteChildren {
+  UserUserIdBillingLayoutRoute: typeof UserUserIdBillingLayoutRouteWithChildren;
   UserUserIdMyStoresLayoutRoute: typeof UserUserIdMyStoresLayoutRouteWithChildren;
-  UserUserIdOnboardingLayoutRoute: typeof UserUserIdOnboardingLayoutRouteWithChildren;
   UserUserIdStoreStoreIdRoute: typeof UserUserIdStoreStoreIdRouteWithChildren;
 }
 
 const UserUserIdRouteChildren: UserUserIdRouteChildren = {
+  UserUserIdBillingLayoutRoute: UserUserIdBillingLayoutRouteWithChildren,
   UserUserIdMyStoresLayoutRoute: UserUserIdMyStoresLayoutRouteWithChildren,
-  UserUserIdOnboardingLayoutRoute: UserUserIdOnboardingLayoutRouteWithChildren,
   UserUserIdStoreStoreIdRoute: UserUserIdStoreStoreIdRouteWithChildren,
 };
 
