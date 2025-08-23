@@ -15,5 +15,5 @@ payment.interceptors.response.use(
   (error) => {
     console.error("Paystack API Error:", error.response?.data || error.message);
     return Promise.reject(error);
-  }
+  },
 );
