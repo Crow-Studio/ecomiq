@@ -1,3 +1,4 @@
+import { useStore } from "@tanstack/react-store";
 import {
   Dialog,
   DialogContent,
@@ -5,10 +6,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
-import { useModal } from "~/hooks/use-modal-store";
+import { modal_store } from "~/hooks/use-modal-store";
 
 export default function Signout() {
-  const { isOpen, type, onClose } = useModal();
+  const { isOpen, type, onClose } = useStore(modal_store, (state) => state);
 
   const isModalOpen = isOpen && type === "signoutUser";
 

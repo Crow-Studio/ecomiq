@@ -1,10 +1,10 @@
 import axios from "axios";
-import { env } from "~/env/client";
+import { env } from "~/env/server";
 
 export const payment = axios.create({
   baseURL: "https://api.paystack.co",
   headers: {
-    Authorization: `Bearer ${env.VITE_PAYSTACK_SECRET_KEY}`,
+    Authorization: `Bearer ${env.PAYSTACK_SECRET_KEY}`,
     "Content-Type": "application/json",
   },
   timeout: 10000,
