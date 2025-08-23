@@ -23,6 +23,7 @@ import { Route as UserUserIdMyStoresLayoutMyStoresRouteImport } from "./routes/u
 import { Route as UserUserIdBillingLayoutBillingRouteImport } from "./routes/user/$userId/_billing-layout/billing";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsDashboardRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/dashboard";
+import { ServerRoute as ApiPaymentsWebhookPaystackIndexServerRouteImport } from "./routes/api/payments/webhook/paystack/index";
 import { ServerRoute as ApiOauthSigninGoogleIndexServerRouteImport } from "./routes/api/oauth/signin/google/index";
 import { ServerRoute as ApiOauthSigninGoogleCallbackIndexServerRouteImport } from "./routes/api/oauth/signin/google/callback/index";
 
@@ -104,6 +105,12 @@ const UserUserIdStoreStoreIdStoreLayoutsDashboardRoute =
     id: "/dashboard",
     path: "/dashboard",
     getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
+  } as any);
+const ApiPaymentsWebhookPaystackIndexServerRoute =
+  ApiPaymentsWebhookPaystackIndexServerRouteImport.update({
+    id: "/api/payments/webhook/paystack/",
+    path: "/api/payments/webhook/paystack/",
+    getParentRoute: () => rootServerRouteImport,
   } as any);
 const ApiOauthSigninGoogleIndexServerRoute =
   ApiOauthSigninGoogleIndexServerRouteImport.update({
@@ -209,30 +216,41 @@ export interface RootRouteChildren {
 }
 export interface FileServerRoutesByFullPath {
   "/api/oauth/signin/google": typeof ApiOauthSigninGoogleIndexServerRoute;
+  "/api/payments/webhook/paystack": typeof ApiPaymentsWebhookPaystackIndexServerRoute;
   "/api/oauth/signin/google/callback": typeof ApiOauthSigninGoogleCallbackIndexServerRoute;
 }
 export interface FileServerRoutesByTo {
   "/api/oauth/signin/google": typeof ApiOauthSigninGoogleIndexServerRoute;
+  "/api/payments/webhook/paystack": typeof ApiPaymentsWebhookPaystackIndexServerRoute;
   "/api/oauth/signin/google/callback": typeof ApiOauthSigninGoogleCallbackIndexServerRoute;
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport;
   "/api/oauth/signin/google/": typeof ApiOauthSigninGoogleIndexServerRoute;
+  "/api/payments/webhook/paystack/": typeof ApiPaymentsWebhookPaystackIndexServerRoute;
   "/api/oauth/signin/google/callback/": typeof ApiOauthSigninGoogleCallbackIndexServerRoute;
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath;
-  fullPaths: "/api/oauth/signin/google" | "/api/oauth/signin/google/callback";
+  fullPaths:
+    | "/api/oauth/signin/google"
+    | "/api/payments/webhook/paystack"
+    | "/api/oauth/signin/google/callback";
   fileServerRoutesByTo: FileServerRoutesByTo;
-  to: "/api/oauth/signin/google" | "/api/oauth/signin/google/callback";
+  to:
+    | "/api/oauth/signin/google"
+    | "/api/payments/webhook/paystack"
+    | "/api/oauth/signin/google/callback";
   id:
     | "__root__"
     | "/api/oauth/signin/google/"
+    | "/api/payments/webhook/paystack/"
     | "/api/oauth/signin/google/callback/";
   fileServerRoutesById: FileServerRoutesById;
 }
 export interface RootServerRouteChildren {
   ApiOauthSigninGoogleIndexServerRoute: typeof ApiOauthSigninGoogleIndexServerRoute;
+  ApiPaymentsWebhookPaystackIndexServerRoute: typeof ApiPaymentsWebhookPaystackIndexServerRoute;
   ApiOauthSigninGoogleCallbackIndexServerRoute: typeof ApiOauthSigninGoogleCallbackIndexServerRoute;
 }
 
@@ -340,6 +358,13 @@ declare module "@tanstack/react-router" {
 }
 declare module "@tanstack/react-start/server" {
   interface ServerFileRoutesByPath {
+    "/api/payments/webhook/paystack/": {
+      id: "/api/payments/webhook/paystack/";
+      path: "/api/payments/webhook/paystack";
+      fullPath: "/api/payments/webhook/paystack";
+      preLoaderRoute: typeof ApiPaymentsWebhookPaystackIndexServerRouteImport;
+      parentRoute: typeof rootServerRouteImport;
+    };
     "/api/oauth/signin/google/": {
       id: "/api/oauth/signin/google/";
       path: "/api/oauth/signin/google";
@@ -468,6 +493,8 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>();
 const rootServerRouteChildren: RootServerRouteChildren = {
   ApiOauthSigninGoogleIndexServerRoute: ApiOauthSigninGoogleIndexServerRoute,
+  ApiPaymentsWebhookPaystackIndexServerRoute:
+    ApiPaymentsWebhookPaystackIndexServerRoute,
   ApiOauthSigninGoogleCallbackIndexServerRoute:
     ApiOauthSigninGoogleCallbackIndexServerRoute,
 };

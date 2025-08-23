@@ -1,11 +1,13 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { createFileRoute } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 import { Ecomiq } from "~/components/svgs/ecomiq";
 import { Button } from "~/components/ui/button";
 import MyStoreUser from "~/components/user/my-stores/user";
 import UserStores from "~/components/user/my-stores/user-stores";
 import { seo } from "~/lib/seo";
+import { payment } from "~/utils/payment";
 
 export const Route = createFileRoute("/user/$userId/_my-stores-layout/my-stores")({
   component: RouteComponent,
@@ -33,6 +35,28 @@ export const Route = createFileRoute("/user/$userId/_my-stores-layout/my-stores"
 
 function RouteComponent() {
   const { user, stores } = Route.useRouteContext();
+  const [isPaying, setIsPaying] = useState(false);
+
+  const onCreateStore = async () => {
+    setIsPaying(true);
+    try {
+      const res = await payment.post("/transaction/initialize", {
+        email: "thecodingmontana@gmail.com",
+        amount: 10,
+        currency: "KES",
+        mobile_money: {
+          phone: "0768879348",
+          provider: "mpesa",
+        },
+      });
+      console.log(res);
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setIsPaying(false);
+    }
+    // window.location.assign
+  };
   return (
     <div className="bg-card text-card-foreground flex flex-col gap-y-5 rounded-xl border p-5 shadow-sm">
       <div className="flex items-center justify-between">
@@ -42,9 +66,13 @@ function RouteComponent() {
       <div className="grid gap-y-7">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-medium">My stores</h2>
-          <Button className="bg-brand hover:bg-primary-secondary group inline-flex h-max w-fit cursor-pointer items-center justify-center rounded-lg border border-transparent px-4 py-2 text-sm font-medium text-white shadow-[0rem_-0.0625rem_0rem_0.0625rem_rgba(249,129,99,1)_inset,_0rem_0rem_0rem_0.0625rem_#F97452_inset,_0rem_0.03125rem_0rem_0.09375rem_#F97452_inset] transition-colors duration-300 ease-in-out hover:translate-y-0.5 hover:shadow-[0rem_-0.0625rem_0rem_0.0625rem_rgba(252,199,185,0.8)_inset,_0rem_0rem_0rem_0.0625rem_#F97452_inset,_0rem_0.03125rem_0rem_0.09375rem_hsla(0,_0%,_100%,_0.25)_inset] focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:shadow-xs disabled:hover:shadow-xs">
+          <Button
+            disabled={isPaying}
+            onClick={() => onCreateStore()}
+            className="bg-brand hover:bg-primary-secondary group inline-flex h-max w-fit cursor-pointer items-center justify-center rounded-lg border border-transparent px-4 py-2 text-sm font-medium text-white shadow-[0rem_-0.0625rem_0rem_0.0625rem_rgba(249,129,99,1)_inset,_0rem_0rem_0rem_0.0625rem_#F97452_inset,_0rem_0.03125rem_0rem_0.09375rem_#F97452_inset] transition-colors duration-300 ease-in-out hover:translate-y-0.5 hover:shadow-[0rem_-0.0625rem_0rem_0.0625rem_rgba(252,199,185,0.8)_inset,_0rem_0rem_0rem_0.0625rem_#F97452_inset,_0rem_0.03125rem_0rem_0.09375rem_hsla(0,_0%,_100%,_0.25)_inset] focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:shadow-xs disabled:hover:shadow-xs"
+          >
             <Plus />
-            Create store
+            {isPaying ? "Processing..." : "Create Store"}
           </Button>
         </div>
 
