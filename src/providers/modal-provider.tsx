@@ -5,5 +5,5 @@ export default function ModalProvider() {
     <div>
       <Signout />
     </div>
-  )
+  );
 }
