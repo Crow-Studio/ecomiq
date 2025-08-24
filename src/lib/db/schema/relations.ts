@@ -1,12 +1,5 @@
 import { relations } from "drizzle-orm";
-import {
-  ledger_entries,
-  payments,
-  plans,
-  subscriptions,
-  wallets,
-  withdrawals,
-} from "./payments";
+import { subs_transactions, subscriptions } from "./payments";
 import { store, store_members } from "./store";
 import { user } from "./user";
 
@@ -15,15 +8,11 @@ export const users_relations = relations(user, ({ many }) => ({
   stores: many(store),
   memberships: many(store_members),
   subscriptions: many(subscriptions),
-  wallet: many(wallets),
-  ledger: many(ledger_entries),
-  withdrawals: many(withdrawals),
 }));
 
 export const store_relations = relations(store, ({ one, many }) => ({
   owner: one(user, { fields: [store.owner_id], references: [user.id] }),
   members: many(store_members),
-  payments: many(payments),
 }));
 
 export const store_members_relations = relations(store_members, ({ one }) => ({
@@ -31,33 +20,14 @@ export const store_members_relations = relations(store_members, ({ one }) => ({
   store: one(store, { fields: [store_members.store_id], references: [store.id] }),
 }));
 
-export const plans_relations = relations(plans, ({ many }) => ({
-  subscriptions: many(subscriptions),
-}));
-
-export const subscriptions_relations = relations(subscriptions, ({ one }) => ({
+export const subscriptions_relations = relations(subscriptions, ({ one, many }) => ({
   user: one(user, { fields: [subscriptions.user_id], references: [user.id] }),
-  plan: one(plans, { fields: [subscriptions.plan_id], references: [plans.id] }),
+  transactions: many(subs_transactions),
 }));
 
-export const payments_relations = relations(payments, ({ one }) => ({
-  store: one(store, { fields: [payments.store_id], references: [store.id] }),
-  owner: one(user, { fields: [payments.owner_id], references: [user.id] }),
-}));
-
-export const wallet_relations = relations(wallets, ({ one }) => ({
-  user: one(user, { fields: [wallets.user_id], references: [user.id] }),
-}));
-
-export const ledger_relations = relations(ledger_entries, ({ one }) => ({
-  user: one(user, { fields: [ledger_entries.user_id], references: [user.id] }),
-  store: one(store, { fields: [ledger_entries.store_id], references: [store.id] }),
-  payment: one(payments, {
-    fields: [ledger_entries.payment_id],
-    references: [payments.id],
+export const subs_transactions_relations = relations(subs_transactions, ({ one }) => ({
+  subscription: one(subscriptions, {
+    fields: [subs_transactions.subscription_id],
+    references: [subscriptions.id],
   }),
-}));
-
-export const withdrawalsRelations = relations(withdrawals, ({ one }) => ({
-  user: one(user, { fields: [withdrawals.user_id], references: [user.id] }),
 }));

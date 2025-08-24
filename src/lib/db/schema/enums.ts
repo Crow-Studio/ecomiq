@@ -18,9 +18,17 @@ export enum CurrencyEnum {
   KES = "KES",
 }
 
+export enum SubscriptionPlanEnum {
+  TRIAL = "trial",
+  STARTER = "starter",
+  GROWTH = "growth",
+  ENTERPRISE = "enterprise",
+}
+
 export enum BillingCyleEnum {
   MONTHLY = "monthly",
   YEARLY = "yearly",
+  TRIAL_PERIOD = "trial_period",
 }
 
 export enum SubscriptionStatusEnum {
@@ -61,6 +69,10 @@ export enum LedgerEntryTypeEnum {
 }
 
 export const user_role_enum = pgEnum("user_role", enumToPgEnum(UserRole));
+export const subscription_plan = pgEnum(
+  "subscription_plan",
+  enumToPgEnum(SubscriptionPlanEnum),
+);
 export const currency_enum = pgEnum("currency_enum", enumToPgEnum(CurrencyEnum));
 export const billing_cyle_enum = pgEnum(
   "billing_cyle_enum",

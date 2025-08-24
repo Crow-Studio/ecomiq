@@ -29,18 +29,18 @@ import { signoutUserAction } from "~/lib/auth/functions/signout-user";
 const pricingPlans = [
   {
     name: "Starter",
-    monthlyPrice: 37,
-    description: "For the new marketer on a budget who just wants basic tracking...",
+    monthlyPrice: 9,
+    description: "For solo entrepreneurs launching their first store.",
   },
   {
-    name: "Standard",
-    monthlyPrice: 77,
-    description: "For the new marketer on a budget who just wants basic tracking...",
+    name: "Growth",
+    monthlyPrice: 19,
+    description: "For growing teams that need more control and insights.",
   },
   {
-    name: "Pro",
-    monthlyPrice: 150,
-    description: "For the new marketer on a budget who just wants basic tracking...",
+    name: "Enterprise",
+    monthlyPrice: 49,
+    description: "For large teams and high-volume sellers.",
   },
 ];
 

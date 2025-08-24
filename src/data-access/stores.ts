@@ -58,3 +58,15 @@ export const getStores = async (user_id: string): Promise<StoreWithRole[]> => {
 
   return uniqueStores;
 };
+
+export const createStore = async ({ user_id }: { user_id: string }) => {
+  const [store] = await db
+    .insert(tables.store)
+    .values({
+      name: "My Store",
+      owner_id: user_id,
+    })
+    .returning();
+
+  return store;
+};
