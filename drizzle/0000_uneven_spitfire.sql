@@ -180,6 +180,12 @@ CREATE TABLE "app_user" (
 	CONSTRAINT "app_user_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
+CREATE TABLE "app_cron_jobs" (
+	"id" varchar(16) PRIMARY KEY NOT NULL,
+	"message" text,
+	"created_at" timestamp with time zone DEFAULT now()
+);
+--> statement-breakpoint
 ALTER TABLE "app_ledger_entries" ADD CONSTRAINT "app_ledger_entries_user_id_app_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."app_user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "app_ledger_entries" ADD CONSTRAINT "app_ledger_entries_store_id_app_stores_id_fk" FOREIGN KEY ("store_id") REFERENCES "public"."app_stores"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "app_ledger_entries" ADD CONSTRAINT "app_ledger_entries_payment_id_app_payments_id_fk" FOREIGN KEY ("payment_id") REFERENCES "public"."app_payments"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
