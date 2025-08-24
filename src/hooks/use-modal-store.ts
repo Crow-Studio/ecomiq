@@ -1,13 +1,10 @@
 import type {} from "@redux-devtools/extension";
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { Store } from "@tanstack/react-store";
 import { ModalStore } from "~/types/store";
 
-export const useModal = create<ModalStore>()(
-  devtools((set) => ({
-    type: null,
-    isOpen: false,
-    onOpen: (type) => set({ isOpen: true, type }),
-    onClose: () => set({ type: null, isOpen: false }),
-  })),
-);
+export const modal_store = new Store<ModalStore>({
+  type: null,
+  isOpen: false,
+  onOpen: (type) => ({ isOpen: true, type }),
+  onClose: () => ({ type: null, isOpen: false }),
+});

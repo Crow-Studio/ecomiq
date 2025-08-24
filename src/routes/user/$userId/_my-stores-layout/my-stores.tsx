@@ -6,8 +6,18 @@ import { Ecomiq } from "~/components/svgs/ecomiq";
 import { Button } from "~/components/ui/button";
 import MyStoreUser from "~/components/user/my-stores/user";
 import UserStores from "~/components/user/my-stores/user-stores";
+import { paystackPayment } from "~/hooks/use-paystack";
+import { generateNanoId } from "~/lib/db/schema/utils";
+import { PaymentReference } from "~/lib/paystack/types";
 import { seo } from "~/lib/seo";
-import { payment } from "~/utils/payment";
+
+const config = {
+  reference: new Date().getTime().toString(),
+  email: "user@example.com",
+  amount: 200,
+  currency: "KES",
+  publicKey: "pk_live_e815459587c2ddb0ad2e0cf6d757f939a3397ca2",
+};
 
 export const Route = createFileRoute("/user/$userId/_my-stores-layout/my-stores")({
   component: RouteComponent,
@@ -33,29 +43,29 @@ export const Route = createFileRoute("/user/$userId/_my-stores-layout/my-stores"
   }),
 });
 
+const onSuccess = (reference: PaymentReference) => {
+  console.log(reference);
+};
+
+const onClose = () => {
+  console.log("closed");
+};
+
 function RouteComponent() {
   const { user, stores } = Route.useRouteContext();
   const [isPaying, setIsPaying] = useState(false);
+  const initializePayment = paystackPayment(config);
 
   const onCreateStore = async () => {
     setIsPaying(true);
     try {
-      const res = await payment.post("/transaction/initialize", {
-        email: "thecodingmontana@gmail.com",
-        amount: 10,
-        currency: "KES",
-        mobile_money: {
-          phone: "0768879348",
-          provider: "mpesa",
-        },
-      });
-      console.log(res);
+      initializePayment({ config, onSuccess, onClose });
+      console.log(generateNanoId(12));
     } catch (error) {
       console.log("error", error);
     } finally {
       setIsPaying(false);
     }
-    // window.location.assign
   };
   return (
     <div className="bg-card text-card-foreground flex flex-col gap-y-5 rounded-xl border p-5 shadow-sm">
