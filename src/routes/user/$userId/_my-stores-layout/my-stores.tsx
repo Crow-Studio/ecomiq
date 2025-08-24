@@ -90,7 +90,7 @@ function RouteComponent() {
           </Button>
         </div>
         {stores.length > 0 ? (
-          <UserStores stores={stores} />
+          <UserStores stores={stores} user={user} />
         ) : (
           <div className="flex flex-col items-center gap-y-1">
             <div className="flex items-center justify-center">

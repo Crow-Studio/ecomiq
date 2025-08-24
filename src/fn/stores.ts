@@ -53,6 +53,8 @@ export const createStoreFn = createServerFn({
 
       try {
         subscription = await getUserSubscription(user.id);
+
+        console.log('down', subscription)
       } catch (error) {
         console.error("Failed to fetch user subscription:", error);
         throw new Error("Unable to retrieve subscription information. Please try again!");
@@ -170,3 +172,32 @@ export const createStoreFn = createServerFn({
       );
     }
   });
+
+
+export const billingCreateStoreFn = createServerFn({
+  method: "POST",
+})
+  .middleware([authenticatedMiddleware])
+  .handler(async ({ context: { user } }) => {
+    try {
+      // Validate user context
+      if (!user?.id) {
+        throw new Error("User context is missing or invalid!");
+      }
+
+      const store = await createStore({
+        user_id: user.id,
+      });
+
+      return {
+        message: "Your store has been created!",
+        storeId: store.id
+      }
+    } catch (error) {
+      console.log('Failed to create store', error)
+      if (error instanceof Error) {
+        throw new Error(error.message)
+      }
+      throw new Error("Failed to create store. Please try again!")
+    }
+  })

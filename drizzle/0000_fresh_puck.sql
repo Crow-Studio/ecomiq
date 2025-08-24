@@ -19,6 +19,7 @@ CREATE TABLE "app_subs_transactions" (
 	"amount" integer NOT NULL,
 	"paystack_reference" varchar(255) NOT NULL,
 	"paystack_trxref" varchar(255) NOT NULL,
+	"currency" "currency_enum" DEFAULT 'KES',
 	"paystack_transaction_id" varchar(255) NOT NULL,
 	"created_at" timestamp (3) DEFAULT now() NOT NULL,
 	"updated_at" timestamp (3)
@@ -40,10 +41,12 @@ CREATE TABLE "app_stores" (
 	"id" varchar(16) PRIMARY KEY NOT NULL,
 	"owner_id" varchar(16) NOT NULL,
 	"name" varchar(200) NOT NULL,
+	"url" text NOT NULL,
 	"currency" "currency_enum" DEFAULT 'KES' NOT NULL,
 	"active" boolean DEFAULT true NOT NULL,
 	"created_at" timestamp (3) DEFAULT now() NOT NULL,
-	"updated_at" timestamp (3)
+	"updated_at" timestamp (3),
+	CONSTRAINT "app_stores_url_unique" UNIQUE("url")
 );
 --> statement-breakpoint
 CREATE TABLE "app_store_members" (
@@ -103,7 +106,7 @@ CREATE TABLE "app_user" (
 	CONSTRAINT "app_user_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
-ALTER TABLE "app_subs_transactions" ADD CONSTRAINT "app_subs_transactions_subscription_id_app_user_id_fk" FOREIGN KEY ("subscription_id") REFERENCES "public"."app_user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "app_subs_transactions" ADD CONSTRAINT "app_subs_transactions_subscription_id_app_subscriptions_id_fk" FOREIGN KEY ("subscription_id") REFERENCES "public"."app_subscriptions"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "app_subscriptions" ADD CONSTRAINT "app_subscriptions_user_id_app_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."app_user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "app_stores" ADD CONSTRAINT "app_stores_owner_id_app_user_id_fk" FOREIGN KEY ("owner_id") REFERENCES "public"."app_user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "app_store_members" ADD CONSTRAINT "app_store_members_user_id_app_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."app_user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint

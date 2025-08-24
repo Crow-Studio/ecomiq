@@ -1,3 +1,5 @@
+import { SubscriptionPlanEnum } from "~/lib/db/schema";
+
 export interface QuoteFragment {
   _id: string;
   author: {
@@ -27,4 +29,11 @@ export interface AuthFormData {
 export interface AuthForgotPasswordFormData {
   email: string;
   new_password: string;
+}
+
+
+export interface PricingPlan {
+  name: SubscriptionPlanEnum,
+  monthlyPrice: number
+  description: string
 }

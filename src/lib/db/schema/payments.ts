@@ -46,10 +46,11 @@ export const subs_transactions = pgTable("subs_transactions", {
     .$defaultFn(() => generateNanoId()),
   subscription_id: text("subscription_id")
     .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
+    .references(() => subscriptions.id, { onDelete: "cascade" }),
   amount: integer("amount").notNull(),
   paystack_reference: varchar("paystack_reference", { length: 255 }).notNull(),
   paystack_trxref: varchar("paystack_trxref", { length: 255 }).notNull(),
+  currency: enums.currency_enum("currency").default(enums.CurrencyEnum.KES),
   paystack_transaction_id: varchar("paystack_transaction_id", { length: 255 }).notNull(),
   created_at: timestamp("created_at", { mode: "date", precision: 3 })
     .notNull()

@@ -1,5 +1,5 @@
 {
-  "id": "9cd837ac-4903-4780-a026-e43c1be3d1a5",
+  "id": "e5c79bcb-3f6d-4e3c-b05d-2af9b26b3f26",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -71,6 +71,14 @@
           "primaryKey": false,
           "notNull": true
         },
+        "currency": {
+          "name": "currency",
+          "type": "currency_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'KES'"
+        },
         "paystack_transaction_id": {
           "name": "paystack_transaction_id",
           "type": "varchar(255)",
@@ -93,10 +101,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "app_subs_transactions_subscription_id_app_user_id_fk": {
-          "name": "app_subs_transactions_subscription_id_app_user_id_fk",
+        "app_subs_transactions_subscription_id_app_subscriptions_id_fk": {
+          "name": "app_subs_transactions_subscription_id_app_subscriptions_id_fk",
           "tableFrom": "app_subs_transactions",
-          "tableTo": "app_user",
+          "tableTo": "app_subscriptions",
           "columnsFrom": [
             "subscription_id"
           ],
@@ -240,6 +248,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "url": {
+          "name": "url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "currency": {
           "name": "currency",
           "type": "currency_enum",
@@ -302,7 +316,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "app_stores_url_unique": {
+          "name": "app_stores_url_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "url"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
