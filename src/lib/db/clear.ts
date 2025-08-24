@@ -16,7 +16,8 @@ async function main() {
   await db.execute(sql.raw(`CREATE SCHEMA public;`));
 
   // Restore Supabase grants (critical!)
-  await db.execute(sql.raw(`
+  await db.execute(
+    sql.raw(`
     GRANT USAGE ON SCHEMA public TO postgres, anon, authenticated, service_role;
 
     GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO service_role;
@@ -27,7 +28,8 @@ async function main() {
 
     ALTER DEFAULT PRIVILEGES IN SCHEMA public
     GRANT ALL ON SEQUENCES TO service_role;
-  `));
+  `),
+  );
 
   await pool.end();
 }
