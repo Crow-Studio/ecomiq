@@ -1,10 +1,8 @@
-import { text, timestamp, varchar } from "drizzle-orm/pg-core";
-import { generateNanoId, pgTable } from "./utils";
+import { text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { pgTable } from "./utils";
 
 export const cron_job = pgTable("cron_jobs", {
-  id: varchar("id", { length: 16 })
-    .primaryKey()
-    .$defaultFn(() => generateNanoId()),
+  id: uuid().notNull().primaryKey().defaultRandom(),
   message: text("message"),
   created_at: timestamp("created_at", { withTimezone: true, mode: "date" }).defaultNow(),
 });

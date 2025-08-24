@@ -7,7 +7,7 @@ CREATE TYPE "public"."subscription_status_enum" AS ENUM('trialing', 'active', 'p
 CREATE TYPE "public"."user_role" AS ENUM('owner', 'manager', 'staff');--> statement-breakpoint
 CREATE TYPE "public"."withdrawal_status_enum" AS ENUM('pending', 'processing', 'completed', 'failed', 'canceled');--> statement-breakpoint
 CREATE TABLE "app_cron_jobs" (
-	"id" varchar(16) PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"message" text,
 	"created_at" timestamp with time zone DEFAULT now()
 );
