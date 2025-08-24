@@ -50,9 +50,7 @@ export default function UserStores({ stores, user }: Props) {
                 }}
               >
                 <h2 className="text-sm font-semibold capitalize">{store.name}</h2>
-                <p className="text-muted-foreground text-xs">
-                  {store.url}
-                </p>
+                <p className="text-muted-foreground text-xs">{store.url}</p>
               </motion.div>
               <motion.div
                 variants={{

@@ -1,8 +1,8 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { motion, Variants } from "motion/react"
+import { motion, Variants } from "motion/react";
 
 interface Props {
-  itemVariants: Variants
+  itemVariants: Variants;
 }
 
 export default function BillingFooter({ itemVariants }: Props) {

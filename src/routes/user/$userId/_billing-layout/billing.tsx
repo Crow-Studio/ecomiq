@@ -35,8 +35,12 @@ function RouteComponent() {
     subscription &&
     subscription.current_period_end &&
     isBefore(subscription.current_period_end, new Date());
-  const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlanEnum>(SubscriptionPlanEnum.STARTER);
-  const [billingPeriod, setBillingPeriod] = useState<BillingCyleEnum>(BillingCyleEnum.MONTHLY);
+  const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlanEnum>(
+    SubscriptionPlanEnum.STARTER,
+  );
+  const [billingPeriod, setBillingPeriod] = useState<BillingCyleEnum>(
+    BillingCyleEnum.MONTHLY,
+  );
   const [currency, setCurrency] = useState<CurrencyEnum>(CurrencyEnum.KES);
 
   const getPrice = (monthlyPrice: number) => {

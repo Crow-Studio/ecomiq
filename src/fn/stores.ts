@@ -54,7 +54,7 @@ export const createStoreFn = createServerFn({
       try {
         subscription = await getUserSubscription(user.id);
 
-        console.log('down', subscription)
+        console.log("down", subscription);
       } catch (error) {
         console.error("Failed to fetch user subscription:", error);
         throw new Error("Unable to retrieve subscription information. Please try again!");
@@ -173,7 +173,6 @@ export const createStoreFn = createServerFn({
     }
   });
 
-
 export const billingCreateStoreFn = createServerFn({
   method: "POST",
 })
@@ -191,13 +190,13 @@ export const billingCreateStoreFn = createServerFn({
 
       return {
         message: "Your store has been created!",
-        storeId: store.id
-      }
+        storeId: store.id,
+      };
     } catch (error) {
-      console.log('Failed to create store', error)
+      console.log("Failed to create store", error);
       if (error instanceof Error) {
-        throw new Error(error.message)
+        throw new Error(error.message);
       }
-      throw new Error("Failed to create store. Please try again!")
+      throw new Error("Failed to create store. Please try again!");
     }
-  })
+  });

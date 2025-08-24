@@ -12,7 +12,7 @@ export interface StoreWithRole {
   active: boolean;
   user_id: string;
   role: UserRole;
-  url :string
+  url: string;
 }
 
 export const getStores = async (user_id: string): Promise<StoreWithRole[]> => {
@@ -43,7 +43,7 @@ export const getStores = async (user_id: string): Promise<StoreWithRole[]> => {
       active: tables.store.active,
       user_id: tables.store_members.user_id,
       role: tables.store_members.role,
-      url: tables.store.url
+      url: tables.store.url,
     })
     .from(tables.store_members)
     .innerJoin(tables.store, eq(tables.store.id, tables.store_members.store_id))
@@ -64,13 +64,13 @@ export const getStores = async (user_id: string): Promise<StoreWithRole[]> => {
 };
 
 export const createStore = async ({ user_id }: { user_id: string }) => {
-  const url = `${generateNanoId(12)}.ecomiqshop.com`
+  const url = `${generateNanoId(12)}.ecomiqshop.com`;
   const [store] = await db
     .insert(tables.store)
     .values({
       name: "My Store",
       owner_id: user_id,
-      url
+      url,
     })
     .returning();
 

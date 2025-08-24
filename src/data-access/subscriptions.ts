@@ -1,24 +1,28 @@
 import { and, eq } from "drizzle-orm";
 import { db, tables } from "~/lib/db";
-import { BillingCyleEnum, SubscriptionPlanEnum, SubscriptionStatusEnum } from "~/lib/db/schema";
+import {
+  BillingCyleEnum,
+  SubscriptionPlanEnum,
+  SubscriptionStatusEnum,
+} from "~/lib/db/schema";
 
 export async function getUserSubscription(user_id: string) {
   const user = await db.query.user.findFirst({
-    where: table => eq(table.id, user_id)
-  })
+    where: (table) => eq(table.id, user_id),
+  });
 
   if (!user) {
-    return undefined
+    return undefined;
   }
 
   if (!user.subscription_id) {
-    return undefined
+    return undefined;
   }
 
   return await db.query.subscriptions.findFirst({
     where: and(
       eq(tables.subscriptions.id, user.subscription_id),
-      eq(tables.subscriptions.user_id, user_id)
+      eq(tables.subscriptions.user_id, user_id),
     ),
   });
 }
@@ -28,13 +32,13 @@ export async function createSubscription({
   current_period_end,
   status,
   subscription_plan = SubscriptionPlanEnum.TRIAL,
-  billing_cycle = BillingCyleEnum.TRIAL_PERIOD
+  billing_cycle = BillingCyleEnum.TRIAL_PERIOD,
 }: {
   user_id: string;
   current_period_end: Date;
   status: SubscriptionStatusEnum;
-  subscription_plan?: SubscriptionPlanEnum
-  billing_cycle?: BillingCyleEnum
+  subscription_plan?: SubscriptionPlanEnum;
+  billing_cycle?: BillingCyleEnum;
 }) {
   const [subscription] = await db
     .insert(tables.subscriptions)
@@ -43,7 +47,7 @@ export async function createSubscription({
       status,
       current_period_end,
       subscription_plan,
-      billing_cycle
+      billing_cycle,
     })
     .returning();
 
@@ -54,5 +58,5 @@ export async function createSubscription({
     })
     .where(eq(tables.user.id, user_id));
 
-  return subscription
+  return subscription;
 }

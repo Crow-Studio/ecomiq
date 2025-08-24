@@ -1,9 +1,14 @@
-import { createServerFn } from '@tanstack/react-start';
-import { createSubscription, getUserSubscription } from '~/data-access/subscriptions';
-import { authenticatedMiddleware } from '~/lib/auth/middleware/auth-guard';
-import { z } from "zod"
-import { BillingCyleEnum, CurrencyEnum, SubscriptionPlanEnum, SubscriptionStatusEnum } from '~/lib/db/schema';
-import { createTransaction } from '~/data-access/transactions';
+import { createServerFn } from "@tanstack/react-start";
+import { z } from "zod";
+import { createSubscription, getUserSubscription } from "~/data-access/subscriptions";
+import { createTransaction } from "~/data-access/transactions";
+import { authenticatedMiddleware } from "~/lib/auth/middleware/auth-guard";
+import {
+  BillingCyleEnum,
+  CurrencyEnum,
+  SubscriptionPlanEnum,
+  SubscriptionStatusEnum,
+} from "~/lib/db/schema";
 
 /* ------------------- Zod Schema------------------- */
 export const createSubTransactionSchema = z.object({
@@ -18,23 +23,23 @@ export const createTransactionSchema = z.object({
   paystack_reference: z.string(),
   paystack_trxref: z.string(),
   amount: z.number(),
-  currency: z.enum(CurrencyEnum)
-})
+  currency: z.enum(CurrencyEnum),
+});
 
 /* ------------------- Server Functions ------------------- */
 export const getUserSubscriptionFn = createServerFn({
-  method: 'GET'
+  method: "GET",
 })
   .middleware([authenticatedMiddleware])
   .handler(async ({ context: { user } }) => {
-    return await getUserSubscription(user.id)
-  })
+    return await getUserSubscription(user.id);
+  });
 
 export const createSubTransactionFn = createServerFn({
-  method: 'POST'
+  method: "POST",
 })
   .validator((data: unknown) => {
-    const result = createSubTransactionSchema.safeParse(data)
+    const result = createSubTransactionSchema.safeParse(data);
     if (!result.success) {
       throw new Error(result.error.issues[0].message);
     }
@@ -48,20 +53,20 @@ export const createSubTransactionFn = createServerFn({
         current_period_end: data.current_period_end,
         billing_cycle: data.billing_cycle,
         status: SubscriptionStatusEnum.ACTIVE,
-        subscription_plan: data.subscription_plan
-      })
+        subscription_plan: data.subscription_plan,
+      });
 
-      return subscription
+      return subscription;
     } catch {
-      throw new Error("Failed to create subscription. Please try again!")
+      throw new Error("Failed to create subscription. Please try again!");
     }
-  })
+  });
 
 export const createTransactionFn = createServerFn({
-  method: 'POST'
+  method: "POST",
 })
   .validator((data: unknown) => {
-    const result = createTransactionSchema.safeParse(data)
+    const result = createTransactionSchema.safeParse(data);
     if (!result.success) {
       throw new Error(result.error.issues[0].message);
     }
@@ -76,9 +81,9 @@ export const createTransactionFn = createServerFn({
         paystack_reference: data.paystack_reference,
         paystack_trxref: data.paystack_trxref,
         amount: data.amount,
-        currency: data.currency
-      })
+        currency: data.currency,
+      });
     } catch {
-      throw new Error('Failed to create transaction. Please try again!')
+      throw new Error("Failed to create transaction. Please try again!");
     }
-  })
+  });

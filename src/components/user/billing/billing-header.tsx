@@ -9,9 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { BillingCyleEnum, CurrencyEnum } from "~/lib/db/schema";
 import { User } from "~/use-cases/types";
 import MyStoreUser from "../my-stores/user";
-import { BillingCyleEnum, CurrencyEnum } from "~/lib/db/schema";
 
 interface Props {
   user: User;

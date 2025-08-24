@@ -31,9 +31,8 @@ export interface AuthForgotPasswordFormData {
   new_password: string;
 }
 
-
 export interface PricingPlan {
-  name: SubscriptionPlanEnum,
-  monthlyPrice: number
-  description: string
+  name: SubscriptionPlanEnum;
+  monthlyPrice: number;
+  description: string;
 }

@@ -56,7 +56,7 @@ export default function BillingActionButtons({
 
   const onSuccess = async (payload: PaymentReference) => {
     try {
-      console.log(payload)
+      console.log(payload);
       const current_period_end =
         billingPeriod === BillingCyleEnum.MONTHLY
           ? addMonths(new Date(), 1)

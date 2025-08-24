@@ -121,7 +121,6 @@ export const annualPlans = [
   },
 ];
 
-
 export const pricingPlans: PricingPlan[] = [
   {
     name: SubscriptionPlanEnum.STARTER,

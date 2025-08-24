@@ -12,7 +12,7 @@ interface Props {
   billingPeriod: BillingCyleEnum;
   currency: CurrencyEnum;
   plan: PricingPlan;
-  getPrice: (monthlyPrice: number) => number
+  getPrice: (monthlyPrice: number) => number;
 }
 
 export default function BillingPlan({
@@ -22,7 +22,7 @@ export default function BillingPlan({
   billingPeriod,
   currency,
   plan,
-  getPrice
+  getPrice,
 }: Props) {
   const getCurrencySymbol = () => {
     return currency === CurrencyEnum.USD ? "$" : "Ksh";
