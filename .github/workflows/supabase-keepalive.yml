@@ -19,6 +19,12 @@ jobs:
           -H "Content-Type: application/json" \
           -d "{\"message\": \"$MESSAGE\"}")
 
+          http_body=$(echo "$response" | sed '$d')
+          http_code=$(echo "$response" | tail -n1)
+
+          echo "Response body: $http_body"
+          echo "HTTP code: $http_code"
+
           http_code="${response: -3}"
           if [ "$http_code" -ne 201 ] && [ "$http_code" -ne 200 ]; then
           echo "Failed to insert cron job. HTTP code: $http_code"
