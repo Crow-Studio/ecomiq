@@ -220,7 +220,7 @@ export const billingCreateStoreFn = createServerFn({
         throw new Error("User context is missing or invalid!");
       }
 
-      const stores = await getStores(user.id)
+      const stores = await getStores(user.id);
 
       // Identify all stores where the user is the OWNER
       const ownedStores = stores.filter((s) => s.role === UserRole.OWNER);
@@ -231,16 +231,16 @@ export const billingCreateStoreFn = createServerFn({
         subscription = await getUserSubscription(user.id);
       } catch (error) {
         console.error("Failed to fetch user subscription:", error);
-        throw new Error(
-          "Unable to retrieve subscription information. Please try again!",
-        );
+        throw new Error("Unable to retrieve subscription information. Please try again!");
       }
 
       if (!subscription) {
-        throw new Error("You don't have an active subscription. Please upgrade to create a store!");
+        throw new Error(
+          "You don't have an active subscription. Please upgrade to create a store!",
+        );
       }
 
-      const total_stores = ownedStores.length
+      const total_stores = ownedStores.length;
       const allowedStores = storeLimits[subscription.subscription_plan] ?? 0;
 
       if (total_stores >= allowedStores) {
