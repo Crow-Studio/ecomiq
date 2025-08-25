@@ -134,7 +134,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
           <ModalProvider />
         </ThemeProvider>
         <TanStackRouterDevtools position="bottom-right" />
-        <ReactQueryDevtools buttonPosition="bottom-left" />
+        <ReactQueryDevtools buttonPosition="bottom-right" />
         <Scripts />
       </body>
     </html>

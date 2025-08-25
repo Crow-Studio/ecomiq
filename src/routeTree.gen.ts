@@ -23,6 +23,23 @@ import { Route as UserUserIdMyStoresLayoutMyStoresRouteImport } from "./routes/u
 import { Route as UserUserIdBillingLayoutBillingRouteImport } from "./routes/user/$userId/_billing-layout/billing";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsDashboardRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/dashboard";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/products/_products-layout";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/products/_products-layout/index";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/index";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/index";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/products/_products-layout/services";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/products/_products-layout/license-keys";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/products/_products-layout/digital";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutShipmentRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/shipment";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutReturnAndRefundRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/return-and-refund";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutOrdersListRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/orders-list";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutReviewsRequestRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/reviews-request";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/loyalty";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/email";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/coupon";
 import { ServerRoute as ApiPaymentsWebhookPaystackIndexServerRouteImport } from "./routes/api/payments/webhook/paystack/index";
 import { ServerRoute as ApiOauthSigninGoogleIndexServerRouteImport } from "./routes/api/oauth/signin/google/index";
 import { ServerRoute as ApiOauthSigninGoogleCallbackIndexServerRouteImport } from "./routes/api/oauth/signin/google/callback/index";
@@ -31,6 +48,18 @@ const AuthRouteImport = createFileRoute("/auth")();
 const UserUserIdRouteImport = createFileRoute("/user/$userId")();
 const UserUserIdStoreStoreIdRouteImport = createFileRoute(
   "/user/$userId/store/$storeId",
+)();
+const UserUserIdStoreStoreIdStoreLayoutsProductsRouteImport = createFileRoute(
+  "/user/$userId/store/$storeId/_store-layouts/products",
+)();
+const UserUserIdStoreStoreIdStoreLayoutsOrdersRouteImport = createFileRoute(
+  "/user/$userId/store/$storeId/_store-layouts/orders",
+)();
+const UserUserIdStoreStoreIdStoreLayoutsCustomersRouteImport = createFileRoute(
+  "/user/$userId/store/$storeId/_store-layouts/customers",
+)();
+const UserUserIdStoreStoreIdStoreLayoutsCampaignRouteImport = createFileRoute(
+  "/user/$userId/store/$storeId/_store-layouts/campaign",
 )();
 const rootServerRouteImport = createServerRootRoute();
 
@@ -100,12 +129,171 @@ const UserUserIdStoreStoreIdStoreLayoutsRoute =
     id: "/_store-layouts",
     getParentRoute: () => UserUserIdStoreStoreIdRoute,
   } as any);
+const UserUserIdStoreStoreIdStoreLayoutsProductsRoute =
+  UserUserIdStoreStoreIdStoreLayoutsProductsRouteImport.update({
+    id: "/products",
+    path: "/products",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsOrdersRoute =
+  UserUserIdStoreStoreIdStoreLayoutsOrdersRouteImport.update({
+    id: "/orders",
+    path: "/orders",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsCustomersRoute =
+  UserUserIdStoreStoreIdStoreLayoutsCustomersRouteImport.update({
+    id: "/customers",
+    path: "/customers",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsCampaignRoute =
+  UserUserIdStoreStoreIdStoreLayoutsCampaignRouteImport.update({
+    id: "/campaign",
+    path: "/campaign",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
+  } as any);
 const UserUserIdStoreStoreIdStoreLayoutsDashboardRoute =
   UserUserIdStoreStoreIdStoreLayoutsDashboardRouteImport.update({
     id: "/dashboard",
     path: "/dashboard",
     getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
   } as any);
+const UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute =
+  UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteImport.update({
+    id: "/_products-layout",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsProductsRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute =
+  UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteImport.update({
+    id: "/_orders-layout",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsOrdersRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRoute =
+  UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteImport.update({
+    id: "/_customers-layout",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsCustomersRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRoute =
+  UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteImport.update({
+    id: "/_campaign-layout",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsCampaignRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute =
+  UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRouteImport.update(
+    {
+      id: "/",
+      path: "/",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRoute =
+  UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRouteImport.update({
+    id: "/",
+    path: "/",
+    getParentRoute: () =>
+      UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRoute =
+  UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRouteImport.update(
+    {
+      id: "/",
+      path: "/",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRoute =
+  UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRouteImport.update(
+    {
+      id: "/services",
+      path: "/services",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRoute =
+  UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRouteImport.update(
+    {
+      id: "/license-keys",
+      path: "/license-keys",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRoute =
+  UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRouteImport.update(
+    {
+      id: "/digital",
+      path: "/digital",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutShipmentRoute =
+  UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutShipmentRouteImport.update(
+    {
+      id: "/shipment",
+      path: "/shipment",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutReturnAndRefundRoute =
+  UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutReturnAndRefundRouteImport.update(
+    {
+      id: "/return-and-refund",
+      path: "/return-and-refund",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutOrdersListRoute =
+  UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutOrdersListRouteImport.update(
+    {
+      id: "/orders-list",
+      path: "/orders-list",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutReviewsRequestRoute =
+  UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutReviewsRequestRouteImport.update(
+    {
+      id: "/reviews-request",
+      path: "/reviews-request",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRoute =
+  UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRouteImport.update(
+    {
+      id: "/loyalty",
+      path: "/loyalty",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute =
+  UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRouteImport.update(
+    {
+      id: "/email",
+      path: "/email",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute =
+  UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRouteImport.update(
+    {
+      id: "/coupon",
+      path: "/coupon",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRoute,
+    } as any,
+  );
 const ApiPaymentsWebhookPaystackIndexServerRoute =
   ApiPaymentsWebhookPaystackIndexServerRouteImport.update({
     id: "/api/payments/webhook/paystack/",
@@ -136,6 +324,23 @@ export interface FileRoutesByFullPath {
   "/user/$userId/my-stores": typeof UserUserIdMyStoresLayoutMyStoresRoute;
   "/user/$userId/store/$storeId": typeof UserUserIdStoreStoreIdStoreLayoutsRouteWithChildren;
   "/user/$userId/store/$storeId/dashboard": typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRoute;
+  "/user/$userId/store/$storeId/campaign": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/customers": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/orders": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/products": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/campaign/coupon": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute;
+  "/user/$userId/store/$storeId/campaign/email": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute;
+  "/user/$userId/store/$storeId/customers/loyalty": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRoute;
+  "/user/$userId/store/$storeId/customers/reviews-request": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutReviewsRequestRoute;
+  "/user/$userId/store/$storeId/orders/orders-list": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutOrdersListRoute;
+  "/user/$userId/store/$storeId/orders/return-and-refund": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutReturnAndRefundRoute;
+  "/user/$userId/store/$storeId/orders/shipment": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutShipmentRoute;
+  "/user/$userId/store/$storeId/products/digital": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRoute;
+  "/user/$userId/store/$storeId/products/license-keys": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRoute;
+  "/user/$userId/store/$storeId/products/services": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRoute;
+  "/user/$userId/store/$storeId/customers/": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRoute;
+  "/user/$userId/store/$storeId/orders/": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRoute;
+  "/user/$userId/store/$storeId/products/": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute;
 }
 export interface FileRoutesByTo {
   "/auth": typeof AuthAuthLayoutRouteWithChildren;
@@ -148,6 +353,20 @@ export interface FileRoutesByTo {
   "/user/$userId/my-stores": typeof UserUserIdMyStoresLayoutMyStoresRoute;
   "/user/$userId/store/$storeId": typeof UserUserIdStoreStoreIdStoreLayoutsRouteWithChildren;
   "/user/$userId/store/$storeId/dashboard": typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRoute;
+  "/user/$userId/store/$storeId/campaign": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/customers": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRoute;
+  "/user/$userId/store/$storeId/orders": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRoute;
+  "/user/$userId/store/$storeId/products": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute;
+  "/user/$userId/store/$storeId/campaign/coupon": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute;
+  "/user/$userId/store/$storeId/campaign/email": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute;
+  "/user/$userId/store/$storeId/customers/loyalty": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRoute;
+  "/user/$userId/store/$storeId/customers/reviews-request": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutReviewsRequestRoute;
+  "/user/$userId/store/$storeId/orders/orders-list": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutOrdersListRoute;
+  "/user/$userId/store/$storeId/orders/return-and-refund": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutReturnAndRefundRoute;
+  "/user/$userId/store/$storeId/orders/shipment": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutShipmentRoute;
+  "/user/$userId/store/$storeId/products/digital": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRoute;
+  "/user/$userId/store/$storeId/products/license-keys": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRoute;
+  "/user/$userId/store/$storeId/products/services": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
@@ -165,6 +384,27 @@ export interface FileRoutesById {
   "/user/$userId/store/$storeId": typeof UserUserIdStoreStoreIdRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts": typeof UserUserIdStoreStoreIdStoreLayoutsRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts/dashboard": typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRoute;
+  "/user/$userId/store/$storeId/_store-layouts/campaign": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/customers": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/orders": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/products": typeof UserUserIdStoreStoreIdStoreLayoutsProductsRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/products/_products-layout": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/coupon": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute;
+  "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/email": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute;
+  "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/loyalty": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRoute;
+  "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/reviews-request": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutReviewsRequestRoute;
+  "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/orders-list": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutOrdersListRoute;
+  "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/return-and-refund": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutReturnAndRefundRoute;
+  "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/shipment": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutShipmentRoute;
+  "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/digital": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRoute;
+  "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/license-keys": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRoute;
+  "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/services": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRoute;
+  "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRoute;
+  "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRoute;
+  "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
@@ -178,7 +418,24 @@ export interface FileRouteTypes {
     | "/user/$userId/billing"
     | "/user/$userId/my-stores"
     | "/user/$userId/store/$storeId"
-    | "/user/$userId/store/$storeId/dashboard";
+    | "/user/$userId/store/$storeId/dashboard"
+    | "/user/$userId/store/$storeId/campaign"
+    | "/user/$userId/store/$storeId/customers"
+    | "/user/$userId/store/$storeId/orders"
+    | "/user/$userId/store/$storeId/products"
+    | "/user/$userId/store/$storeId/campaign/coupon"
+    | "/user/$userId/store/$storeId/campaign/email"
+    | "/user/$userId/store/$storeId/customers/loyalty"
+    | "/user/$userId/store/$storeId/customers/reviews-request"
+    | "/user/$userId/store/$storeId/orders/orders-list"
+    | "/user/$userId/store/$storeId/orders/return-and-refund"
+    | "/user/$userId/store/$storeId/orders/shipment"
+    | "/user/$userId/store/$storeId/products/digital"
+    | "/user/$userId/store/$storeId/products/license-keys"
+    | "/user/$userId/store/$storeId/products/services"
+    | "/user/$userId/store/$storeId/customers/"
+    | "/user/$userId/store/$storeId/orders/"
+    | "/user/$userId/store/$storeId/products/";
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/auth"
@@ -190,7 +447,21 @@ export interface FileRouteTypes {
     | "/user/$userId/billing"
     | "/user/$userId/my-stores"
     | "/user/$userId/store/$storeId"
-    | "/user/$userId/store/$storeId/dashboard";
+    | "/user/$userId/store/$storeId/dashboard"
+    | "/user/$userId/store/$storeId/campaign"
+    | "/user/$userId/store/$storeId/customers"
+    | "/user/$userId/store/$storeId/orders"
+    | "/user/$userId/store/$storeId/products"
+    | "/user/$userId/store/$storeId/campaign/coupon"
+    | "/user/$userId/store/$storeId/campaign/email"
+    | "/user/$userId/store/$storeId/customers/loyalty"
+    | "/user/$userId/store/$storeId/customers/reviews-request"
+    | "/user/$userId/store/$storeId/orders/orders-list"
+    | "/user/$userId/store/$storeId/orders/return-and-refund"
+    | "/user/$userId/store/$storeId/orders/shipment"
+    | "/user/$userId/store/$storeId/products/digital"
+    | "/user/$userId/store/$storeId/products/license-keys"
+    | "/user/$userId/store/$storeId/products/services";
   id:
     | "__root__"
     | "/auth"
@@ -206,7 +477,28 @@ export interface FileRouteTypes {
     | "/user/$userId/_my-stores-layout/my-stores"
     | "/user/$userId/store/$storeId"
     | "/user/$userId/store/$storeId/_store-layouts"
-    | "/user/$userId/store/$storeId/_store-layouts/dashboard";
+    | "/user/$userId/store/$storeId/_store-layouts/dashboard"
+    | "/user/$userId/store/$storeId/_store-layouts/campaign"
+    | "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout"
+    | "/user/$userId/store/$storeId/_store-layouts/customers"
+    | "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout"
+    | "/user/$userId/store/$storeId/_store-layouts/orders"
+    | "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout"
+    | "/user/$userId/store/$storeId/_store-layouts/products"
+    | "/user/$userId/store/$storeId/_store-layouts/products/_products-layout"
+    | "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/coupon"
+    | "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/email"
+    | "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/loyalty"
+    | "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/reviews-request"
+    | "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/orders-list"
+    | "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/return-and-refund"
+    | "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/shipment"
+    | "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/digital"
+    | "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/license-keys"
+    | "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/services"
+    | "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/"
+    | "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/"
+    | "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
@@ -347,12 +639,159 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRouteImport;
       parentRoute: typeof UserUserIdStoreStoreIdRoute;
     };
+    "/user/$userId/store/$storeId/_store-layouts/products": {
+      id: "/user/$userId/store/$storeId/_store-layouts/products";
+      path: "/products";
+      fullPath: "/user/$userId/store/$storeId/products";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/orders": {
+      id: "/user/$userId/store/$storeId/_store-layouts/orders";
+      path: "/orders";
+      fullPath: "/user/$userId/store/$storeId/orders";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/customers": {
+      id: "/user/$userId/store/$storeId/_store-layouts/customers";
+      path: "/customers";
+      fullPath: "/user/$userId/store/$storeId/customers";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/campaign": {
+      id: "/user/$userId/store/$storeId/_store-layouts/campaign";
+      path: "/campaign";
+      fullPath: "/user/$userId/store/$storeId/campaign";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
+    };
     "/user/$userId/store/$storeId/_store-layouts/dashboard": {
       id: "/user/$userId/store/$storeId/_store-layouts/dashboard";
       path: "/dashboard";
       fullPath: "/user/$userId/store/$storeId/dashboard";
       preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRouteImport;
       parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/products/_products-layout": {
+      id: "/user/$userId/store/$storeId/_store-layouts/products/_products-layout";
+      path: "/products";
+      fullPath: "/user/$userId/store/$storeId/products";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout": {
+      id: "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout";
+      path: "/orders";
+      fullPath: "/user/$userId/store/$storeId/orders";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout": {
+      id: "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout";
+      path: "/customers";
+      fullPath: "/user/$userId/store/$storeId/customers";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout": {
+      id: "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout";
+      path: "/campaign";
+      fullPath: "/user/$userId/store/$storeId/campaign";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/": {
+      id: "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/";
+      path: "/";
+      fullPath: "/user/$userId/store/$storeId/products/";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/": {
+      id: "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/";
+      path: "/";
+      fullPath: "/user/$userId/store/$storeId/orders/";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/": {
+      id: "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/";
+      path: "/";
+      fullPath: "/user/$userId/store/$storeId/customers/";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/services": {
+      id: "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/services";
+      path: "/services";
+      fullPath: "/user/$userId/store/$storeId/products/services";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/license-keys": {
+      id: "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/license-keys";
+      path: "/license-keys";
+      fullPath: "/user/$userId/store/$storeId/products/license-keys";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/digital": {
+      id: "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/digital";
+      path: "/digital";
+      fullPath: "/user/$userId/store/$storeId/products/digital";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/shipment": {
+      id: "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/shipment";
+      path: "/shipment";
+      fullPath: "/user/$userId/store/$storeId/orders/shipment";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutShipmentRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/return-and-refund": {
+      id: "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/return-and-refund";
+      path: "/return-and-refund";
+      fullPath: "/user/$userId/store/$storeId/orders/return-and-refund";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutReturnAndRefundRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/orders-list": {
+      id: "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/orders-list";
+      path: "/orders-list";
+      fullPath: "/user/$userId/store/$storeId/orders/orders-list";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutOrdersListRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/reviews-request": {
+      id: "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/reviews-request";
+      path: "/reviews-request";
+      fullPath: "/user/$userId/store/$storeId/customers/reviews-request";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutReviewsRequestRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/loyalty": {
+      id: "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/loyalty";
+      path: "/loyalty";
+      fullPath: "/user/$userId/store/$storeId/customers/loyalty";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/email": {
+      id: "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/email";
+      path: "/email";
+      fullPath: "/user/$userId/store/$storeId/campaign/email";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/coupon": {
+      id: "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/coupon";
+      path: "/coupon";
+      fullPath: "/user/$userId/store/$storeId/campaign/coupon";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRoute;
     };
   }
 }
@@ -437,14 +876,173 @@ const UserUserIdMyStoresLayoutRouteWithChildren =
     UserUserIdMyStoresLayoutRouteChildren,
   );
 
+interface UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute;
+  UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteChildren: UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute:
+      UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute,
+    UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute:
+      UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsCampaignRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteWithChildren;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsCampaignRouteChildren: UserUserIdStoreStoreIdStoreLayoutsCampaignRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRoute:
+      UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteWithChildren,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsCampaignRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsCampaignRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsCampaignRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRoute;
+  UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutReviewsRequestRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutReviewsRequestRoute;
+  UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRoute;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteChildren: UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRoute:
+      UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRoute,
+    UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutReviewsRequestRoute:
+      UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutReviewsRequestRoute,
+    UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRoute:
+      UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRoute,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsCustomersRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteWithChildren;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsCustomersRouteChildren: UserUserIdStoreStoreIdStoreLayoutsCustomersRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRoute:
+      UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteWithChildren,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsCustomersRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsCustomersRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsCustomersRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutOrdersListRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutOrdersListRoute;
+  UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutReturnAndRefundRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutReturnAndRefundRoute;
+  UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutShipmentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutShipmentRoute;
+  UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRoute;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteChildren: UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutOrdersListRoute:
+      UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutOrdersListRoute,
+    UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutReturnAndRefundRoute:
+      UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutReturnAndRefundRoute,
+    UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutShipmentRoute:
+      UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutShipmentRoute,
+    UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRoute:
+      UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRoute,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsOrdersRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteWithChildren;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsOrdersRouteChildren: UserUserIdStoreStoreIdStoreLayoutsOrdersRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute:
+      UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteWithChildren,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsOrdersRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsOrdersRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsOrdersRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRoute;
+  UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRoute;
+  UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRoute;
+  UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteChildren: UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRoute:
+      UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRoute,
+    UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRoute:
+      UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRoute,
+    UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRoute:
+      UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRoute,
+    UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute:
+      UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsProductsRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteWithChildren;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsProductsRouteChildren: UserUserIdStoreStoreIdStoreLayoutsProductsRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute:
+      UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteWithChildren,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsProductsRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsProductsRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsProductsRouteChildren,
+  );
+
 interface UserUserIdStoreStoreIdStoreLayoutsRouteChildren {
   UserUserIdStoreStoreIdStoreLayoutsDashboardRoute: typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRoute;
+  UserUserIdStoreStoreIdStoreLayoutsCampaignRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignRouteWithChildren;
+  UserUserIdStoreStoreIdStoreLayoutsCustomersRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersRouteWithChildren;
+  UserUserIdStoreStoreIdStoreLayoutsOrdersRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersRouteWithChildren;
+  UserUserIdStoreStoreIdStoreLayoutsProductsRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsRouteWithChildren;
 }
 
 const UserUserIdStoreStoreIdStoreLayoutsRouteChildren: UserUserIdStoreStoreIdStoreLayoutsRouteChildren =
   {
     UserUserIdStoreStoreIdStoreLayoutsDashboardRoute:
       UserUserIdStoreStoreIdStoreLayoutsDashboardRoute,
+    UserUserIdStoreStoreIdStoreLayoutsCampaignRoute:
+      UserUserIdStoreStoreIdStoreLayoutsCampaignRouteWithChildren,
+    UserUserIdStoreStoreIdStoreLayoutsCustomersRoute:
+      UserUserIdStoreStoreIdStoreLayoutsCustomersRouteWithChildren,
+    UserUserIdStoreStoreIdStoreLayoutsOrdersRoute:
+      UserUserIdStoreStoreIdStoreLayoutsOrdersRouteWithChildren,
+    UserUserIdStoreStoreIdStoreLayoutsProductsRoute:
+      UserUserIdStoreStoreIdStoreLayoutsProductsRouteWithChildren,
   };
 
 const UserUserIdStoreStoreIdStoreLayoutsRouteWithChildren =
