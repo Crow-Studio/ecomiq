@@ -16,7 +16,6 @@ export interface StoreWithRole {
 }
 
 export const getStores = async (user_id: string): Promise<StoreWithRole[]> => {
-  // stores the user owns
   const ownedStores = await db.query.store.findMany({
     where: (s, { eq }) => eq(s.owner_id, user_id),
   });
@@ -56,7 +55,6 @@ export const getStores = async (user_id: string): Promise<StoreWithRole[]> => {
       role: s.role as UserRole,
     }));
 
-  // Merge and remove duplicates if necessary
   const allStores = [...ownedWithRole, ...memberStoresWithRole];
   const uniqueStores = Array.from(new Map(allStores.map((s) => [s.id, s])).values());
 
@@ -73,6 +71,12 @@ export const createStore = async ({ user_id }: { user_id: string }) => {
       url,
     })
     .returning();
+
+  await db.insert(tables.store_members).values({
+    store_id: store.id,
+    user_id: user_id,
+    role: UserRole.OWNER,
+  });
 
   return store;
 };

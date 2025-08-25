@@ -42,7 +42,11 @@ function RouteComponent() {
   const onCreateStore = async () => {
     setIsCreatingStore(true);
     try {
-      const res = await createStoreFn();
+      const res = await createStoreFn({
+        data: {
+          total_stores: stores.length,
+        },
+      });
 
       if (!res.storeId && res.redirectTo === "BILLING") {
         return navigate({

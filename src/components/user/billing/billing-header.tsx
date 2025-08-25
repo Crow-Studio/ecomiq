@@ -20,6 +20,8 @@ interface Props {
   setCurrency: Dispatch<SetStateAction<CurrencyEnum>>;
   currency: CurrencyEnum;
   itemVariants: Variants;
+  isSubscriptionExpired: boolean | undefined;
+  hasExceededStoreLimit: boolean;
 }
 
 export default function BillingHeader({
@@ -29,6 +31,8 @@ export default function BillingHeader({
   currency,
   setCurrency,
   itemVariants,
+  isSubscriptionExpired,
+  hasExceededStoreLimit,
 }: Props) {
   return (
     <motion.div variants={itemVariants} className="space-y-3 px-8 pt-6">
@@ -40,6 +44,44 @@ export default function BillingHeader({
         </div>
       </div>
       <div className="space-y-4">
+        {!isSubscriptionExpired && hasExceededStoreLimit && (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="text-muted-foreground mx-auto flex w-full max-w-md items-center gap-x-3"
+          >
+            <p className="text-center text-sm text-balance">
+              You’ve reached the maximum number of stores creation for your plan. Please
+              upgrade or renew to continue.
+            </p>
+          </motion.div>
+        )}
+        {isSubscriptionExpired && !hasExceededStoreLimit && (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="text-muted-foreground mx-auto flex w-full max-w-md items-center gap-x-3"
+          >
+            <p className="text-center text-sm text-balance">
+              Your subscription has expired. Please upgrade or renew to continue.
+            </p>
+          </motion.div>
+        )}
+        {isSubscriptionExpired && hasExceededStoreLimit && (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="text-muted-foreground mx-auto flex w-full max-w-md items-center gap-x-3"
+          >
+            <p className="text-center text-sm text-balance">
+              Your subscription has expired and you’ve reached the maximum number of
+              stores creation for your plan. Please upgrade or renew to continue.
+            </p>
+          </motion.div>
+        )}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}

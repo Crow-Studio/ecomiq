@@ -40,7 +40,7 @@ export const Route = createFileRoute("/user/$userId/_billing-layout")({
       });
     }
 
-    return { user, subscription };
+    return { user, subscription, stores };
   },
 });
 

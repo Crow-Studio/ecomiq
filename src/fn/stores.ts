@@ -5,9 +5,10 @@ import { createStore, getStores } from "~/data-access/stores";
 import { createSubscription, getUserSubscription } from "~/data-access/subscriptions";
 import { authenticatedMiddleware } from "~/lib/auth/middleware/auth-guard";
 import { SubscriptionStatusEnum } from "~/lib/db/schema";
+import { storeLimits } from "~/utils/stores";
 
-// zod schemas
-const storeSchema = z.object({
+/* ------------------- Zod Schema------------------- */
+export const storeSchema = z.object({
   user_id: z
     .string()
     .min(16, {
@@ -18,6 +19,13 @@ const storeSchema = z.object({
     }),
 });
 
+export const createStoreFnSchema = z.object({
+  total_stores: z.number({
+    error: 'Please provide total number of stores!'
+  })
+})
+
+/* ------------------- Server Functions------------------- */
 export const getStoresFn = createServerFn({
   method: "GET",
 })
@@ -41,8 +49,15 @@ interface CreateServerFnResponse {
 export const createStoreFn = createServerFn({
   method: "POST",
 })
+  .validator((data: unknown) => {
+    const result = createStoreFnSchema.safeParse(data);
+    if (!result.success) {
+      throw new Error(result.error.issues[0].message);
+    }
+    return result.data;
+  })
   .middleware([authenticatedMiddleware])
-  .handler(async ({ context: { user } }): Promise<CreateServerFnResponse> => {
+  .handler(async ({ data: { total_stores }, context: { user } }): Promise<CreateServerFnResponse> => {
     try {
       // Validate user context
       if (!user?.id) {
@@ -125,6 +140,7 @@ export const createStoreFn = createServerFn({
 
       /*
        * Case 4: User has an active subscription and it is still valid
+       * Check store limits
        * Allow store creation and redirect to the new store's dashboard
        */
       if (
@@ -133,26 +149,27 @@ export const createStoreFn = createServerFn({
         isBefore(new Date(), subscription.current_period_end)
       ) {
         try {
-          const store = await createStore({
-            user_id: user.id,
-          });
+          const allowedStores = storeLimits[subscription.subscription_plan] ?? 0
+          if (total_stores >= allowedStores) {
+            throw new Error("You've exceeded the allowed number of stores for your plan!")
+          }
+
+          const store = await createStore({ user_id: user.id })
 
           if (!store?.id) {
-            throw new Error("Store creation failed - no store ID returned!");
+            throw new Error("Store creation failed - no store ID returned!")
           }
 
           return {
             redirectTo: "DASHBOARD",
             storeId: store.id,
-          };
-        } catch (error) {
-          console.error("Failed to create store:", error);
-          if (error instanceof Error) {
-            throw new Error(error.message);
           }
-          throw new Error("Failed to create store. Please try again.");
+        } catch (error) {
+          console.error("Failed to create store:", error)
+          throw new Error(error instanceof Error ? error.message : "Failed to create store. Please try again.")
         }
       }
+
 
       /*
        * Fallback: redirect to billing for any other subscription state

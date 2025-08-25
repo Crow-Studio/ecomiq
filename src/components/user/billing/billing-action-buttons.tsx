@@ -25,6 +25,7 @@ interface Props {
   plans: PricingPlan[];
   getPrice: (monthlyPrice: number) => number;
   user: User;
+  hasExceededStoreLimit: boolean;
 }
 
 export default function BillingActionButtons({
@@ -36,6 +37,7 @@ export default function BillingActionButtons({
   plans,
   getPrice,
   user,
+  hasExceededStoreLimit,
 }: Props) {
   const navigate = useNavigate();
   const [isPayNow, setIsPayNow] = useState(false);
@@ -168,7 +170,7 @@ export default function BillingActionButtons({
         </Button>
       </motion.div>
 
-      {!isSubscriptionExpired && (
+      {!isSubscriptionExpired && !hasExceededStoreLimit && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -178,7 +180,7 @@ export default function BillingActionButtons({
           <Button
             onClick={() => handleSkipPayment()}
             disabled={isPayNow || isSkipNow}
-            variant={"ghost"}
+            variant="ghost"
             type="button"
             className="w-full"
           >

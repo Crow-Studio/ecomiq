@@ -9,6 +9,7 @@ import BillingPlan from "~/components/user/billing/billing-plan";
 import { pricingPlans } from "~/data/plans";
 import { BillingCyleEnum, CurrencyEnum, SubscriptionPlanEnum } from "~/lib/db/schema";
 import { seo } from "~/lib/seo";
+import { storeLimits } from "~/utils/stores";
 
 export const Route = createFileRoute("/user/$userId/_billing-layout/billing")({
   component: RouteComponent,
@@ -30,11 +31,17 @@ export const Route = createFileRoute("/user/$userId/_billing-layout/billing")({
 });
 
 function RouteComponent() {
-  const { user, subscription } = Route.useRouteContext();
+  const { user, subscription, stores } = Route.useRouteContext();
+
   const isSubscriptionExpired =
     subscription &&
     subscription.current_period_end &&
     isBefore(subscription.current_period_end, new Date());
+  const totalStores = stores.length;
+  const allowedStores =
+    storeLimits[subscription?.subscription_plan ?? SubscriptionPlanEnum.TRIAL] ?? 0;
+  const hasExceededStoreLimit = totalStores >= allowedStores;
+
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlanEnum>(
     SubscriptionPlanEnum.STARTER,
   );
@@ -91,6 +98,8 @@ function RouteComponent() {
         setBillingPeriod={setBillingPeriod}
         setCurrency={setCurrency}
         user={user}
+        isSubscriptionExpired={isSubscriptionExpired}
+        hasExceededStoreLimit={hasExceededStoreLimit}
       />
       <div className="space-y-3 px-8 pt-6">
         <motion.div className="" variants={itemVariants}>
@@ -118,6 +127,7 @@ function RouteComponent() {
           plans={pricingPlans}
           getPrice={getPrice}
           user={user}
+          hasExceededStoreLimit={hasExceededStoreLimit}
         />
       </div>
       <BillingFooter itemVariants={itemVariants} />
