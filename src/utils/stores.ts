@@ -6,4 +6,4 @@ export const storeLimits: Record<SubscriptionPlanEnum, number> = {
   [SubscriptionPlanEnum.STARTER]: 3,
   [SubscriptionPlanEnum.GROWTH]: 5,
   [SubscriptionPlanEnum.ENTERPRISE]: Infinity, // no limit
-}
+};
