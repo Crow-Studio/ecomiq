@@ -44,7 +44,7 @@ export default function MyStoreUser({ user }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="cursor-pointer">
-        <Avatar className="h-8 w-8 rounded-lg grayscale">
+        <Avatar className="h-8 w-8 rounded-lg">
           <AvatarImage src={user.avatar} alt={user.username} />
           <AvatarFallback className="rounded-lg">
             {user.username.charAt(0).toUpperCase() || "CN"}

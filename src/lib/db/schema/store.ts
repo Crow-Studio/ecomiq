@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-deprecated */
-import { boolean, index, timestamp, unique, varchar } from "drizzle-orm/pg-core";
+import { boolean, index, text, timestamp, unique, varchar } from "drizzle-orm/pg-core";
 import * as enums from "./enums";
 import { user } from "./user";
 import { generateNanoId, pgTable } from "./utils";
@@ -15,6 +15,7 @@ export const store = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     name: varchar("name", { length: 200 }).notNull(),
+    url: text("url").unique().notNull(),
     currency: enums.currency_enum("currency").default(enums.CurrencyEnum.KES).notNull(),
     active: boolean("active").default(true).notNull(),
     created_at: timestamp("created_at", { mode: "date", precision: 3 })

@@ -20,8 +20,8 @@ export const env = createEnv({
     RESEND_API_KEY: z.string().min(1),
 
     // Paystack
-    PAYSTACK_SECRET_KEY: z.string().min(1),
-    PAYSTACK_PUBLIC_KEY: z.string().min(1),
+    VITE_PAYSTACK_SECRET_KEY: z.string().min(1),
+    VITE_PAYSTACK_PUBLIC_KEY: z.string().min(1),
   },
   runtimeEnv: process.env,
 });

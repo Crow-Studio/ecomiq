@@ -1,3 +1,6 @@
+import { SubscriptionPlanEnum } from "~/lib/db/schema";
+import { PricingPlan } from "~/types";
+
 export const monthlyPlans = [
   {
     name: "Starter",
@@ -115,5 +118,23 @@ export const annualPlans = [
       "24/7 priority support",
     ],
     cta: "Contact Sales",
+  },
+];
+
+export const pricingPlans: PricingPlan[] = [
+  {
+    name: SubscriptionPlanEnum.STARTER,
+    monthlyPrice: 9,
+    description: "For solo entrepreneurs launching their first store.",
+  },
+  {
+    name: SubscriptionPlanEnum.GROWTH,
+    monthlyPrice: 19,
+    description: "For growing teams that need more control and insights.",
+  },
+  {
+    name: SubscriptionPlanEnum.ENTERPRISE,
+    monthlyPrice: 49,
+    description: "For large teams and high-volume sellers.",
   },
 ];

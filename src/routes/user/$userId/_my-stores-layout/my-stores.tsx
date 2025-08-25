@@ -1,23 +1,14 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { createFileRoute } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Loader2, Plus } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Ecomiq } from "~/components/svgs/ecomiq";
 import { Button } from "~/components/ui/button";
 import MyStoreUser from "~/components/user/my-stores/user";
 import UserStores from "~/components/user/my-stores/user-stores";
-import { paystackPayment } from "~/hooks/use-paystack";
-import { generateNanoId } from "~/lib/db/schema/utils";
-import { PaymentReference } from "~/lib/paystack/types";
+import { createStoreFn } from "~/fn/stores";
 import { seo } from "~/lib/seo";
-
-const config = {
-  reference: new Date().getTime().toString(),
-  email: "user@example.com",
-  amount: 200,
-  currency: "KES",
-  publicKey: "pk_live_e815459587c2ddb0ad2e0cf6d757f939a3397ca2",
-};
 
 export const Route = createFileRoute("/user/$userId/_my-stores-layout/my-stores")({
   component: RouteComponent,
@@ -43,28 +34,41 @@ export const Route = createFileRoute("/user/$userId/_my-stores-layout/my-stores"
   }),
 });
 
-const onSuccess = (reference: PaymentReference) => {
-  console.log(reference);
-};
-
-const onClose = () => {
-  console.log("closed");
-};
-
 function RouteComponent() {
+  const navigate = useNavigate();
   const { user, stores } = Route.useRouteContext();
-  const [isPaying, setIsPaying] = useState(false);
-  const initializePayment = paystackPayment(config);
+  const [isCreatingStore, setIsCreatingStore] = useState(false);
 
   const onCreateStore = async () => {
-    setIsPaying(true);
+    setIsCreatingStore(true);
     try {
-      initializePayment({ config, onSuccess, onClose });
-      console.log(generateNanoId(12));
+      const res = await createStoreFn();
+
+      if (!res.storeId && res.redirectTo === "BILLING") {
+        return navigate({
+          to: "/user/$userId/billing",
+          params: {
+            userId: user.id,
+          },
+        });
+      }
+
+      return navigate({
+        to: "/user/$userId/store/$storeId/dashboard",
+        params: {
+          storeId: res.storeId as string,
+          userId: user.id,
+        },
+      });
     } catch (error) {
-      console.log("error", error);
+      console.log(error);
+      if (error instanceof Error) {
+        toast.error(error.message, {
+          position: "top-center",
+        });
+      }
     } finally {
-      setIsPaying(false);
+      setIsCreatingStore(false);
     }
   };
   return (
@@ -77,17 +81,16 @@ function RouteComponent() {
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-medium">My stores</h2>
           <Button
-            disabled={isPaying}
+            disabled={isCreatingStore}
             onClick={() => onCreateStore()}
             className="bg-brand hover:bg-primary-secondary group inline-flex h-max w-fit cursor-pointer items-center justify-center rounded-lg border border-transparent px-4 py-2 text-sm font-medium text-white shadow-[0rem_-0.0625rem_0rem_0.0625rem_rgba(249,129,99,1)_inset,_0rem_0rem_0rem_0.0625rem_#F97452_inset,_0rem_0.03125rem_0rem_0.09375rem_#F97452_inset] transition-colors duration-300 ease-in-out hover:translate-y-0.5 hover:shadow-[0rem_-0.0625rem_0rem_0.0625rem_rgba(252,199,185,0.8)_inset,_0rem_0rem_0rem_0.0625rem_#F97452_inset,_0rem_0.03125rem_0rem_0.09375rem_hsla(0,_0%,_100%,_0.25)_inset] focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:shadow-xs disabled:hover:shadow-xs"
           >
-            <Plus />
-            {isPaying ? "Processing..." : "Create Store"}
+            {isCreatingStore ? <Loader2 className="size-4 animate-spin" /> : <Plus />}
+            Create store
           </Button>
         </div>
-
         {stores.length > 0 ? (
-          <UserStores stores={stores} />
+          <UserStores stores={stores} user={user} />
         ) : (
           <div className="flex flex-col items-center gap-y-1">
             <div className="flex items-center justify-center">
