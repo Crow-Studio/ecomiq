@@ -26,6 +26,8 @@ interface Props {
   getPrice: (monthlyPrice: number) => number;
   user: User;
   hasExceededStoreLimit: boolean;
+  allowedStores: number;
+  totalStores: number;
 }
 
 export default function BillingActionButtons({
@@ -38,6 +40,8 @@ export default function BillingActionButtons({
   getPrice,
   user,
   hasExceededStoreLimit,
+  allowedStores,
+  totalStores,
 }: Props) {
   const navigate = useNavigate();
   const [isPayNow, setIsPayNow] = useState(false);
@@ -58,7 +62,6 @@ export default function BillingActionButtons({
 
   const onSuccess = async (payload: PaymentReference) => {
     try {
-      console.log(payload);
       const current_period_end =
         billingPeriod === BillingCyleEnum.MONTHLY
           ? addMonths(new Date(), 1)
@@ -119,7 +122,20 @@ export default function BillingActionButtons({
   const handleSkipPayment = async () => {
     try {
       setIsSkipNow(true);
-      const res = await billingCreateStoreFn();
+
+      if (hasExceededStoreLimit) {
+        return toast.error(
+          `Store limit reached. Your plan allows ${allowedStores} store(s), you currently have ${totalStores}.`,
+          {
+            position: "top-center",
+          },
+        );
+      }
+      const res = await billingCreateStoreFn({
+        data: {
+          total_stores: totalStores,
+        },
+      });
 
       toast.success(res.message, {
         position: "top-center",

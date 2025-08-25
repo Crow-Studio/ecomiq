@@ -4,7 +4,7 @@ import { z } from "zod";
 import { createStore, getStores } from "~/data-access/stores";
 import { createSubscription, getUserSubscription } from "~/data-access/subscriptions";
 import { authenticatedMiddleware } from "~/lib/auth/middleware/auth-guard";
-import { SubscriptionStatusEnum } from "~/lib/db/schema";
+import { SubscriptionStatusEnum, UserRole } from "~/lib/db/schema";
 import { storeLimits } from "~/utils/stores";
 
 /* ------------------- Zod Schema------------------- */
@@ -205,12 +205,46 @@ export const createStoreFn = createServerFn({
 export const billingCreateStoreFn = createServerFn({
   method: "POST",
 })
+  .validator((data: unknown) => {
+    const result = createStoreFnSchema.safeParse(data);
+    if (!result.success) {
+      throw new Error(result.error.issues[0].message);
+    }
+    return result.data;
+  })
   .middleware([authenticatedMiddleware])
   .handler(async ({ context: { user } }) => {
     try {
       // Validate user context
       if (!user?.id) {
         throw new Error("User context is missing or invalid!");
+      }
+
+      const stores = await getStores(user.id)
+
+      // Identify all stores where the user is the OWNER
+      const ownedStores = stores.filter((s) => s.role === UserRole.OWNER);
+
+      let subscription;
+
+      try {
+        subscription = await getUserSubscription(user.id);
+      } catch (error) {
+        console.error("Failed to fetch user subscription:", error);
+        throw new Error(
+          "Unable to retrieve subscription information. Please try again!",
+        );
+      }
+
+      if (!subscription) {
+        throw new Error("You don't have an active subscription. Please upgrade to create a store!");
+      }
+
+      const total_stores = ownedStores.length
+      const allowedStores = storeLimits[subscription.subscription_plan] ?? 0;
+
+      if (total_stores >= allowedStores) {
+        throw new Error("You've exceeded the allowed number of stores for your plan!");
       }
 
       const store = await createStore({

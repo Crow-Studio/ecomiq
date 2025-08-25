@@ -128,6 +128,8 @@ function RouteComponent() {
           getPrice={getPrice}
           user={user}
           hasExceededStoreLimit={hasExceededStoreLimit}
+          allowedStores={allowedStores}
+          totalStores={totalStores}
         />
       </div>
       <BillingFooter itemVariants={itemVariants} />
