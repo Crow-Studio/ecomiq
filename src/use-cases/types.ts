@@ -1,3 +1,5 @@
+import { CurrencyEnum, UserRole } from "~/lib/db/schema";
+
 export type UserId = string;
 
 export interface Session {
@@ -37,4 +39,23 @@ export interface GoogleUser {
   email: string;
   email_verified: boolean;
   locale: string;
+}
+
+export interface StoreWithMembers {
+  id: string;
+  name: string;
+  created_at: Date;
+  updated_at: Date | null;
+  url: string;
+  currency: CurrencyEnum;
+  owner_id: string;
+  active: boolean;
+  members: {
+    id: string;
+    role: UserRole | null;
+    created_at: Date;
+    updated_at: Date | null;
+    user_id: string;
+    store_id: string;
+  }[];
 }

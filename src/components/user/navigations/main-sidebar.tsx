@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { Ecomiq } from "~/components/svgs/ecomiq";
 import { Separator } from "~/components/ui/separator";
@@ -9,6 +9,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
+import { cn } from "~/lib/utils";
+import { StoreWithMembers, User } from "~/use-cases/types";
 
 interface TooltipWrapperProps {
   children: ReactNode;
@@ -40,7 +42,15 @@ interface NavItem {
   label: string;
 }
 
-export default function MainSidebar() {
+interface Props {
+  user: User;
+  store: StoreWithMembers;
+}
+
+export default function MainSidebar({ user, store }: Props) {
+  const {
+    location: { pathname },
+  } = useRouterState();
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
@@ -106,15 +116,15 @@ export default function MainSidebar() {
 
       <TooltipProvider>
         <nav
-          className={`flex h-svh shrink-0 flex-col space-y-2 bg-[#f3f4f8] p-1 transition-all duration-300 ease-in-out dark:bg-[#171717] ${
+          className={`border-border flex h-screen shrink-0 flex-col space-y-2 border-r bg-[#f3f4f8] p-1 transition-all duration-300 ease-in-out dark:bg-[#171717] ${
             isMobile
               ? `fixed top-0 left-0 z-50 ${isCollapsed ? "w-16" : "w-64"}`
-              : `sticky ${isCollapsed ? "w-16" : "w-64"}`
+              : `${isCollapsed ? "w-16" : "w-64"}`
           } `}
         >
           {/* Header */}
           <div
-            className={`flex items-center gap-x-2 p-2 ${
+            className={`flex flex-shrink-0 items-center gap-x-2 p-2 ${
               isCollapsed ? "justify-center" : ""
             }`}
           >
@@ -124,15 +134,26 @@ export default function MainSidebar() {
             )}
           </div>
 
-          {/* Main Navigation */}
-          <div className="flex-1 space-y-1">
+          {/* Main Navigation - Scrollable */}
+          <div className="flex-1 space-y-1 overflow-y-auto">
             {navItems.map((item) => (
               <TooltipWrapper
                 key={item.label}
                 content={item.label}
                 disabled={!isCollapsed}
               >
-                <Link to={item.to} className={navLinkClasses} onClick={closeSidebar}>
+                <Link
+                  to={item.to}
+                  className={cn(
+                    "text-muted-foreground flex w-full cursor-pointer items-center gap-x-2 rounded-md p-2 transition-colors duration-500 ease-in-out",
+                    pathname ===
+                      `/user/${user.id}/store/${store.id}/${item.label.toLocaleLowerCase()}`
+                      ? "bg-background dark:bg-[#313131] text-primary"
+                      : "hover:bg-background dark:hover:bg-[#313131] hover:text-primary",
+                    isCollapsed && "justify-center",
+                  )}
+                  onClick={closeSidebar}
+                >
                   <Icon icon={item.icon} className="size-6 flex-shrink-0" />
                   {!isCollapsed && <p>{item.label}</p>}
                 </Link>
@@ -166,8 +187,8 @@ export default function MainSidebar() {
             </TooltipWrapper>
           </div>
 
-          {/* Bottom Section */}
-          <div className="space-y-2">
+          {/* Bottom Section - Fixed */}
+          <div className="flex-shrink-0 space-y-2">
             <TooltipWrapper content="Support" disabled={!isCollapsed}>
               <Link to="/" className={navLinkClasses} onClick={closeSidebar}>
                 <Icon

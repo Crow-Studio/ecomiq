@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { addDays, isBefore } from "date-fns";
 import { z } from "zod";
-import { createStore, getStores } from "~/data-access/stores";
+import { createStore, getStore, getStores } from "~/data-access/stores";
 import { createSubscription, getUserSubscription } from "~/data-access/subscriptions";
 import { authenticatedMiddleware } from "~/lib/auth/middleware/auth-guard";
 import { SubscriptionStatusEnum, UserRole } from "~/lib/db/schema";
@@ -18,6 +18,10 @@ export const storeSchema = z.object({
       error: "User ID must be at most 16 characters long",
     }),
 });
+
+export const getStoreFnSchema = z.object({
+  store_id: z.string()
+})
 
 export const createStoreFnSchema = z.object({
   total_stores: z.number({
@@ -40,6 +44,21 @@ export const getStoresFn = createServerFn({
   .handler(async ({ data }) => {
     return await getStores(data.user_id);
   });
+
+export const getStoreFn = createServerFn({
+  method: 'GET'
+})
+.validator((data: unknown) => {
+  const result = getStoreFnSchema.safeParse(data);
+    if (!result.success) {
+      throw new Error(result.error.issues[0].message);
+    }
+    return result.data;
+})
+.middleware([authenticatedMiddleware])
+.handler(async ({ data }) =>  {
+  return await getStore(data.store_id)
+})
 
 interface CreateServerFnResponse {
   redirectTo: "BILLING" | "DASHBOARD";

@@ -5,7 +5,6 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.url(),
     VITE_BASE_URL: z.url(),
-    BETTER_AUTH_SECRET: z.string().min(1),
     NODE_ENV: z.string(),
 
     // Upstash
