@@ -105,7 +105,7 @@ export default function MainSidebar({ user, store }: Props) {
       )}
       <TooltipProvider>
         <nav
-          className={`border-border flex overflow-x-hidden h-screen shrink-0 flex-col space-y-2 border-r bg-[#f3f4f8] p-1 transition-all duration-300 ease-in-out dark:bg-[#171717] ${
+          className={`border-border flex h-screen shrink-0 flex-col space-y-2 overflow-x-hidden border-r bg-[#f3f4f8] p-1 transition-all duration-300 ease-in-out dark:bg-[#171717] ${
             isMobile
               ? `fixed top-0 left-0 z-50 ${isCollapsed ? "w-16" : "w-64"}`
               : `${isCollapsed ? "w-16" : "w-64"}`
