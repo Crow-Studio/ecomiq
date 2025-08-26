@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute(
   "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout",
@@ -10,6 +10,7 @@ function RouteComponent() {
   return (
     <div>
       Hello "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout"!
+      <Outlet />
     </div>
   );
 }

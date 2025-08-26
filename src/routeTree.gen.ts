@@ -23,13 +23,24 @@ import { Route as UserUserIdMyStoresLayoutMyStoresRouteImport } from "./routes/u
 import { Route as UserUserIdBillingLayoutBillingRouteImport } from "./routes/user/$userId/_billing-layout/billing";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsDashboardRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/dashboard";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/team/_team-layout";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/support/_support-layout";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/settings/_settings-layout";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/products/_products-layout";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/payments/_payments-layout";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/analytics/_analytics-layout";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutIndexRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/team/_team-layout/index";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutIndexRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/support/_support-layout/index";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutIndexRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/settings/_settings-layout/index";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/products/_products-layout/index";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutIndexRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/payments/_payments-layout/index";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/index";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/index";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutIndexRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/index";
+import { Route as UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutIndexRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/analytics/_analytics-layout/index";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/products/_products-layout/services";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/products/_products-layout/license-keys";
 import { Route as UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRouteImport } from "./routes/user/$userId/store/$storeId/_store-layouts/products/_products-layout/digital";
@@ -49,8 +60,20 @@ const UserUserIdRouteImport = createFileRoute("/user/$userId")();
 const UserUserIdStoreStoreIdRouteImport = createFileRoute(
   "/user/$userId/store/$storeId",
 )();
+const UserUserIdStoreStoreIdStoreLayoutsTeamRouteImport = createFileRoute(
+  "/user/$userId/store/$storeId/_store-layouts/team",
+)();
+const UserUserIdStoreStoreIdStoreLayoutsSupportRouteImport = createFileRoute(
+  "/user/$userId/store/$storeId/_store-layouts/support",
+)();
+const UserUserIdStoreStoreIdStoreLayoutsSettingsRouteImport = createFileRoute(
+  "/user/$userId/store/$storeId/_store-layouts/settings",
+)();
 const UserUserIdStoreStoreIdStoreLayoutsProductsRouteImport = createFileRoute(
   "/user/$userId/store/$storeId/_store-layouts/products",
+)();
+const UserUserIdStoreStoreIdStoreLayoutsPaymentsRouteImport = createFileRoute(
+  "/user/$userId/store/$storeId/_store-layouts/payments",
 )();
 const UserUserIdStoreStoreIdStoreLayoutsOrdersRouteImport = createFileRoute(
   "/user/$userId/store/$storeId/_store-layouts/orders",
@@ -60,6 +83,9 @@ const UserUserIdStoreStoreIdStoreLayoutsCustomersRouteImport = createFileRoute(
 )();
 const UserUserIdStoreStoreIdStoreLayoutsCampaignRouteImport = createFileRoute(
   "/user/$userId/store/$storeId/_store-layouts/campaign",
+)();
+const UserUserIdStoreStoreIdStoreLayoutsAnalyticsRouteImport = createFileRoute(
+  "/user/$userId/store/$storeId/_store-layouts/analytics",
 )();
 const rootServerRouteImport = createServerRootRoute();
 
@@ -129,10 +155,34 @@ const UserUserIdStoreStoreIdStoreLayoutsRoute =
     id: "/_store-layouts",
     getParentRoute: () => UserUserIdStoreStoreIdRoute,
   } as any);
+const UserUserIdStoreStoreIdStoreLayoutsTeamRoute =
+  UserUserIdStoreStoreIdStoreLayoutsTeamRouteImport.update({
+    id: "/team",
+    path: "/team",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsSupportRoute =
+  UserUserIdStoreStoreIdStoreLayoutsSupportRouteImport.update({
+    id: "/support",
+    path: "/support",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsSettingsRoute =
+  UserUserIdStoreStoreIdStoreLayoutsSettingsRouteImport.update({
+    id: "/settings",
+    path: "/settings",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
+  } as any);
 const UserUserIdStoreStoreIdStoreLayoutsProductsRoute =
   UserUserIdStoreStoreIdStoreLayoutsProductsRouteImport.update({
     id: "/products",
     path: "/products",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsPaymentsRoute =
+  UserUserIdStoreStoreIdStoreLayoutsPaymentsRouteImport.update({
+    id: "/payments",
+    path: "/payments",
     getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
   } as any);
 const UserUserIdStoreStoreIdStoreLayoutsOrdersRoute =
@@ -153,16 +203,42 @@ const UserUserIdStoreStoreIdStoreLayoutsCampaignRoute =
     path: "/campaign",
     getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
   } as any);
+const UserUserIdStoreStoreIdStoreLayoutsAnalyticsRoute =
+  UserUserIdStoreStoreIdStoreLayoutsAnalyticsRouteImport.update({
+    id: "/analytics",
+    path: "/analytics",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
+  } as any);
 const UserUserIdStoreStoreIdStoreLayoutsDashboardRoute =
   UserUserIdStoreStoreIdStoreLayoutsDashboardRouteImport.update({
     id: "/dashboard",
     path: "/dashboard",
     getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsRoute,
   } as any);
+const UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRoute =
+  UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRouteImport.update({
+    id: "/_team-layout",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsTeamRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRoute =
+  UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRouteImport.update({
+    id: "/_support-layout",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsSupportRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRoute =
+  UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRouteImport.update({
+    id: "/_settings-layout",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsSettingsRoute,
+  } as any);
 const UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute =
   UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteImport.update({
     id: "/_products-layout",
     getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsProductsRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRoute =
+  UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRouteImport.update({
+    id: "/_payments-layout",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsPaymentsRoute,
   } as any);
 const UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRoute =
   UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteImport.update({
@@ -179,6 +255,35 @@ const UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRoute =
     id: "/_campaign-layout",
     getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsCampaignRoute,
   } as any);
+const UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRoute =
+  UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRouteImport.update({
+    id: "/_analytics-layout",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsAnalyticsRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutIndexRoute =
+  UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutIndexRouteImport.update({
+    id: "/",
+    path: "/",
+    getParentRoute: () => UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRoute,
+  } as any);
+const UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutIndexRoute =
+  UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutIndexRouteImport.update(
+    {
+      id: "/",
+      path: "/",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutIndexRoute =
+  UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutIndexRouteImport.update(
+    {
+      id: "/",
+      path: "/",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRoute,
+    } as any,
+  );
 const UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute =
   UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRouteImport.update(
     {
@@ -186,6 +291,15 @@ const UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute =
       path: "/",
       getParentRoute: () =>
         UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutIndexRoute =
+  UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutIndexRouteImport.update(
+    {
+      id: "/",
+      path: "/",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRoute,
     } as any,
   );
 const UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRoute =
@@ -202,6 +316,24 @@ const UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRoute =
       path: "/",
       getParentRoute: () =>
         UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutIndexRoute =
+  UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutIndexRouteImport.update(
+    {
+      id: "/",
+      path: "/",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRoute,
+    } as any,
+  );
+const UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutIndexRoute =
+  UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutIndexRouteImport.update(
+    {
+      id: "/",
+      path: "/",
+      getParentRoute: () =>
+        UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRoute,
     } as any,
   );
 const UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRoute =
@@ -324,10 +456,15 @@ export interface FileRoutesByFullPath {
   "/user/$userId/my-stores": typeof UserUserIdMyStoresLayoutMyStoresRoute;
   "/user/$userId/store/$storeId": typeof UserUserIdStoreStoreIdStoreLayoutsRouteWithChildren;
   "/user/$userId/store/$storeId/dashboard": typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRoute;
+  "/user/$userId/store/$storeId/analytics": typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRouteWithChildren;
   "/user/$userId/store/$storeId/campaign": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteWithChildren;
   "/user/$userId/store/$storeId/customers": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteWithChildren;
   "/user/$userId/store/$storeId/orders": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/payments": typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRouteWithChildren;
   "/user/$userId/store/$storeId/products": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/settings": typeof UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/support": typeof UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/team": typeof UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRouteWithChildren;
   "/user/$userId/store/$storeId/campaign/coupon": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute;
   "/user/$userId/store/$storeId/campaign/email": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute;
   "/user/$userId/store/$storeId/customers/loyalty": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRoute;
@@ -338,9 +475,15 @@ export interface FileRoutesByFullPath {
   "/user/$userId/store/$storeId/products/digital": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRoute;
   "/user/$userId/store/$storeId/products/license-keys": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRoute;
   "/user/$userId/store/$storeId/products/services": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRoute;
+  "/user/$userId/store/$storeId/analytics/": typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutIndexRoute;
+  "/user/$userId/store/$storeId/campaign/": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutIndexRoute;
   "/user/$userId/store/$storeId/customers/": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRoute;
   "/user/$userId/store/$storeId/orders/": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRoute;
+  "/user/$userId/store/$storeId/payments/": typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutIndexRoute;
   "/user/$userId/store/$storeId/products/": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute;
+  "/user/$userId/store/$storeId/settings/": typeof UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutIndexRoute;
+  "/user/$userId/store/$storeId/support/": typeof UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutIndexRoute;
+  "/user/$userId/store/$storeId/team/": typeof UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutIndexRoute;
 }
 export interface FileRoutesByTo {
   "/auth": typeof AuthAuthLayoutRouteWithChildren;
@@ -353,10 +496,15 @@ export interface FileRoutesByTo {
   "/user/$userId/my-stores": typeof UserUserIdMyStoresLayoutMyStoresRoute;
   "/user/$userId/store/$storeId": typeof UserUserIdStoreStoreIdStoreLayoutsRouteWithChildren;
   "/user/$userId/store/$storeId/dashboard": typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRoute;
-  "/user/$userId/store/$storeId/campaign": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/analytics": typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutIndexRoute;
+  "/user/$userId/store/$storeId/campaign": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutIndexRoute;
   "/user/$userId/store/$storeId/customers": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRoute;
   "/user/$userId/store/$storeId/orders": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRoute;
+  "/user/$userId/store/$storeId/payments": typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutIndexRoute;
   "/user/$userId/store/$storeId/products": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute;
+  "/user/$userId/store/$storeId/settings": typeof UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutIndexRoute;
+  "/user/$userId/store/$storeId/support": typeof UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutIndexRoute;
+  "/user/$userId/store/$storeId/team": typeof UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutIndexRoute;
   "/user/$userId/store/$storeId/campaign/coupon": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute;
   "/user/$userId/store/$storeId/campaign/email": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute;
   "/user/$userId/store/$storeId/customers/loyalty": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRoute;
@@ -384,14 +532,24 @@ export interface FileRoutesById {
   "/user/$userId/store/$storeId": typeof UserUserIdStoreStoreIdRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts": typeof UserUserIdStoreStoreIdStoreLayoutsRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts/dashboard": typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRoute;
+  "/user/$userId/store/$storeId/_store-layouts/analytics": typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/analytics/_analytics-layout": typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts/campaign": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts/customers": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts/orders": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/payments": typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/payments/_payments-layout": typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts/products": typeof UserUserIdStoreStoreIdStoreLayoutsProductsRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts/products/_products-layout": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/settings": typeof UserUserIdStoreStoreIdStoreLayoutsSettingsRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/settings/_settings-layout": typeof UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/support": typeof UserUserIdStoreStoreIdStoreLayoutsSupportRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/support/_support-layout": typeof UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/team": typeof UserUserIdStoreStoreIdStoreLayoutsTeamRouteWithChildren;
+  "/user/$userId/store/$storeId/_store-layouts/team/_team-layout": typeof UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRouteWithChildren;
   "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/coupon": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute;
   "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/email": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute;
   "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/loyalty": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutLoyaltyRoute;
@@ -402,9 +560,15 @@ export interface FileRoutesById {
   "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/digital": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRoute;
   "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/license-keys": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRoute;
   "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/services": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutServicesRoute;
+  "/user/$userId/store/$storeId/_store-layouts/analytics/_analytics-layout/": typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutIndexRoute;
+  "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/": typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutIndexRoute;
   "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/": typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRoute;
   "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/": typeof UserUserIdStoreStoreIdStoreLayoutsOrdersOrdersLayoutIndexRoute;
+  "/user/$userId/store/$storeId/_store-layouts/payments/_payments-layout/": typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutIndexRoute;
   "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/": typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRoute;
+  "/user/$userId/store/$storeId/_store-layouts/settings/_settings-layout/": typeof UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutIndexRoute;
+  "/user/$userId/store/$storeId/_store-layouts/support/_support-layout/": typeof UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutIndexRoute;
+  "/user/$userId/store/$storeId/_store-layouts/team/_team-layout/": typeof UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
@@ -419,10 +583,15 @@ export interface FileRouteTypes {
     | "/user/$userId/my-stores"
     | "/user/$userId/store/$storeId"
     | "/user/$userId/store/$storeId/dashboard"
+    | "/user/$userId/store/$storeId/analytics"
     | "/user/$userId/store/$storeId/campaign"
     | "/user/$userId/store/$storeId/customers"
     | "/user/$userId/store/$storeId/orders"
+    | "/user/$userId/store/$storeId/payments"
     | "/user/$userId/store/$storeId/products"
+    | "/user/$userId/store/$storeId/settings"
+    | "/user/$userId/store/$storeId/support"
+    | "/user/$userId/store/$storeId/team"
     | "/user/$userId/store/$storeId/campaign/coupon"
     | "/user/$userId/store/$storeId/campaign/email"
     | "/user/$userId/store/$storeId/customers/loyalty"
@@ -433,9 +602,15 @@ export interface FileRouteTypes {
     | "/user/$userId/store/$storeId/products/digital"
     | "/user/$userId/store/$storeId/products/license-keys"
     | "/user/$userId/store/$storeId/products/services"
+    | "/user/$userId/store/$storeId/analytics/"
+    | "/user/$userId/store/$storeId/campaign/"
     | "/user/$userId/store/$storeId/customers/"
     | "/user/$userId/store/$storeId/orders/"
-    | "/user/$userId/store/$storeId/products/";
+    | "/user/$userId/store/$storeId/payments/"
+    | "/user/$userId/store/$storeId/products/"
+    | "/user/$userId/store/$storeId/settings/"
+    | "/user/$userId/store/$storeId/support/"
+    | "/user/$userId/store/$storeId/team/";
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/auth"
@@ -448,10 +623,15 @@ export interface FileRouteTypes {
     | "/user/$userId/my-stores"
     | "/user/$userId/store/$storeId"
     | "/user/$userId/store/$storeId/dashboard"
+    | "/user/$userId/store/$storeId/analytics"
     | "/user/$userId/store/$storeId/campaign"
     | "/user/$userId/store/$storeId/customers"
     | "/user/$userId/store/$storeId/orders"
+    | "/user/$userId/store/$storeId/payments"
     | "/user/$userId/store/$storeId/products"
+    | "/user/$userId/store/$storeId/settings"
+    | "/user/$userId/store/$storeId/support"
+    | "/user/$userId/store/$storeId/team"
     | "/user/$userId/store/$storeId/campaign/coupon"
     | "/user/$userId/store/$storeId/campaign/email"
     | "/user/$userId/store/$storeId/customers/loyalty"
@@ -478,14 +658,24 @@ export interface FileRouteTypes {
     | "/user/$userId/store/$storeId"
     | "/user/$userId/store/$storeId/_store-layouts"
     | "/user/$userId/store/$storeId/_store-layouts/dashboard"
+    | "/user/$userId/store/$storeId/_store-layouts/analytics"
+    | "/user/$userId/store/$storeId/_store-layouts/analytics/_analytics-layout"
     | "/user/$userId/store/$storeId/_store-layouts/campaign"
     | "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout"
     | "/user/$userId/store/$storeId/_store-layouts/customers"
     | "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout"
     | "/user/$userId/store/$storeId/_store-layouts/orders"
     | "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout"
+    | "/user/$userId/store/$storeId/_store-layouts/payments"
+    | "/user/$userId/store/$storeId/_store-layouts/payments/_payments-layout"
     | "/user/$userId/store/$storeId/_store-layouts/products"
     | "/user/$userId/store/$storeId/_store-layouts/products/_products-layout"
+    | "/user/$userId/store/$storeId/_store-layouts/settings"
+    | "/user/$userId/store/$storeId/_store-layouts/settings/_settings-layout"
+    | "/user/$userId/store/$storeId/_store-layouts/support"
+    | "/user/$userId/store/$storeId/_store-layouts/support/_support-layout"
+    | "/user/$userId/store/$storeId/_store-layouts/team"
+    | "/user/$userId/store/$storeId/_store-layouts/team/_team-layout"
     | "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/coupon"
     | "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/email"
     | "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/loyalty"
@@ -496,9 +686,15 @@ export interface FileRouteTypes {
     | "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/digital"
     | "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/license-keys"
     | "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/services"
+    | "/user/$userId/store/$storeId/_store-layouts/analytics/_analytics-layout/"
+    | "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/"
     | "/user/$userId/store/$storeId/_store-layouts/customers/_customers-layout/"
     | "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/"
-    | "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/";
+    | "/user/$userId/store/$storeId/_store-layouts/payments/_payments-layout/"
+    | "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/"
+    | "/user/$userId/store/$storeId/_store-layouts/settings/_settings-layout/"
+    | "/user/$userId/store/$storeId/_store-layouts/support/_support-layout/"
+    | "/user/$userId/store/$storeId/_store-layouts/team/_team-layout/";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
@@ -639,11 +835,39 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRouteImport;
       parentRoute: typeof UserUserIdStoreStoreIdRoute;
     };
+    "/user/$userId/store/$storeId/_store-layouts/team": {
+      id: "/user/$userId/store/$storeId/_store-layouts/team";
+      path: "/team";
+      fullPath: "/user/$userId/store/$storeId/team";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsTeamRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/support": {
+      id: "/user/$userId/store/$storeId/_store-layouts/support";
+      path: "/support";
+      fullPath: "/user/$userId/store/$storeId/support";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSupportRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/settings": {
+      id: "/user/$userId/store/$storeId/_store-layouts/settings";
+      path: "/settings";
+      fullPath: "/user/$userId/store/$storeId/settings";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSettingsRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
+    };
     "/user/$userId/store/$storeId/_store-layouts/products": {
       id: "/user/$userId/store/$storeId/_store-layouts/products";
       path: "/products";
       fullPath: "/user/$userId/store/$storeId/products";
       preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/payments": {
+      id: "/user/$userId/store/$storeId/_store-layouts/payments";
+      path: "/payments";
+      fullPath: "/user/$userId/store/$storeId/payments";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsRouteImport;
       parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
     };
     "/user/$userId/store/$storeId/_store-layouts/orders": {
@@ -667,6 +891,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignRouteImport;
       parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
     };
+    "/user/$userId/store/$storeId/_store-layouts/analytics": {
+      id: "/user/$userId/store/$storeId/_store-layouts/analytics";
+      path: "/analytics";
+      fullPath: "/user/$userId/store/$storeId/analytics";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
+    };
     "/user/$userId/store/$storeId/_store-layouts/dashboard": {
       id: "/user/$userId/store/$storeId/_store-layouts/dashboard";
       path: "/dashboard";
@@ -674,12 +905,40 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRouteImport;
       parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsRoute;
     };
+    "/user/$userId/store/$storeId/_store-layouts/team/_team-layout": {
+      id: "/user/$userId/store/$storeId/_store-layouts/team/_team-layout";
+      path: "/team";
+      fullPath: "/user/$userId/store/$storeId/team";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsTeamRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/support/_support-layout": {
+      id: "/user/$userId/store/$storeId/_store-layouts/support/_support-layout";
+      path: "/support";
+      fullPath: "/user/$userId/store/$storeId/support";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSupportRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/settings/_settings-layout": {
+      id: "/user/$userId/store/$storeId/_store-layouts/settings/_settings-layout";
+      path: "/settings";
+      fullPath: "/user/$userId/store/$storeId/settings";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSettingsRoute;
+    };
     "/user/$userId/store/$storeId/_store-layouts/products/_products-layout": {
       id: "/user/$userId/store/$storeId/_store-layouts/products/_products-layout";
       path: "/products";
       fullPath: "/user/$userId/store/$storeId/products";
       preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteImport;
       parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/payments/_payments-layout": {
+      id: "/user/$userId/store/$storeId/_store-layouts/payments/_payments-layout";
+      path: "/payments";
+      fullPath: "/user/$userId/store/$storeId/payments";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsRoute;
     };
     "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout": {
       id: "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout";
@@ -702,12 +961,47 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteImport;
       parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignRoute;
     };
+    "/user/$userId/store/$storeId/_store-layouts/analytics/_analytics-layout": {
+      id: "/user/$userId/store/$storeId/_store-layouts/analytics/_analytics-layout";
+      path: "/analytics";
+      fullPath: "/user/$userId/store/$storeId/analytics";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/team/_team-layout/": {
+      id: "/user/$userId/store/$storeId/_store-layouts/team/_team-layout/";
+      path: "/";
+      fullPath: "/user/$userId/store/$storeId/team/";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutIndexRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/support/_support-layout/": {
+      id: "/user/$userId/store/$storeId/_store-layouts/support/_support-layout/";
+      path: "/";
+      fullPath: "/user/$userId/store/$storeId/support/";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutIndexRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/settings/_settings-layout/": {
+      id: "/user/$userId/store/$storeId/_store-layouts/settings/_settings-layout/";
+      path: "/";
+      fullPath: "/user/$userId/store/$storeId/settings/";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutIndexRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRoute;
+    };
     "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/": {
       id: "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/";
       path: "/";
       fullPath: "/user/$userId/store/$storeId/products/";
       preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutIndexRouteImport;
       parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/payments/_payments-layout/": {
+      id: "/user/$userId/store/$storeId/_store-layouts/payments/_payments-layout/";
+      path: "/";
+      fullPath: "/user/$userId/store/$storeId/payments/";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutIndexRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRoute;
     };
     "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/": {
       id: "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout/";
@@ -722,6 +1016,20 @@ declare module "@tanstack/react-router" {
       fullPath: "/user/$userId/store/$storeId/customers/";
       preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutIndexRouteImport;
       parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersCustomersLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/": {
+      id: "/user/$userId/store/$storeId/_store-layouts/campaign/_campaign-layout/";
+      path: "/";
+      fullPath: "/user/$userId/store/$storeId/campaign/";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutIndexRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRoute;
+    };
+    "/user/$userId/store/$storeId/_store-layouts/analytics/_analytics-layout/": {
+      id: "/user/$userId/store/$storeId/_store-layouts/analytics/_analytics-layout/";
+      path: "/";
+      fullPath: "/user/$userId/store/$storeId/analytics/";
+      preLoaderRoute: typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutIndexRouteImport;
+      parentRoute: typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRoute;
     };
     "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/services": {
       id: "/user/$userId/store/$storeId/_store-layouts/products/_products-layout/services";
@@ -876,9 +1184,40 @@ const UserUserIdMyStoresLayoutRouteWithChildren =
     UserUserIdMyStoresLayoutRouteChildren,
   );
 
+interface UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutIndexRoute: typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutIndexRoute;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRouteChildren: UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutIndexRoute:
+      UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutIndexRoute,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsAnalyticsRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRoute: typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRouteWithChildren;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsAnalyticsRouteChildren: UserUserIdStoreStoreIdStoreLayoutsAnalyticsRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRoute:
+      UserUserIdStoreStoreIdStoreLayoutsAnalyticsAnalyticsLayoutRouteWithChildren,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsAnalyticsRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsAnalyticsRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsAnalyticsRouteChildren,
+  );
+
 interface UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteChildren {
   UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute;
   UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute;
+  UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutIndexRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutIndexRoute;
 }
 
 const UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteChildren: UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteChildren =
@@ -887,6 +1226,8 @@ const UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteChildren: Use
       UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutCouponRoute,
     UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute:
       UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutEmailRoute,
+    UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutIndexRoute:
+      UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutIndexRoute,
   };
 
 const UserUserIdStoreStoreIdStoreLayoutsCampaignCampaignLayoutRouteWithChildren =
@@ -984,6 +1325,36 @@ const UserUserIdStoreStoreIdStoreLayoutsOrdersRouteWithChildren =
     UserUserIdStoreStoreIdStoreLayoutsOrdersRouteChildren,
   );
 
+interface UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutIndexRoute: typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutIndexRoute;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRouteChildren: UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutIndexRoute:
+      UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutIndexRoute,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsPaymentsRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRoute: typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRouteWithChildren;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsPaymentsRouteChildren: UserUserIdStoreStoreIdStoreLayoutsPaymentsRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRoute:
+      UserUserIdStoreStoreIdStoreLayoutsPaymentsPaymentsLayoutRouteWithChildren,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsPaymentsRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsPaymentsRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsPaymentsRouteChildren,
+  );
+
 interface UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutRouteChildren {
   UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutDigitalRoute;
   UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsProductsLayoutLicenseKeysRoute;
@@ -1023,26 +1394,131 @@ const UserUserIdStoreStoreIdStoreLayoutsProductsRouteWithChildren =
     UserUserIdStoreStoreIdStoreLayoutsProductsRouteChildren,
   );
 
+interface UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutIndexRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutIndexRoute;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRouteChildren: UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutIndexRoute:
+      UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutIndexRoute,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsSettingsRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRouteWithChildren;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsSettingsRouteChildren: UserUserIdStoreStoreIdStoreLayoutsSettingsRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRoute:
+      UserUserIdStoreStoreIdStoreLayoutsSettingsSettingsLayoutRouteWithChildren,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsSettingsRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsSettingsRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsSettingsRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutIndexRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutIndexRoute;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRouteChildren: UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutIndexRoute:
+      UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutIndexRoute,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsSupportRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRouteWithChildren;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsSupportRouteChildren: UserUserIdStoreStoreIdStoreLayoutsSupportRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRoute:
+      UserUserIdStoreStoreIdStoreLayoutsSupportSupportLayoutRouteWithChildren,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsSupportRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsSupportRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsSupportRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutIndexRoute: typeof UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutIndexRoute;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRouteChildren: UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutIndexRoute:
+      UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutIndexRoute,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRouteChildren,
+  );
+
+interface UserUserIdStoreStoreIdStoreLayoutsTeamRouteChildren {
+  UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRoute: typeof UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRouteWithChildren;
+}
+
+const UserUserIdStoreStoreIdStoreLayoutsTeamRouteChildren: UserUserIdStoreStoreIdStoreLayoutsTeamRouteChildren =
+  {
+    UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRoute:
+      UserUserIdStoreStoreIdStoreLayoutsTeamTeamLayoutRouteWithChildren,
+  };
+
+const UserUserIdStoreStoreIdStoreLayoutsTeamRouteWithChildren =
+  UserUserIdStoreStoreIdStoreLayoutsTeamRoute._addFileChildren(
+    UserUserIdStoreStoreIdStoreLayoutsTeamRouteChildren,
+  );
+
 interface UserUserIdStoreStoreIdStoreLayoutsRouteChildren {
   UserUserIdStoreStoreIdStoreLayoutsDashboardRoute: typeof UserUserIdStoreStoreIdStoreLayoutsDashboardRoute;
+  UserUserIdStoreStoreIdStoreLayoutsAnalyticsRoute: typeof UserUserIdStoreStoreIdStoreLayoutsAnalyticsRouteWithChildren;
   UserUserIdStoreStoreIdStoreLayoutsCampaignRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCampaignRouteWithChildren;
   UserUserIdStoreStoreIdStoreLayoutsCustomersRoute: typeof UserUserIdStoreStoreIdStoreLayoutsCustomersRouteWithChildren;
   UserUserIdStoreStoreIdStoreLayoutsOrdersRoute: typeof UserUserIdStoreStoreIdStoreLayoutsOrdersRouteWithChildren;
+  UserUserIdStoreStoreIdStoreLayoutsPaymentsRoute: typeof UserUserIdStoreStoreIdStoreLayoutsPaymentsRouteWithChildren;
   UserUserIdStoreStoreIdStoreLayoutsProductsRoute: typeof UserUserIdStoreStoreIdStoreLayoutsProductsRouteWithChildren;
+  UserUserIdStoreStoreIdStoreLayoutsSettingsRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSettingsRouteWithChildren;
+  UserUserIdStoreStoreIdStoreLayoutsSupportRoute: typeof UserUserIdStoreStoreIdStoreLayoutsSupportRouteWithChildren;
+  UserUserIdStoreStoreIdStoreLayoutsTeamRoute: typeof UserUserIdStoreStoreIdStoreLayoutsTeamRouteWithChildren;
 }
 
 const UserUserIdStoreStoreIdStoreLayoutsRouteChildren: UserUserIdStoreStoreIdStoreLayoutsRouteChildren =
   {
     UserUserIdStoreStoreIdStoreLayoutsDashboardRoute:
       UserUserIdStoreStoreIdStoreLayoutsDashboardRoute,
+    UserUserIdStoreStoreIdStoreLayoutsAnalyticsRoute:
+      UserUserIdStoreStoreIdStoreLayoutsAnalyticsRouteWithChildren,
     UserUserIdStoreStoreIdStoreLayoutsCampaignRoute:
       UserUserIdStoreStoreIdStoreLayoutsCampaignRouteWithChildren,
     UserUserIdStoreStoreIdStoreLayoutsCustomersRoute:
       UserUserIdStoreStoreIdStoreLayoutsCustomersRouteWithChildren,
     UserUserIdStoreStoreIdStoreLayoutsOrdersRoute:
       UserUserIdStoreStoreIdStoreLayoutsOrdersRouteWithChildren,
+    UserUserIdStoreStoreIdStoreLayoutsPaymentsRoute:
+      UserUserIdStoreStoreIdStoreLayoutsPaymentsRouteWithChildren,
     UserUserIdStoreStoreIdStoreLayoutsProductsRoute:
       UserUserIdStoreStoreIdStoreLayoutsProductsRouteWithChildren,
+    UserUserIdStoreStoreIdStoreLayoutsSettingsRoute:
+      UserUserIdStoreStoreIdStoreLayoutsSettingsRouteWithChildren,
+    UserUserIdStoreStoreIdStoreLayoutsSupportRoute:
+      UserUserIdStoreStoreIdStoreLayoutsSupportRouteWithChildren,
+    UserUserIdStoreStoreIdStoreLayoutsTeamRoute:
+      UserUserIdStoreStoreIdStoreLayoutsTeamRouteWithChildren,
   };
 
 const UserUserIdStoreStoreIdStoreLayoutsRouteWithChildren =
