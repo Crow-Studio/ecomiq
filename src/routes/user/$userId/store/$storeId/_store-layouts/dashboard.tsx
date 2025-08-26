@@ -1,4 +1,6 @@
 import { createFileRoute, useRouterState } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { ecomiqStore } from "~/hooks/use-ecomiq-store";
 import { seo } from "~/lib/seo";
 import { capitalize } from "~/lib/utils";
 
@@ -29,8 +31,15 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-  const routerState = useRouterState();
+  const {
+    location: { pathname },
+  } = useRouterState();
 
-  console.log(routerState);
-  return <div>{routerState.location.pathname}</div>;
+  useEffect(() => {
+    ecomiqStore.setState((state) => ({
+      ...state,
+      currentRoute: "Dashboard",
+    }));
+  }, [pathname]);
+  return <div>Dashboard</div>;
 }

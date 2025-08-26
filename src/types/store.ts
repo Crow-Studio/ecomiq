@@ -8,3 +8,7 @@ export interface ModalStore {
   onOpen: (type: ModalType) => void;
   onClose: () => void;
 }
+
+export interface EcomiqStore {
+  currentRoute: string;
+}
