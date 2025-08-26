@@ -1,4 +1,3 @@
-import { User } from "~/use-cases/types";
 import { useNavigate } from "@tanstack/react-router";
 import { Loader2, LogOut } from "lucide-react";
 import { useState } from "react";
@@ -12,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { signoutUserAction } from "~/lib/auth/functions/signout-user";
+import { User } from "~/use-cases/types";
 
 interface Props {
   user: User;

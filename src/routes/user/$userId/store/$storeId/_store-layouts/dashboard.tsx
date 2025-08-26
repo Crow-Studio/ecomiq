@@ -31,10 +31,6 @@ export const Route = createFileRoute(
 function RouteComponent() {
   const routerState = useRouterState();
 
-  console.log(routerState)
-  return (
-    <div>
-      {routerState.location.pathname}
-    </div>
-  );
+  console.log(routerState);
+  return <div>{routerState.location.pathname}</div>;
 }

@@ -20,8 +20,8 @@ export const storeSchema = z.object({
 });
 
 export const getStoreFnSchema = z.object({
-  store_id: z.string()
-})
+  store_id: z.string(),
+});
 
 export const createStoreFnSchema = z.object({
   total_stores: z.number({
@@ -46,19 +46,19 @@ export const getStoresFn = createServerFn({
   });
 
 export const getStoreFn = createServerFn({
-  method: 'GET'
+  method: "GET",
 })
-.validator((data: unknown) => {
-  const result = getStoreFnSchema.safeParse(data);
+  .validator((data: unknown) => {
+    const result = getStoreFnSchema.safeParse(data);
     if (!result.success) {
       throw new Error(result.error.issues[0].message);
     }
     return result.data;
-})
-.middleware([authenticatedMiddleware])
-.handler(async ({ data }) =>  {
-  return await getStore(data.store_id)
-})
+  })
+  .middleware([authenticatedMiddleware])
+  .handler(async ({ data }) => {
+    return await getStore(data.store_id);
+  });
 
 interface CreateServerFnResponse {
   redirectTo: "BILLING" | "DASHBOARD";

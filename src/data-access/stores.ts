@@ -63,14 +63,14 @@ export const getStores = async (user_id: string): Promise<StoreWithRole[]> => {
 
 export const getStore = async (store_id: string) => {
   const store = await db.query.store.findFirst({
-    where: table =>  eq(table.id, store_id),
+    where: (table) => eq(table.id, store_id),
     with: {
       members: true,
-    }
-  })
+    },
+  });
 
-  return store ? store : null
-}
+  return store ? store : null;
+};
 
 export const createStore = async ({ user_id }: { user_id: string }) => {
   const url = `${generateNanoId(12)}.ecomiqshop.com`;

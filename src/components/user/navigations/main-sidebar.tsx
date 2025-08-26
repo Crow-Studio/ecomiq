@@ -148,8 +148,8 @@ export default function MainSidebar({ user, store }: Props) {
                     "text-muted-foreground flex w-full cursor-pointer items-center gap-x-2 rounded-md p-2 transition-colors duration-500 ease-in-out",
                     pathname ===
                       `/user/${user.id}/store/${store.id}/${item.label.toLocaleLowerCase()}`
-                      ? "bg-background dark:bg-[#313131] text-primary"
-                      : "hover:bg-background dark:hover:bg-[#313131] hover:text-primary",
+                      ? "bg-background text-primary dark:bg-[#313131]"
+                      : "hover:bg-background hover:text-primary dark:hover:bg-[#313131]",
                     isCollapsed && "justify-center",
                   )}
                   onClick={closeSidebar}
