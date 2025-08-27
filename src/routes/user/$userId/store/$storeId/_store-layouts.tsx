@@ -40,7 +40,7 @@ function RouteComponent() {
       <MainSidebar user={user} store={store} />
       <div className="flex min-w-0 flex-1 flex-col">
         <MainHeader user={user} stores={stores} store={store} />
-        <div className="flex-1 overflow-auto p-4">
+        <div className="flex-1 overflow-hidden">
           <Outlet />
         </div>
       </div>

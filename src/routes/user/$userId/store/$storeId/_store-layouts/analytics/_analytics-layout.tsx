@@ -22,7 +22,6 @@ function RouteComponent() {
 
   return (
     <div>
-      Hello "/user/$userId/store/$storeId/_store-layouts/analytics/_analytics-layout"!
       <Outlet />
     </div>
   );

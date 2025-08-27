@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
+import OrdersSidebar from "~/components/user/orders/orders-sidebar";
 import { ecomiqStore } from "~/hooks/use-ecomiq-store";
 
 export const Route = createFileRoute(
@@ -20,9 +21,11 @@ function RouteComponent() {
     }));
   }, [pathname]);
   return (
-    <div>
-      Hello "/user/$userId/store/$storeId/_store-layouts/orders/_orders-layout"!
-      <Outlet />
+    <div className="flex h-full overflow-hidden">
+      <OrdersSidebar pathname={pathname} />
+      <div className="flex-1 overflow-auto p-4">
+        <Outlet />
+      </div>
     </div>
   );
 }
