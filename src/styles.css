@@ -44,6 +44,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-brand: var(--brand);
   --color-brand-secondary: var(--brand-secondary);
+  --color-app-sidebar: var(--app-sidebar);
 }
 
 :root {
@@ -81,6 +82,7 @@
   --sidebar-ring: oklch(0.705 0.015 286.067);
   --brand: oklch(0.7011 0.2236 40.47);
   --brand-secondary: oklch(0.77 0.18 47.5);
+  --app-sidebar: oklch(97.46% 0.0035 257.64);
 
   /* Text rendering optimizations */
   text-rendering: geometricprecision;
@@ -122,6 +124,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
+  --app-sidebar: oklch(20.61% 0.0046 302.71);
 }
 
 @layer base {

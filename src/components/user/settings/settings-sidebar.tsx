@@ -15,7 +15,7 @@ export default function SettingsSidebar({ pathname }: Props) {
           <button
             type="button"
             className={cn(
-              "text-muted-foreground hover:text-primary flex w-full cursor-pointer items-center gap-x-3 rounded-md p-2 transition-colors duration-500 ease-in-out hover:bg-[#f3f4f8] dark:hover:bg-[#171717]",
+              "text-muted-foreground hover:text-primary flex w-full cursor-pointer items-center gap-x-3 rounded-md p-2 transition-colors duration-500 ease-in-out hover:bg-[#f3f4f8] dark:hover:bg-[#313131]",
             )}
           >
             <Icon icon="hugeicons:store-management-02" className="size-5 flex-shrink-0" />
@@ -24,7 +24,7 @@ export default function SettingsSidebar({ pathname }: Props) {
           <button
             type="button"
             className={cn(
-              "text-muted-foreground hover:text-primary flex w-full cursor-pointer items-center gap-x-3 rounded-md p-2 transition-colors duration-500 ease-in-out hover:bg-[#f3f4f8] dark:hover:bg-[#171717]",
+              "text-muted-foreground hover:text-primary flex w-full cursor-pointer items-center gap-x-3 rounded-md p-2 transition-colors duration-500 ease-in-out hover:bg-[#f3f4f8] dark:hover:bg-[#313131]",
             )}
           >
             <Icon icon="hugeicons:user-settings-01" className="size-5 flex-shrink-0" />
@@ -33,7 +33,7 @@ export default function SettingsSidebar({ pathname }: Props) {
           <button
             type="button"
             className={cn(
-              "text-muted-foreground hover:text-primary flex w-full cursor-pointer items-center gap-x-3 rounded-md p-2 transition-colors duration-500 ease-in-out hover:bg-[#f3f4f8] dark:hover:bg-[#171717]",
+              "text-muted-foreground hover:text-primary flex w-full cursor-pointer items-center gap-x-3 rounded-md p-2 transition-colors duration-500 ease-in-out hover:bg-[#f3f4f8] dark:hover:bg-[#313131]",
             )}
           >
             <Icon icon="hugeicons:web-security" className="size-5 flex-shrink-0" />
