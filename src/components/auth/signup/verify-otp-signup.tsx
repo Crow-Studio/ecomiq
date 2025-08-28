@@ -137,7 +137,9 @@ export default function VerifyOTPSignup({ setIsOTPSent, formData }: Props) {
             disabled={isVerifyOTP || isResendOTPCode}
             type="button"
             className="w-full"
-            variant={"link"}
+            variant="inverse"
+            mode="link"
+            underlined="solid"
             onClick={() => onCancel()}
           >
             <ChevronLeft />

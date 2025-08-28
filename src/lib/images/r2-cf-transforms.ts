@@ -9,11 +9,11 @@ import { ImageUploadResult } from "./r2-client";
 export async function uploadToR2WithCFTransforms(
   file: File | Buffer,
   fileName: string,
-  folder: string = 'products'
+  folder: string = "products",
 ): Promise<ImageUploadResult> {
   const buffer = file instanceof File ? Buffer.from(await file.arrayBuffer()) : file;
   const timestamp = Date.now();
-  const baseName = fileName.replace(/\.[^/.]+$/, '');
+  const baseName = fileName.replace(/\.[^/.]+$/, "");
   const r2Key = `${folder}/${timestamp}-${baseName}`;
 
   try {
@@ -26,11 +26,10 @@ export async function uploadToR2WithCFTransforms(
       id: r2Key,
       r2Key,
       originalUrl: r2Url,
-      variants: generateR2WithCFTransformVariants(r2Url)
+      variants: generateR2WithCFTransformVariants(r2Url),
     };
-
   } catch (error) {
-    console.error('R2 upload failed:', error);
-    throw new Error('Failed to upload image');
+    console.error("R2 upload failed:", error);
+    throw new Error("Failed to upload image");
   }
 }

@@ -1,5 +1,6 @@
 import { createFileRoute, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
+import StoreConfigurations from "~/components/user/dashboard/store-config";
 import { ecomiqStore } from "~/hooks/use-ecomiq-store";
 import { seo } from "~/lib/seo";
 import { capitalize } from "~/lib/utils";
@@ -41,5 +42,9 @@ function RouteComponent() {
       currentRoute: "Dashboard",
     }));
   }, [pathname]);
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <StoreConfigurations />
+    </div>
+  );
 }

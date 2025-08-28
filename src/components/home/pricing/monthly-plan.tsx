@@ -48,7 +48,7 @@ export default function MonthlyPlan() {
                     ? "bg-primary hover:bg-primary/90"
                     : "bg-muted hover:bg-muted/80"
                 }`}
-                variant={plan.popular ? "default" : "outline"}
+                variant={plan.popular ? "primary" : "outline"}
               >
                 {plan.cta}
               </Button>
