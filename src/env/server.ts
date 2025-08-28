@@ -21,6 +21,13 @@ export const env = createEnv({
     // Paystack
     VITE_PAYSTACK_SECRET_KEY: z.string().min(1),
     VITE_PAYSTACK_PUBLIC_KEY: z.string().min(1),
+
+    // Cloudflare
+    CLOUDFLARE_ACCOUNT_ID: z.string(),
+    R2_BUCKET_NAME: z.string(),
+    R2_PUBLIC_URL: z.string(),
+    R2_ACCESS_KEY_ID: z.string(),
+    R2_SECRET_ACCESS_KEY: z.string()
   },
   runtimeEnv: process.env,
 });
